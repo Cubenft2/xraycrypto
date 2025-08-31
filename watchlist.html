@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>XRayCrypto — Watchlist</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="topbar container">
+      <a class="brand" href="index.html">
+        <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
+        <span>XRayCrypto</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="watchlist.html" class="active">Watchlist</a>
+        <a href="markets.html">Markets</a>
+        <a href="news.html" class="active">News</a>
+        <a href="store.html">Store</a>
+      </nav>
+      <form class="symbol-form" onsubmit="return false;">
+        <input id="wlInput" type="text" placeholder="Add symbol: BTC, ETH, SOL or EXCHANGE:PAIR">
+        <button class="button" id="wlAdd" type="button">Add</button>
+        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙 Dark</button>
+      </form>
+    </div>
+
+    <!-- TICKER (theme-aware) -->
+    <div class="ticker">
+      <div class="tradingview-widget-container" data-tv="ticker">
+        <div class="tradingview-widget-container__widget"></div>
+        <script class="tv-config" type="application/json">
+          {
+            "symbols": [
+              {"proName":"BINANCE:BTCUSDT","title":"BTC"},
+              {"proName":"BINANCE:ETHUSDT","title":"ETH"},
+              {"proName":"BINANCE:BNBUSDT","title":"BNB"},
+              {"proName":"BINANCE:XRPUSDT","title":"XRP"},
+              {"proName":"BINANCE:SOLUSDT","title":"SOL"},
+              {"proName":"BINANCE:DOGEUSDT","title":"DOGE"},
+              {"proName":"BINANCE:TONUSDT","title":"TON"},
+              {"proName":"BINANCE:ADAUSDT","title":"ADA"},
+              {"proName":"BINANCE:AVAXUSDT","title":"AVAX"},
+              {"proName":"BINANCE:SHIBUSDT","title":"SHIB"},
+              {"proName":"BINANCE:TRXUSDT","title":"TRX"},
+              {"proName":"BINANCE:DOTUSDT","title":"DOT"},
+              {"proName":"BINANCE:LINKUSDT","title":"LINK"},
+              {"proName":"BINANCE:POLUSDT","title":"POL"},
+              {"proName":"BINANCE:LTCUSDT","title":"LTC"},
+              {"proName":"BINANCE:NEARUSDT","title":"NEAR"},
+              {"proName":"BINANCE:XLMUSDT","title":"XLM"},
+              {"proName":"BINANCE:ATOMUSDT","title":"ATOM"},
+              {"proName":"BINANCE:AAVEUSDT","title":"AAVE"},
+              {"proName":"BINANCE:SUIUSDT","title":"SUI"},
+              {"proName":"BINANCE:ALGOUSDT","title":"ALGO"},
+              {"proName":"BINANCE:PEPEUSDT","title":"PEPE"},
+              {"proName":"BINANCE:USDCUSDT","title":"USDC"},
+              {"proName":"BINANCE:FDUSDUSDT","title":"FDUSD"},
+              {"proName":"OKX:OKBUSDT","title":"OKB"},
+              {"proName":"OKX:ZETAUSDT","title":"ZETA"},
+              {"proName":"BINANCE:CETUSUSDT","title":"CETUS"},
+              {"proName":"BINANCE:BONKUSDT","title":"BONK"}
+            ],
+            "showSymbolLogo": true,
+            "displayMode": "adaptive",
+            "isTransparent": false,
+            "locale": "en"
+          }
+        </script>
+      </div>
+    </div>
+    <!-- STOCKS TICKER -->
+    <div class="ticker">
+      <div class="tradingview-widget-container" data-tv="ticker">
+        <div class="tradingview-widget-container__widget"></div>
+        <script class="tv-config" type="application/json">
+          {
+            "symbols": [
+              {"proName":"SP:SPX","title":"S&P 500"},
+              {"proName":"DJ:DJI","title":"Dow"},
+              {"proName":"NASDAQ:IXIC","title":"Nasdaq"},
+              {"proName":"AMEX:SPY","title":"SPY"},
+              {"proName":"NASDAQ:QQQ","title":"QQQ"},
+              {"proName":"AMEX:DIA","title":"DIA"},
+              {"proName":"TVC:VIX","title":"VIX"},
+
+              {"proName":"NASDAQ:NVDA","title":"NVDA"},
+              {"proName":"NASDAQ:SMCI","title":"SMCI"},
+              {"proName":"NASDAQ:PLTR","title":"PLTR"},
+              {"proName":"NASDAQ:AMD","title":"AMD"},
+              {"proName":"NASDAQ:INTC","title":"INTC"},
+              {"proName":"NASDAQ:TSLA","title":"TSLA"},
+              {"proName":"NASDAQ:GOOGL","title":"GOOGL"},
+              {"proName":"NASDAQ:AMZN","title":"AMZN"},
+              {"proName":"NASDAQ:AAPL","title":"AAPL"},
+              {"proName":"NASDAQ:MSFT","title":"MSFT"},
+
+              {"proName":"NYSE:BRK.B","title":"BRK.B"},
+              {"proName":"NYSE:JNJ","title":"JNJ"},
+              {"proName":"NYSE:WMT","title":"WMT"},
+              {"proName":"NYSE:JPM","title":"JPM"},
+              {"proName":"NYSE:V","title":"V"},
+              {"proName":"NYSE:PG","title":"PG"},
+              {"proName":"NYSE:GS","title":"GS"},
+              {"proName":"NASDAQ:COST","title":"COST"},
+              {"proName":"NYSE:UNH","title":"UNH"},
+              {"proName":"NYSE:HD","title":"HD"},
+              {"proName":"NYSE:MCD","title":"MCD"},
+              {"proName":"NYSE:NKE","title":"NKE"},
+              {"proName":"NYSE:DIS","title":"DIS"},
+              {"proName":"NYSE:BABA","title":"BABA"},
+              {"proName":"NYSE:CRM","title":"CRM"},
+              {"proName":"NASDAQ:PYPL","title":"PYPL"},
+              {"proName":"NASDAQ:ADBE","title":"ADBE"},
+              {"proName":"NYSE:ORCL","title":"ORCL"},
+              {"proName":"NYSE:CVX","title":"CVX"},
+              {"proName":"NYSE:XOM","title":"XOM"},
+              {"proName":"NYSE:BA","title":"BA"},
+              {"proName":"NYSE:CAT","title":"CAT"},
+              {"proName":"NYSE:IBM","title":"IBM"},
+              {"proName":"NYSE:MMM","title":"MMM"},
+              {"proName":"NYSE:GE","title":"GE"},
+              {"proName":"NYSE:F","title":"F"},
+              {"proName":"NASDAQ:SOFI","title":"SOFI"},
+              {"proName":"NYSE:BBAI","title":"BBAI"},
+
+              {"proName":"NASDAQ:COIN","title":"COIN"},
+              {"proName":"NASDAQ:MSTR","title":"MSTR"},
+              {"proName":"NASDAQ:MARA","title":"MARA"},
+              {"proName":"NASDAQ:RIOT","title":"RIOT"},
+              {"proName":"AMEX:IBIT","title":"IBIT"},
+              {"proName":"AMEX:FBTC","title":"FBTC"},
+              {"proName":"AMEX:WGMI","title":"WGMI"}
+            ],
+            "showSymbolLogo": true,
+            "displayMode": "adaptive",
+            "isTransparent": false,
+            "locale": "en"
+          }
+        </script>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE -->
+  <main class="main container">
+
+    <!-- CRYPTO HEAT MAP AT TOP -->
+    <section class="section" id="crypto-heatmap">
+      <h2>Crypto Coins Heatmap</h2>
+      <div class="card">
+        <div class="tradingview-widget-container" data-tv="crypto-heatmap">
+          <div class="tradingview-widget-container__widget"></div>
+          <script class="tv-config" type="application/json">
+            {
+              "dataSource": "Crypto",
+              "blockSize": "market_cap_calc",
+              "blockColor": "24h_close_change|5",
+              "locale": "en",
+              "symbolUrl": "",
+              "hasTopBar": true,
+              "isDataSetEnabled": true,
+              "isZoomEnabled": true,
+              "hasSymbolTooltip": true,
+              "isMonoSize": false,
+              "width": "100%",
+              "height": 520
+            }
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h1>Watchlist</h1>
+      <p class="note">Add coins above (BTC or BTCUSDT). We store your list in your browser.</p>
+    </section>
+
+    <section class="section">
+      <div id="wlList" class="grid cols-3"></div>
+      <p id="wlEmpty" class="note" style="display:none">Your watchlist is empty.</p>
+      <div style="margin-top:12px">
+        <button class="button danger" id="wlClear">Clear all</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+  © 2025 XRayCrypto · 
+  <a href="https://x.com/XRaymetax" target="_blank" class="x-link">X</a>
+</footer>
+  <script src="main.js"></script>
+  <script>
+    const list = document.getElementById('wlList');
+    const empty = document.getElementById('wlEmpty');
+
+    function miniCard(symbol){
+      const theme = getTheme();
+      const wrap = document.createElement('div');
+      wrap.className = 'card';
+      wrap.innerHTML = `
+        <h2 style="margin:0 0 8px">${symbol}</h2>
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <a class="button" href="index.html#chart" onclick="sessionStorage.setItem('xr_symbol', '${symbol}')">Open on Home</a>
+          <button class="button outline" data-remove="${symbol}">Remove</button>
+        </div>
+      `;
+      const s = document.createElement('script');
+      s.src = "https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js";
+      s.async = true;
+      s.text = JSON.stringify({
+        symbol,
+        width: "100%",
+        height: 220,
+        locale: "en",
+        dateRange: "1M",
+        colorTheme: theme,
+        isTransparent: false,
+        showVolume: true
+      });
+      wrap.querySelector('.tradingview-widget-container').appendChild(s);
+      return wrap;
+    }
+
+    function render(){
+      list.innerHTML = '';
+      const wl = WL.get();
+      empty.style.display = wl.length ? 'none' : '';
+      wl.forEach(sym => list.appendChild(miniCard(sym)));
+    }
+
+    document.getElementById('wlAdd').addEventListener('click', ()=>{
+      const raw = document.getElementById('wlInput').value || '';
+      const sym = mapShortToSymbol(raw);
+      if(!sym) return;
+      WL.add(sym);
+      document.getElementById('wlInput').value = '';
+      render();
+    });
+
+    list.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button[data-remove]');
+      if(!btn) return;
+      WL.remove(btn.getAttribute('data-remove'));
+      render();
+    });
+
+    document.getElementById('wlClear').addEventListener('click', ()=>{
+      if(confirm('Clear your entire watchlist?')){ WL.clear(); render(); }
+    });
+
+    // Refresh mini-cards when theme changes (listen to storage or click)
+    window.addEventListener('storage', (e)=>{ if(e.key==='xr_theme') render(); });
+    document.getElementById('themeToggle').addEventListener('click', ()=>{
+      setTimeout(render, 0); // after main.js toggles theme
+    });
+
+    // If user clicked "Open on Home"
+    const picked = sessionStorage.getItem('xr_symbol');
+    if(picked){ sessionStorage.removeItem('xr_symbol'); location.href = `index.html#chart?symbol=${encodeURIComponent(picked)}`; }
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>XRayCrypto — TV Zone</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <meta name="color-scheme" content="dark light"/>
+  <style>
+    /* Minimal theme swapper just for this page's embeds */
+    /* Expect body to carry either .dark or .light (your main.js toggle). */
+    .show-when-dark { display: none; }
+    .show-when-light { display: none; }
+    body.dark .show-when-dark { display: block; }
+    body.light .show-when-light { display: block; }
+  </style>
+</head>
+<body class="light">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="topbar container">
+      <a class="brand" href="index.html">
+        <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
+        <span>XRayCrypto</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="markets.html">Markets</a>
+        <a href="watchlist.html">Watchlist</a>
+        <a href="news.html">News</a>
+        <a href="store.html">Store</a>
+        <a href="tv.html" class="active">TV</a>
+      </nav>
+      <div class="actions">
+        <a class="btn x-social" href="https://x.com/XRaymetax" target="_blank" rel="noopener" aria-label="Follow on X">
+          <span>X</span>
+        </a>
+        <button id="themeToggle" class="btn" aria-label="Toggle theme">☾</button>
+      </div>
+    </div>
+
+    <!-- CRYPTO TICKER (DARK/LIGHT PAIRED, non-transparent) -->
+    <div class="ticker">
+      <!-- DARK -->
+      <div class="tradingview-widget-container show-when-dark">
+        <div class="tradingview-widget-container__widget"></div>
+        <script src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        {
+          "symbols": [
+            {"proName":"BINANCE:BTCUSDT","title":"BTC"},
+            {"proName":"BINANCE:ETHUSDT","title":"ETH"},
+            {"proName":"BINANCE:BNBUSDT","title":"BNB"},
+            {"proName":"BINANCE:XRPUSDT","title":"XRP"},
+            {"proName":"BINANCE:SOLUSDT","title":"SOL"},
+            {"proName":"BINANCE:DOGEUSDT","title":"DOGE"},
+            {"proName":"BINANCE:TONUSDT","title":"TON"},
+            {"proName":"BINANCE:ADAUSDT","title":"ADA"},
+            {"proName":"BINANCE:AVAXUSDT","title":"AVAX"},
+            {"proName":"BINANCE:SHIBUSDT","title":"SHIB"},
+            {"proName":"BINANCE:TRXUSDT","title":"TRX"},
+            {"proName":"BINANCE:DOTUSDT","title":"DOT"},
+            {"proName":"BINANCE:LINKUSDT","title":"LINK"},
+            {"proName":"BINANCE:POLUSDT","title":"POL"},
+            {"proName":"BINANCE:LTCUSDT","title":"LTC"},
+            {"proName":"BINANCE:NEARUSDT","title":"NEAR"},
+            {"proName":"BINANCE:XLMUSDT","title":"XLM"},
+            {"proName":"BINANCE:ATOMUSDT","title":"ATOM"},
+            {"proName":"BINANCE:AAVEUSDT","title":"AAVE"},
+            {"proName":"BINANCE:SUIUSDT","title":"SUI"},
+            {"proName":"BINANCE:ALGOUSDT","title":"ALGO"},
+            {"proName":"BINANCE:PEPEUSDT","title":"PEPE"},
+            {"proName":"BINANCE:USDCUSDT","title":"USDC"},
+            {"proName":"BINANCE:FDUSDUSDT","title":"FDUSD"},
+            {"proName":"OKX:OKBUSDT","title":"OKB"},
+            {"proName":"OKX:ZETAUSDT","title":"ZETA"},
+            {"proName":"BINANCE:CETUSUSDT","title":"CETUS"},
+            {"proName":"BINANCE:BONKUSDT","title":"BONK"}
+          ],
+          "showSymbolLogo": true,
+          "displayMode": "adaptive",
+          "colorTheme": "dark",
+          "isTransparent": false,
+          "locale": "en"
+        }
+        </script>
+      </div>
+      <!-- LIGHT -->
+      <div class="tradingview-widget-container show-when-light">
+        <div class="tradingview-widget-container__widget"></div>
+        <script src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        {
+          "symbols": [
+            {"proName":"BINANCE:BTCUSDT","title":"BTC"},
+            {"proName":"BINANCE:ETHUSDT","title":"ETH"},
+            {"proName":"BINANCE:BNBUSDT","title":"BNB"},
+            {"proName":"BINANCE:XRPUSDT","title":"XRP"},
+            {"proName":"BINANCE:SOLUSDT","title":"SOL"},
+            {"proName":"BINANCE:DOGEUSDT","title":"DOGE"},
+            {"proName":"BINANCE:TONUSDT","title":"TON"},
+            {"proName":"BINANCE:ADAUSDT","title":"ADA"},
+            {"proName":"BINANCE:AVAXUSDT","title":"AVAX"},
+            {"proName":"BINANCE:SHIBUSDT","title":"SHIB"},
+            {"proName":"BINANCE:TRXUSDT","title":"TRX"},
+            {"proName":"BINANCE:DOTUSDT","title":"DOT"},
+            {"proName":"BINANCE:LINKUSDT","title":"LINK"},
+            {"proName":"BINANCE:POLUSDT","title":"POL"},
+            {"proName":"BINANCE:LTCUSDT","title":"LTC"},
+            {"proName":"BINANCE:NEARUSDT","title":"NEAR"},
+            {"proName":"BINANCE:XLMUSDT","title":"XLM"},
+            {"proName":"BINANCE:ATOMUSDT","title":"ATOM"},
+            {"proName":"BINANCE:AAVEUSDT","title":"AAVE"},
+            {"proName":"BINANCE:SUIUSDT","title":"SUI"},
+            {"proName":"BINANCE:ALGOUSDT","title":"ALGO"},
+            {"proName":"BINANCE:PEPEUSDT","title":"PEPE"},
+            {"proName":"BINANCE:USDCUSDT","title":"USDC"},
+            {"proName":"BINANCE:FDUSDUSDT","title":"FDUSD"},
+            {"proName":"OKX:OKBUSDT","title":"OKB"},
+            {"proName":"OKX:ZETAUSDT","title":"ZETA"},
+            {"proName":"BINANCE:CETUSUSDT","title":"CETUS"},
+            {"proName":"BINANCE:BONKUSDT","title":"BONK"}
+          ],
+          "showSymbolLogo": true,
+          "displayMode": "adaptive",
+          "colorTheme": "light",
+          "isTransparent": false,
+          "locale": "en"
+        }
+        </script>
+      </div>
+    </div>
+
+    <!-- STOCK MARKET TICKER (DARK/LIGHT PAIRED, non-transparent) -->
+    <div class="ticker">
+      <!-- DARK -->
+      <div class="tradingview-widget-container show-when-dark">
+        <div class="tradingview-widget-container__widget"></div>
+        <script src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        {
+          "symbols": [
+            {"proName":"SP:SPX","title":"S&P 500"},
+            {"proName":"DJ:DJI","title":"Dow"},
+            {"proName":"NASDAQ:IXIC","title":"Nasdaq"},
+            {"proName":"AMEX:SPY","title":"SPY"},
+            {"proName":"NASDAQ:QQQ","title":"QQQ"},
+            {"proName":"AMEX:DIA","title":"DIA"},
+            {"proName":"TVC:VIX","title":"VIX"},
+            {"proName":"NASDAQ:NVDA","title":"NVDA"},
+            {"proName":"NASDAQ:SMCI","title":"SMCI"},
+            {"proName":"NASDAQ:PLTR","title":"PLTR"},
+            {"proName":"NASDAQ:AMD","title":"AMD"},
+            {"proName":"NASDAQ:INTC","title":"INTC"},
+            {"proN

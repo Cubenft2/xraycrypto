@@ -1,0 +1,91 @@
+/* ========== Base ========== */
+:root{
+  --bg:#0f1115;
+  --card:#161922;
+  --text:#e8ecf1;
+  --muted:#9aa6b2;
+  --brand:#f6c32c; /* pfp yellow */
+  --border:rgba(255,255,255,.08);
+}
+
+body.light{
+  --bg:#f6f7f9;
+  --card:#ffffff;
+  --text:#0f1115;
+  --muted:#6b7280;
+  --border:rgba(15,17,21,.08);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
+  color:var(--text);
+  background:var(--bg);
+}
+
+/* ========== Header / Nav ========== */
+.header{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border)}
+.container{max-width:1100px;margin:0 auto;padding:12px 16px}
+.topbar{display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700}
+.logo{width:28px;height:28px;border-radius:6px}
+
+.nav{display:flex;gap:16px;margin-left:8px}
+.nav a{color:var(--muted);text-decoration:none;padding:6px 8px;border-radius:6px}
+.nav a.active,.nav a:hover{color:var(--text);background:var(--border)}
+
+.symbol-form{margin-left:auto;display:flex;gap:8px;align-items:center}
+.symbol-form input{
+  background:transparent;border:1px solid var(--border);color:var(--text);
+  padding:8px 10px;border-radius:8px;min-width:220px
+}
+
+.button{background:var(--brand);color:#000;padding:8px 12px;border:0;border-radius:8px;font-weight:700;cursor:pointer}
+.button.outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.button.danger{background:#ef4444;color:#fff}
+
+/* ========== Ticker strip ========== */
+.ticker{border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+
+/* ========== Layout ========== */
+.main{padding:24px 16px}
+.section{margin:22px auto 28px;max-width:1100px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+h1,h2,h3{margin:0 0 12px}
+
+.note{color:var(--muted);margin-top:8px}
+
+/* Simple grids */
+.grid{display:grid;gap:16px}
+.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:900px){.cols-3{grid-template-columns:1fr}}
+
+.desktop-only{display:block}
+@media (max-width:900px){.desktop-only{display:none}}
+
+.footer{border-top:1px solid var(--border);padding:16px;text-align:center;color:var(--muted)}
+.footer { 
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9em;
+  color: var(--text-color);
+}
+
+/* X social link style */
+.x-link {
+  font-weight: bold;
+  color: #FFD700; /* bright yellow */
+  text-decoration: none;
+  font-size: 1.1em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+.x-link:hover {
+  background-color: #FFD700;  /* yellow background */
+  color: #000;                /* black text on hover */
+  text-decoration: none;
+}

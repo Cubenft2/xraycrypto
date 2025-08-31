@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>XRayCrypto — Dashboard</title>
+  <meta property="og:image" content="pfp.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="topbar container">
+      <a class="brand" href="index.html">
+        <img src="pfp.png" alt="XRayCrypto logo" class="logo" />
+        <span>XRayCrypto</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="watchlist.html">Watchlist</a>
+        <a href="markets.html">Markets</a>
+        <a href="news.html">News</a>
+        <a href="store.html">Store</a>
+      </nav>
+      <form id="symbolForm" class="symbol-form">
+        <input id="symbolInput" type="text" placeholder="BTC, ETH, SOL…" />
+        <button class="button" type="submit">Open</button>
+        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙 Dark</button>
+      </form>
+    </div>
+
+    <!-- TICKER (theme-aware) -->
+    <div class="ticker">
+      <div class="tradingview-widget-container" data-tv="ticker">
+        <div class="tradingview-widget-container__widget"></div>
+        <script class="tv-config" type="application/json">
+          {
+            "symbols": [
+              {"proName":"BINANCE:BTCUSDT","title":"BTC"},
+              {"proName":"BINANCE:ETHUSDT","title":"ETH"},
+              {"proName":"BINANCE:BNBUSDT","title":"BNB"},
+              {"proName":"BINANCE:XRPUSDT","title":"XRP"},
+              {"proName":"BINANCE:SOLUSDT","title":"SOL"},
+              {"proName":"BINANCE:DOGEUSDT","title":"DOGE"},
+              {"proName":"BINANCE:TONUSDT","title":"TON"},
+              {"proName":"BINANCE:ADAUSDT","title":"ADA"},
+              {"proName":"BINANCE:AVAXUSDT","title":"AVAX"},
+              {"proName":"BINANCE:SHIBUSDT","title":"SHIB"},
+              {"proName":"BINANCE:TRXUSDT","title":"TRX"},
+              {"proName":"BINANCE:DOTUSDT","title":"DOT"},
+              {"proName":"BINANCE:LINKUSDT","title":"LINK"},
+              {"proName":"BINANCE:POLUSDT","title":"POL"},
+              {"proName":"BINANCE:LTCUSDT","title":"LTC"},
+              {"proName":"BINANCE:NEARUSDT","title":"NEAR"},
+              {"proName":"BINANCE:XLMUSDT","title":"XLM"},
+              {"proName":"BINANCE:ATOMUSDT","title":"ATOM"},
+              {"proName":"BINANCE:AAVEUSDT","title":"AAVE"},
+              {"proName":"BINANCE:SUIUSDT","title":"SUI"},
+              {"proName":"BINANCE:ALGOUSDT","title":"ALGO"},
+              {"proName":"BINANCE:PEPEUSDT","title":"PEPE"},
+              {"proName":"BINANCE:USDCUSDT","title":"USDC"},
+              {"proName":"BINANCE:FDUSDUSDT","title":"FDUSD"},
+              {"proName":"OKX:OKBUSDT","title":"OKB"},
+              {"proName":"OKX:ZETAUSDT","title":"ZETA"},
+              {"proName":"BINANCE:CETUSUSDT","title":"CETUS"},
+              {"proName":"BINANCE:BONKUSDT","title":"BONK"}
+            ],
+            "showSymbolLogo": true,
+            "displayMode": "adaptive",
+            "isTransparent": false,
+            "locale": "en"
+          }
+        </script>
+      </div>
+    </div>
+    <!-- STOCKS TICKER -->
+    <div class="ticker">
+      <div class="tradingview-widget-container" data-tv="ticker">
+        <div class="tradingview-widget-container__widget"></div>
+        <script class="tv-config" type="application/json">
+          {
+            "symbols": [
+              {"proName":"SP:SPX","title":"S&P 500"},
+              {"proName":"DJ:DJI","title":"Dow"},
+              {"proName":"NASDAQ:IXIC","title":"Nasdaq"},
+              {"proName":"AMEX:SPY","title":"SPY"},
+              {"proName":"NASDAQ:QQQ","title":"QQQ"},
+              {"proName":"AMEX:DIA","title":"DIA"},
+              {"proName":"TVC:VIX","title":"VIX"},
+
+              {"proName":"NASDAQ:NVDA","title":"NVDA"},
+              {"proName":"NASDAQ:SMCI","title":"SMCI"},
+              {"proName":"NASDAQ:PLTR","title":"PLTR"},
+              {"proName":"NASDAQ:AMD","title":"AMD"},
+              {"proName":"NASDAQ:INTC","title":"INTC"},
+              {"proName":"NASDAQ:TSLA","title":"TSLA"},
+              {"proName":"NASDAQ:GOOGL","title":"GOOGL"},
+              {"proName":"NASDAQ:AMZN","title":"AMZN"},
+              {"proName":"NASDAQ:AAPL","title":"AAPL"},
+              {"proName":"NASDAQ:MSFT","title":"MSFT"},
+
+              {"proName":"NYSE:BRK.B","title":"BRK.B"},
+              {"proName":"NYSE:JNJ","title":"JNJ"},
+              {"proName":"NYSE:WMT","title":"WMT"},
+              {"proName":"NYSE:JPM","title":"JPM"},
+              {"proName":"NYSE:V","title":"V"},
+              {"proName":"NYSE:PG","title":"PG"},
+              {"proName":"NYSE:GS","title":"GS"},
+              {"proName":"NASDAQ:COST","title":"COST"},
+              {"proName":"NYSE:UNH","title":"UNH"},
+              {"proName":"NYSE:HD","title":"HD"},
+              {"proName":"NYSE:MCD","title":"MCD"},
+              {"proName":"NYSE:NKE","title":"NKE"},
+              {"proName":"NYSE:DIS","title":"DIS"},
+              {"proName":"NYSE:BABA","title":"BABA"},
+              {"proName":"NYSE:CRM","title":"CRM"},
+              {"proName":"NASDAQ:PYPL","title":"PYPL"},
+              {"proName":"NASDAQ:ADBE","title":"ADBE"},
+              {"proName":"NYSE:ORCL","title":"ORCL"},
+              {"proName":"NYSE:CVX","title":"CVX"},
+              {"proName":"NYSE:XOM","title":"XOM"},
+              {"proName":"NYSE:BA","title":"BA"},
+              {"proName":"NYSE:CAT","title":"CAT"},
+              {"proName":"NYSE:IBM","title":"IBM"},
+              {"proName":"NYSE:MMM","title":"MMM"},
+              {"proName":"NYSE:GE","title":"GE"},
+              {"proName":"NYSE:F","title":"F"},
+              {"proName":"NASDAQ:SOFI","title":"SOFI"},
+              {"proName":"NYSE:BBAI","title":"BBAI"},
+
+              {"proName":"NASDAQ:COIN","title":"COIN"},
+              {"proName":"NASDAQ:MSTR","title":"MSTR"},
+              {"proName":"NASDAQ:MARA","title":"MARA"},
+              {"proName":"NASDAQ:RIOT","title":"RIOT"},
+              {"proName":"AMEX:IBIT","title":"IBIT"},
+              {"proName":"AMEX:FBTC","title":"FBTC"},
+              {"proName":"AMEX:WGMI","title":"WGMI"}
+            ],
+            "showSymbolLogo": true,
+            "displayMode": "adaptive",
+            "isTransparent": false,
+            "locale": "en"
+          }
+        </script>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="main container">
+    <!-- ADVANCED CHART -->
+    <section class="section" id="chart">
+      <h1>BTCUSDT — Advanced Chart</h1>
+      <div class="card" style="height:600px">
+        <div class="tradingview-widget-container" data-tv="advchart" style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+          <div class="tradingview-widget-copyright">
+            <a href="https://www.tradingview.com/symbols/BINANCE-BTCUSDT/?exchange=BINANCE" rel="noopener nofollow" target="_blank">
+              <span class="blue-text">BTCUSDT chart by TradingView</span>
+            </a>
+          </div>
+          <script class="tv-config" type="application/json">
+            {
+              "allow_symbol_change": true,
+              "calendar": false,
+              "details": true,
+              "hide_side_toolbar": false,
+              "hide_top_toolbar": false,
+              "hide_legend": false,
+              "hide_volume": false,
+              "interval": "60",
+              "locale": "en",
+              "save_image": true,
+              "style": "1",
+              "symbol": "BINANCE:BTCUSDT",
+              "timezone": "Etc/UTC",
+              "withdateranges": true,
+              "autosize": true
+            }
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRYPTO SCREENER -->
+    <section class="section" id="screener">
+      <h2>Crypto Screener</h2>
+      <div class="card">
+        <div class="tradingview-widget-container" data-tv="screener">
+          <div class="tradingview-widget-container__widget"></div>
+          <script class="tv-config" type="application/json">
+            {
+              "defaultColumn": "overview",
+              "screener_type": "crypto_mkt",
+              "displayCurrency": "USD",
+              "isTransparent": false,
+              "locale": "en",
+              "width": "100%",
+              "height": 550
+            }
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRYPTO HEAT MAP -->
+    <section class="section" id="crypto-heatmap">
+      <h2>Crypto Coins Heatmap</h2>
+      <div class="card">
+        <div class="tradingview-widget-container" data-tv="crypto-heatmap">
+          <div class="tradingview-widget-container__widget"></div>
+          <script class="tv-config" type="application/json">
+            {
+              "dataSource": "Crypto",
+              "blockSize": "market_cap_calc",
+              "blockColor": "24h_close_change|5",
+              "locale": "en",
+              "symbolUrl": "",
+              "hasTopBar": true,
+              "isDataSetEnabled": true,
+              "isZoomEnabled": true,
+              "hasSymbolTooltip": true,
+              "isMonoSize": false,
+              "width": "100%",
+              "height": 520
+            }
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOP CRYPTO NEWS -->
+    <section class="section" id="news">
+      <h2>Top Crypto News</h2>
+      <div class="card">
+        <div class="tradingview-widget-container" data-tv="timeline">
+          <div class="tradingview-widget-container__widget"></div>
+          <script class="tv-config" type="application/json">
+            {
+              "feedMode": "market",
+              "market": "crypto",
+              "displayMode": "regular",
+              "width": "100%",
+              "height": 600,
+              "locale": "en"
+            }
+          </script>
+        </div>
+      </div>
+    </section>
+  </main>
+
+ <footer class="footer">
+  © 2025 XRayCrypto · 
+  <a href="https://x.com/XRaymetax" target="_blank" class="x-link">X</a>
+</footer>
+
+
+  <script src="main.js"></script>
+</body>
+</html>
