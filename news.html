@@ -1,9 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+
   <title>XRayCrypto — News</title>
   <meta name="description" content="Stay updated with live market news, crypto headlines, Bloomberg, Yahoo Finance, Sky News, Al Jazeera, and more."/>
   <meta name="keywords" content="crypto news, stock news, Bloomberg, Yahoo Finance, Al Jazeera, live financial news, XRayCrypto"/>
@@ -26,7 +29,7 @@
   <link rel="stylesheet" href="styles.css"/>
 </head>
 
-<body class="light">
+<body>
   <!-- HEADER -->
   <header class="header">
     <div class="topbar container">
@@ -41,7 +44,7 @@
         <a href="index.html" data-softnav>Home</a>
         <a href="markets.html" data-softnav>Markets</a>
         <a href="watchlist.html" data-softnav>Watchlist</a>
-        <a href="news.html" data-softnav>News</a>
+        <a href="news.html" class="active" data-softnav>News</a>
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
      </nav>
@@ -82,17 +85,17 @@
       </div>
 
       <div class="card">
-        <h2 style="margin:0 0 8px">Al Jazeera English</h3>
+        <h2 style="margin:0 0 8px">Al Jazeera English</h2>
         <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-            <iframe title="Al Jazeera English Live"
-               src="https://www.youtube.com/embed/live_stream?channel=UCNye-wNBqNL5ZzHSJj3l8Bg&autoplay=0&mute=1"
-               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+          <iframe title="Al Jazeera English Live"
+             src="https://www.youtube.com/embed/live_stream?channel=UCNye-wNBqNL5ZzHSJj3l8Bg&autoplay=0&mute=1"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
         </div>
       </div>
         
       <div class="card">     
-        <h32 style="margin:0 0 8px">FRANCE 24 (English)</h3>
+        <h2 style="margin:0 0 8px">FRANCE 24 (English)</h2>
         <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
           <iframe title="FRANCE 24 English Live"
             src="https://www.youtube.com/embed/live_stream?channel=UCCCPCZNChQdGa9EkATeye4g&autoplay=0&mute=1"
@@ -102,7 +105,7 @@
       </div>
           
       <div class="card">     
-        <h2 style="margin:16px 0 8px">DW News</h3>
+        <h2 style="margin:16px 0 8px">DW News</h2>
         <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
           <iframe title="DW News Live"
             src="https://www.youtube.com/embed/live_stream?channel=UCknLrEdhRCp1aegoMqRaCZg&autoplay=0&mute=1"

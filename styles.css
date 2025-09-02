@@ -22,12 +22,15 @@ body.light{
 
 *{box-sizing:border-box}
 html,body{height:100%}
-body{
-  margin:0;
-  font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
-  color:var(--text);
-  background:var(--bg);
-}
+/* Prevent sideways scroll on small screens from wide iframes/widgets */
+html,body{overflow-x:hidden}
+
+body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:16px;transition:background .2s ease,color .2s ease}
+/* Theme helper visibility */
+.show-when-dark{display:none}
+.show-when-light{display:none}
+body:not(.light) .show-when-dark{display:block}
+body.light .show-when-light{display:block}
 
 /* ========== Header / Nav ========== */
 .header{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border)}
@@ -109,6 +112,12 @@ body{
   width:100%!important;
   height:100%!important;
 }
+
+/* ========== Generic embed sizing (TV & YouTube) ========== */
+.tradingview-widget-container,
+.tradingview-widget-container__widget{ width:100%; }
+.card iframe,
+.tv-embed iframe{ display:block; width:100%; border:0; }
 
 /* ========== Layout ========== */
 .main{padding:24px 16px}

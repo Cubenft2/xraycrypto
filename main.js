@@ -12,7 +12,9 @@ function getTheme(){ return localStorage.getItem(THEME_KEY) || 'dark'; }
 function setTheme(t){ localStorage.setItem(THEME_KEY, t); }
 function applyThemeToDOM(){
   const t = getTheme();
-  document.body.classList.toggle('light', t === 'light');
+  // Normalize to either .light or .dark on <body>
+  document.body.classList.remove('light','dark');
+  document.body.classList.add(t === 'light' ? 'light' : 'dark');
   const btn = document.getElementById('themeToggle');
   if(btn) btn.textContent = (t === 'light') ? '🌙 Dark' : '🌞 Light';
 }
@@ -376,6 +378,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
     ensureMounted(document.getElementById('pageMain'));
   }catch(e){ console.error('Init failed:', e); }
 
+  // Bump super-short iframes that some mobile browsers collapse
+  document.querySelectorAll('iframe').forEach(f => {
+    const h = parseInt(f.getAttribute('height') || '0', 10);
+    if(!isNaN(h) && h > 0 && h < 320) f.setAttribute('height','360');
+  });
+
   applyHomeDeepLink();
 
   /* ==== Mobile menu ==== */
@@ -491,7 +499,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   // Prefetch on hover/focus
   document.addEventListener('mouseover', (e)=>{
-    const a = e.target.closest('#primaryNav a, .brand');
+    const a = e.target.closest('#primaryNav a, .brand, a[data-softnav]');
     if(!a) return;
     const href = a.getAttribute('href');
     if(!href || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) return;
@@ -499,7 +507,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(!prefetchCache.has(url)) fetchNext(url).catch(()=>{});
   });
   document.addEventListener('focusin', (e)=>{
-    const a = e.target.closest('#primaryNav a, .brand');
+    const a = e.target.closest('#primaryNav a, .brand, a[data-softnav]');
     if(!a) return;
     const href = a.getAttribute('href');
     if(!href || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) return;
@@ -507,11 +515,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(!prefetchCache.has(url)) fetchNext(url).catch(()=>{});
   });
 
-  // Intercept header links
+  // Intercept header + softnav links
   document.addEventListener('click', (e)=>{
-    const headerLink = e.target.closest('#primaryNav a, .brand');
-    const softLink = e.target.closest('a[data-softnav]');
-    const a = headerLink || softLink;
+    const headerLink = e.target.closest('#primaryNav a, .brand, a[data-softnav]');
+    const a = headerLink;
     if(!a) return;
     if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const href = a.getAttribute('href');
