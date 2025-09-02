@@ -161,3 +161,4 @@ h1,h2,h3{margin:0 0 12px}
 
 /* Fade helper for SPA-lite */
 #pageMain { transition: opacity .12s ease; }
+#pageMain.fading { opacity: 0; }
