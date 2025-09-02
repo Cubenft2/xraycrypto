@@ -4,75 +4,70 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>XRayCrypto — Store</title>
+  <meta name="description" content="Shop XRayCrypto gear, NFTs, digital assets, and crypto-inspired designs. Secure and fast checkout."/>
+  <meta name="keywords" content="crypto store, XRayCrypto gear, NFTs, digital assets, crypto merch"/>
+  <link rel="canonical" href="https://xraymetax.online/store.html"/>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="XRayCrypto — Store"/>
+  <meta property="og:description" content="Shop XRayCrypto gear, NFTs, digital assets, and crypto-inspired designs."/>
+  <meta property="og:image" content="https://xraymetax.online/pfp.png"/>
+  <meta property="og:url" content="https://xraymetax.online/store.html"/>
+  <meta property="og:type" content="website"/>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="XRayCrypto — Store"/>
+  <meta name="twitter:description" content="Shop XRayCrypto gear, NFTs, digital assets, and crypto-inspired designs."/>
+  <meta name="twitter:image" content="https://xraymetax.online/pfp.png"/>
+
+  <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
 </head>
+
 <body>
   <!-- HEADER -->
   <header class="header">
     <div class="topbar container">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html" data-softnav>
         <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
         <span>XRayCrypto</span>
       </a>
-      <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="markets.html">Markets</a>
-        <a href="watchlist.html">Watchlist</a>
-        <a href="news.html" class="active">News</a>
-        <a href="store.html" class="active">Store</a>
+
+      <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
+
+      <nav id="primaryNav" class="nav">
+        <a href="index.html" data-softnav>Home</a>
+        <a href="markets.html" data-softnav>Markets</a>
+        <a href="watchlist.html" data-softnav>Watchlist</a>
+        <a href="news.html" data-softnav>News</a>
+        <a href="store.html" class="active" data-softnav>Store</a>
+        <a href="chill.html" data-softnav>ChillZone</a>
       </nav>
-      <div class="symbol-form">
+
+      <!-- page-specific controls (STORE = theme only) -->
+      <div id="headerControls" class="symbol-form">
         <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙 Dark</button>
       </div>
     </div>
 
-    <!-- TICKER -->
-    <div class="ticker">
-      <div id="tv-ticker-store" class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-      </div>
-    </div>
+    <div class="ticker"><div id="cryptoTape"></div></div>
+    <div class="ticker"><div id="stocksTape"></div></div>
   </header>
- <!-- CRYPTO HEAT MAP -->
-    <section class="section" id="crypto-heatmap">
-      <h2>Crypto Coins Heatmap</h2>
-      <div class="card">
-        <div class="tradingview-widget-container" data-tv="crypto-heatmap">
-          <div class="tradingview-widget-container__widget"></div>
-          <script class="tv-config" type="application/json">
-            {
-              "dataSource": "Crypto",
-              "blockSize": "market_cap_calc",
-              "blockColor": "24h_close_change|5",
-              "locale": "en",
-              "symbolUrl": "",
-              "hasTopBar": true,
-              "isDataSetEnabled": true,
-              "isZoomEnabled": true,
-              "hasSymbolTooltip": true,
-              "isMonoSize": false,
-              "width": "100%",
-              "height": 520
-            }
-          </script>
-        </div>
-      </div>
-    </section>
+
+  <main class="main container" id="pageMain">
     <section class="section">
-      <h1>Store</h1>
-      <p class="note">Products coming soon. Ready for Coinbase Commerce / Unstoppable integration later.</p>
-      <div class="grid cols-3">
-        <div class="card"><h3>Sticker Pack</h3><p class="note">Soon</p></div>
-        <div class="card"><h3>Stoic Cards</h3><p class="note">Soon</p></div>
-        <div class="card"><h3>Limited Prints</h3><p class="note">Soon</p></div>
+      <h1>Store (Coming Soon)</h1>
+      <div class="card">
+        <p>We’re getting the shop ready. Expect prints, NFT drops, and premium assets here soon.</p>
+        <p class="note">Stay Tune!</p>
       </div>
     </section>
   </main>
 
-<footer class="footer">
-  © 2025 XRayCrypto · 
-  <a href="https://x.com/XRaymetax" target="_blank" class="x-link">X</a>
-</footer>
+  <footer class="footer">
+    © 2025 XRayCrypto · <a href="https://x.com/XRaymetax" target="_blank" class="x-link">X</a>
+  </footer>
 
   <script src="main.js"></script>
 </body>

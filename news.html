@@ -1,213 +1,136 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>XRayCrypto — Live News</title>
+  <title>XRayCrypto — News</title>
+  <meta name="description" content="Stay updated with live market news, crypto headlines, Bloomberg, Yahoo Finance, Sky News, Al Jazeera, and more."/>
+  <meta name="keywords" content="crypto news, stock news, Bloomberg, Yahoo Finance, Al Jazeera, live financial news, XRayCrypto"/>
+  <link rel="canonical" href="https://xraymetax.online/news.html"/>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="XRayCrypto — News"/>
+  <meta property="og:description" content="Stay updated with live market news, crypto headlines, Bloomberg, Yahoo Finance, Sky News, Al Jazeera, and more."/>
+  <meta property="og:image" content="https://xraymetax.online/pfp.png"/>
+  <meta property="og:url" content="https://xraymetax.online/news.html"/>
+  <meta property="og:type" content="website"/>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="XRayCrypto — News"/>
+  <meta name="twitter:description" content="Stay updated with live market news, crypto headlines, Bloomberg, Yahoo Finance, Sky News, Al Jazeera, and more."/>
+  <meta name="twitter:image" content="https://xraymetax.online/pfp.png"/>
+
+  <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
 </head>
+
 <body class="light">
   <!-- HEADER -->
   <header class="header">
     <div class="topbar container">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html" data-softnav>
         <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
         <span>XRayCrypto</span>
       </a>
 
-      <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="markets.html">Markets</a>
-        <a href="watchlist.html">Watchlist</a>
-        <a href="news.html" class="active">News</a>
-        <a href="store.html">Store</a>
-      </nav>
+      <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
 
-      <div class="symbol-form">
+      <nav id="primaryNav" class="nav">
+        <a href="index.html" data-softnav>Home</a>
+        <a href="markets.html" data-softnav>Markets</a>
+        <a href="watchlist.html" data-softnav>Watchlist</a>
+        <a href="news.html" data-softnav>News</a>
+        <a href="store.html" data-softnav>Store</a>
+        <a href="chill.html" data-softnav>ChillZone</a>
+     </nav>
+
+      <!-- page-specific controls (NEWS = theme only) -->
+      <div id="headerControls" class="symbol-form">
         <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙 Dark</button>
       </div>
     </div>
-    <!-- TICKER (theme-aware) -->
-    <div class="ticker">
-      <div class="tradingview-widget-container" data-tv="ticker">
-        <div class="tradingview-widget-container__widget"></div>
-        <script class="tv-config" type="application/json">
-          {
-            "symbols": [
-              {"proName":"BINANCE:BTCUSDT","title":"BTC"},
-              {"proName":"BINANCE:ETHUSDT","title":"ETH"},
-              {"proName":"BINANCE:BNBUSDT","title":"BNB"},
-              {"proName":"BINANCE:XRPUSDT","title":"XRP"},
-              {"proName":"BINANCE:SOLUSDT","title":"SOL"},
-              {"proName":"BINANCE:DOGEUSDT","title":"DOGE"},
-              {"proName":"BINANCE:TONUSDT","title":"TON"},
-              {"proName":"BINANCE:ADAUSDT","title":"ADA"},
-              {"proName":"BINANCE:AVAXUSDT","title":"AVAX"},
-              {"proName":"BINANCE:SHIBUSDT","title":"SHIB"},
-              {"proName":"BINANCE:TRXUSDT","title":"TRX"},
-              {"proName":"BINANCE:DOTUSDT","title":"DOT"},
-              {"proName":"BINANCE:LINKUSDT","title":"LINK"},
-              {"proName":"BINANCE:POLUSDT","title":"POL"},
-              {"proName":"BINANCE:LTCUSDT","title":"LTC"},
-              {"proName":"BINANCE:NEARUSDT","title":"NEAR"},
-              {"proName":"BINANCE:XLMUSDT","title":"XLM"},
-              {"proName":"BINANCE:ATOMUSDT","title":"ATOM"},
-              {"proName":"BINANCE:AAVEUSDT","title":"AAVE"},
-              {"proName":"BINANCE:SUIUSDT","title":"SUI"},
-              {"proName":"BINANCE:ALGOUSDT","title":"ALGO"},
-              {"proName":"BINANCE:PEPEUSDT","title":"PEPE"},
-              {"proName":"BINANCE:USDCUSDT","title":"USDC"},
-              {"proName":"BINANCE:FDUSDUSDT","title":"FDUSD"},
-              {"proName":"OKX:OKBUSDT","title":"OKB"},
-              {"proName":"OKX:ZETAUSDT","title":"ZETA"},
-              {"proName":"BINANCE:CETUSUSDT","title":"CETUS"},
-              {"proName":"BINANCE:BONKUSDT","title":"BONK"}
-            ],
-            "showSymbolLogo": true,
-            "displayMode": "adaptive",
-            "isTransparent": false,
-            "locale": "en"
-          }
-        </script>
-      </div>
-    </div>
-    <!-- STOCKS TICKER -->
-    <div class="ticker">
-      <div class="tradingview-widget-container" data-tv="ticker">
-        <div class="tradingview-widget-container__widget"></div>
-        <script class="tv-config" type="application/json">
-          {
-            "symbols": [
-              {"proName":"SP:SPX","title":"S&P 500"},
-              {"proName":"DJ:DJI","title":"Dow"},
-              {"proName":"NASDAQ:IXIC","title":"Nasdaq"},
-              {"proName":"AMEX:SPY","title":"SPY"},
-              {"proName":"NASDAQ:QQQ","title":"QQQ"},
-              {"proName":"AMEX:DIA","title":"DIA"},
-              {"proName":"TVC:VIX","title":"VIX"},
 
-              {"proName":"NASDAQ:NVDA","title":"NVDA"},
-              {"proName":"NASDAQ:SMCI","title":"SMCI"},
-              {"proName":"NASDAQ:PLTR","title":"PLTR"},
-              {"proName":"NASDAQ:AMD","title":"AMD"},
-              {"proName":"NASDAQ:INTC","title":"INTC"},
-              {"proName":"NASDAQ:TSLA","title":"TSLA"},
-              {"proName":"NASDAQ:GOOGL","title":"GOOGL"},
-              {"proName":"NASDAQ:AMZN","title":"AMZN"},
-              {"proName":"NASDAQ:AAPL","title":"AAPL"},
-              {"proName":"NASDAQ:MSFT","title":"MSFT"},
-
-              {"proName":"NYSE:BRK.B","title":"BRK.B"},
-              {"proName":"NYSE:JNJ","title":"JNJ"},
-              {"proName":"NYSE:WMT","title":"WMT"},
-              {"proName":"NYSE:JPM","title":"JPM"},
-              {"proName":"NYSE:V","title":"V"},
-              {"proName":"NYSE:PG","title":"PG"},
-              {"proName":"NYSE:GS","title":"GS"},
-              {"proName":"NASDAQ:COST","title":"COST"},
-              {"proName":"NYSE:UNH","title":"UNH"},
-              {"proName":"NYSE:HD","title":"HD"},
-              {"proName":"NYSE:MCD","title":"MCD"},
-              {"proName":"NYSE:NKE","title":"NKE"},
-              {"proName":"NYSE:DIS","title":"DIS"},
-              {"proName":"NYSE:BABA","title":"BABA"},
-              {"proName":"NYSE:CRM","title":"CRM"},
-              {"proName":"NASDAQ:PYPL","title":"PYPL"},
-              {"proName":"NASDAQ:ADBE","title":"ADBE"},
-              {"proName":"NYSE:ORCL","title":"ORCL"},
-              {"proName":"NYSE:CVX","title":"CVX"},
-              {"proName":"NYSE:XOM","title":"XOM"},
-              {"proName":"NYSE:BA","title":"BA"},
-              {"proName":"NYSE:CAT","title":"CAT"},
-              {"proName":"NYSE:IBM","title":"IBM"},
-              {"proName":"NYSE:MMM","title":"MMM"},
-              {"proName":"NYSE:GE","title":"GE"},
-              {"proName":"NYSE:F","title":"F"},
-              {"proName":"NASDAQ:SOFI","title":"SOFI"},
-              {"proName":"NYSE:BBAI","title":"BBAI"},
-
-              {"proName":"NASDAQ:COIN","title":"COIN"},
-              {"proName":"NASDAQ:MSTR","title":"MSTR"},
-              {"proName":"NASDAQ:MARA","title":"MARA"},
-              {"proName":"NASDAQ:RIOT","title":"RIOT"},
-              {"proName":"AMEX:IBIT","title":"IBIT"},
-              {"proName":"AMEX:FBTC","title":"FBTC"},
-              {"proName":"AMEX:WGMI","title":"WGMI"}
-            ],
-            "showSymbolLogo": true,
-            "displayMode": "adaptive",
-            "isTransparent": false,
-            "locale": "en"
-          }
-        </script>
-      </div>
-    </div>
-  </header>
+    <div class="ticker"><div id="cryptoTape"></div></div>
+    <div class="ticker"><div id="stocksTape"></div></div>
   </header>
 
-  <main class="main container">
+  <main class="main container" id="pageMain">
     <section class="section">
       <h1>Live Market News</h1>
       <p>Watch live financial news streams and follow real-time crypto headlines.</p>
 
-      <!-- Yahoo Finance -->
       <div class="card">
         <h2 style="margin:0 0 8px">Yahoo Finance (Press Play to start)</h2>
-        <div class="video-wrap" style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
-          <iframe
-            title="Yahoo Finance Live"
+        <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
+          <iframe title="Yahoo Finance Live"
             src="https://www.youtube.com/embed/live_stream?channel=UCIALMKvObZNtJ6AmdCLP7Lg&autoplay=0&mute=1"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            style="position:absolute;inset:0;width:100%;height:100%;border:0">
-          </iframe>
+            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
         </div>
       </div>
 
-      <!-- CNBC -->
       <div class="card">
-        <h2 style="margin:0 0 8px">CNBC Television (Press Play to start)</h2>
-        <div class="video-wrap" style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
-          <iframe
-            title="CNBC Live"
-            src="https://www.youtube.com/embed/live_stream?channel=UCvJJ_dzjViJCoLf5uKUTwoA&autoplay=0&mute=1"
+        <h2 style="margin:0 0 8px">Bloomberg Global News (Press Play to start)</h2>
+        <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
+          <iframe title="Bloomberg Global News"
+            src="https://www.youtube.com/embed/live_stream?channel=UCUMZ7gohGI9HcU9VNsr2FJQ&autoplay=0&mute=1"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            style="position:absolute;inset:0;width:100%;height:100%;border:0">
-          </iframe>
+            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
         </div>
       </div>
 
-      <!-- CryptoPanic Headlines -->
+      <div class="card">
+        <h2 style="margin:0 0 8px">Al Jazeera English</h3>
+        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
+            <iframe title="Al Jazeera English Live"
+               src="https://www.youtube.com/embed/live_stream?channel=UCNye-wNBqNL5ZzHSJj3l8Bg&autoplay=0&mute=1"
+               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+        </div>
+      </div>
+        
+      <div class="card">     
+        <h32 style="margin:0 0 8px">FRANCE 24 (English)</h3>
+        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
+          <iframe title="FRANCE 24 English Live"
+            src="https://www.youtube.com/embed/live_stream?channel=UCCCPCZNChQdGa9EkATeye4g&autoplay=0&mute=1"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+        </div>
+      </div>
+          
+      <div class="card">     
+        <h2 style="margin:16px 0 8px">DW News</h3>
+        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
+          <iframe title="DW News Live"
+            src="https://www.youtube.com/embed/live_stream?channel=UCknLrEdhRCp1aegoMqRaCZg&autoplay=0&mute=1"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+        </div>
+      </div>
+
       <div class="card">
         <h2 style="margin:40px 0 8px">📰 Live Crypto News (Powered by CryptoPanic)</h2>
-        <iframe 
-          id="cryptoNews"
-          src="https://cryptopanic.com/widgets/news/?bg_color=1e1e1e&text_color=ffffff&link_color=00ffff&title=Crypto%20Headlines&title_color=ffffff" 
-          style="width:100%;height:600px;border:none;border-radius:12px;overflow:hidden"
-          loading="lazy">
-        </iframe>
+        <iframe id="cryptoNews"
+          src="https://cryptopanic.com/widgets/news/?bg_color=1e1e1e&text_color=ffffff&link_color=00ffff&title=Crypto%20Headlines&title_color=ffffff"
+          style="width:100%;height:600px;border:none;border-radius:12px;overflow:hidden" loading="lazy"></iframe>
       </div>
 
       <p class="note" style="margin-top:14px">
-        Tip: If a live video is blank, try clicking it to activate, or check if your ad-blocker is interfering.
+        Tip: If a live video is blank, click to activate, or check if an ad-blocker is interfering.
       </p>
     </section>
   </main>
 
   <footer class="footer">
-    © 2025 XRayCrypto · 
-    <a href="https://x.com/XRaymetax" target="_blank" class="x-link">X</a>
+    © 2025 XRayCrypto · <a href="https://x.com/XRaymetax" target="_blank" class="x-link">X</a>
   </footer>
 
   <script src="main.js"></script>
   <script>
-    setInterval(() => {
-      const frame = document.getElementById('cryptoNews');
-      if (frame) {
-        frame.src = frame.src;
-      }
-    }, 2 * 60 * 1000); // Refresh every 2 minutes
+    setInterval(()=>{ const f = document.getElementById('cryptoNews'); if(f) f.src = f.src; }, 120000);
   </script>
 </body>
 </html>

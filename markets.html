@@ -4,106 +4,63 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>XRayCrypto — Markets</title>
+  <meta name="description" content="Track stock market performance with live tickers, advanced charts, heatmaps, and real-time market news on XRayCrypto."/>
+  <meta name="keywords" content="markets, stocks, Nasdaq, S&P500, SPY, Dow Jones, trading, investing, charts, heatmap, XRayCrypto"/>
+  <link rel="canonical" href="https://xraymetax.online/markets.html"/>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="XRayCrypto — Markets"/>
+  <meta property="og:description" content="Track stock market performance with live tickers, advanced charts, heatmaps, and real-time market news."/>
+  <meta property="og:image" content="https://xraymetax.online/pfp.png"/>
+  <meta property="og:url" content="https://xraymetax.online/markets.html"/>
+  <meta property="og:type" content="website"/>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="XRayCrypto — Markets"/>
+  <meta name="twitter:description" content="Track stock market performance with live tickers, advanced charts, heatmaps, and real-time market news."/>
+  <meta name="twitter:image" content="https://xraymetax.online/pfp.png"/>
+
+  <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
 </head>
+
 <body>
   <!-- HEADER -->
   <header class="header">
     <div class="topbar container">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html" data-softnav>
         <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
         <span>XRayCrypto</span>
       </a>
-      <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="watchlist.html">Watchlist</a>
-        <a href="markets.html" class="active">Markets</a>
-        <a href="news.html" class="active">News</a>
-        <a href="store.html">Store</a>
+
+      <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
+
+      <nav id="primaryNav" class="nav">
+        <a href="index.html" data-softnav>Home</a>
+        <a href="markets.html" class="active" data-softnav>Markets</a>
+        <a href="watchlist.html" data-softnav>Watchlist</a>
+        <a href="news.html" data-softnav>News</a>
+        <a href="store.html" data-softnav>Store</a>
+        <a href="chill.html" data-softnav>ChillZone</a>
       </nav>
-      <form id="marketSymbolForm" class="symbol-form" style="gap:8px">
-        <input id="marketSymbolInput" type="text" placeholder="AAPL, SPY, NASDAQ:NVDA, AMEX:SPY, BTCUSDT"/>
-        <button class="button" type="submit">Open</button>
+
+      <!-- page-specific controls (MARKETS = Open stocks/ETFs) -->
+      <div id="headerControls" class="symbol-form" style="gap:8px">
+        <form id="marketSymbolForm">
+          <input id="marketSymbolInput" type="text" placeholder="AAPL, SPY, NASDAQ:NVDA, AMEX:SPY, BTCUSDT"/>
+          <button class="button" type="submit">Open</button>
+        </form>
         <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙 Dark</button>
-      </form>
-    </div>
-
-    <!-- STOCKS TICKER -->
-    <div class="ticker">
-      <div class="tradingview-widget-container" data-tv="ticker">
-        <div class="tradingview-widget-container__widget"></div>
-        <script class="tv-config" type="application/json">
-          {
-            "symbols": [
-              {"proName":"SP:SPX","title":"S&P 500"},
-              {"proName":"DJ:DJI","title":"Dow"},
-              {"proName":"NASDAQ:IXIC","title":"Nasdaq"},
-              {"proName":"AMEX:SPY","title":"SPY"},
-              {"proName":"NASDAQ:QQQ","title":"QQQ"},
-              {"proName":"AMEX:DIA","title":"DIA"},
-              {"proName":"TVC:VIX","title":"VIX"},
-
-              {"proName":"NASDAQ:NVDA","title":"NVDA"},
-              {"proName":"NASDAQ:SMCI","title":"SMCI"},
-              {"proName":"NASDAQ:PLTR","title":"PLTR"},
-              {"proName":"NASDAQ:AMD","title":"AMD"},
-              {"proName":"NASDAQ:INTC","title":"INTC"},
-              {"proName":"NASDAQ:TSLA","title":"TSLA"},
-              {"proName":"NASDAQ:GOOGL","title":"GOOGL"},
-              {"proName":"NASDAQ:AMZN","title":"AMZN"},
-              {"proName":"NASDAQ:AAPL","title":"AAPL"},
-              {"proName":"NASDAQ:MSFT","title":"MSFT"},
-
-              {"proName":"NYSE:BRK.B","title":"BRK.B"},
-              {"proName":"NYSE:JNJ","title":"JNJ"},
-              {"proName":"NYSE:WMT","title":"WMT"},
-              {"proName":"NYSE:JPM","title":"JPM"},
-              {"proName":"NYSE:V","title":"V"},
-              {"proName":"NYSE:PG","title":"PG"},
-              {"proName":"NYSE:GS","title":"GS"},
-              {"proName":"NASDAQ:COST","title":"COST"},
-              {"proName":"NYSE:UNH","title":"UNH"},
-              {"proName":"NYSE:HD","title":"HD"},
-              {"proName":"NYSE:MCD","title":"MCD"},
-              {"proName":"NYSE:NKE","title":"NKE"},
-              {"proName":"NYSE:DIS","title":"DIS"},
-              {"proName":"NYSE:BABA","title":"BABA"},
-              {"proName":"NYSE:CRM","title":"CRM"},
-              {"proName":"NASDAQ:PYPL","title":"PYPL"},
-              {"proName":"NASDAQ:ADBE","title":"ADBE"},
-              {"proName":"NYSE:ORCL","title":"ORCL"},
-              {"proName":"NYSE:CVX","title":"CVX"},
-              {"proName":"NYSE:XOM","title":"XOM"},
-              {"proName":"NYSE:BA","title":"BA"},
-              {"proName":"NYSE:CAT","title":"CAT"},
-              {"proName":"NYSE:IBM","title":"IBM"},
-              {"proName":"NYSE:MMM","title":"MMM"},
-              {"proName":"NYSE:GE","title":"GE"},
-              {"proName":"NYSE:F","title":"F"},
-              {"proName":"NASDAQ:SOFI","title":"SOFI"},
-              {"proName":"NYSE:BBAI","title":"BBAI"},
-
-              {"proName":"NASDAQ:COIN","title":"COIN"},
-              {"proName":"NASDAQ:MSTR","title":"MSTR"},
-              {"proName":"NASDAQ:MARA","title":"MARA"},
-              {"proName":"NASDAQ:RIOT","title":"RIOT"},
-              {"proName":"AMEX:IBIT","title":"IBIT"},
-              {"proName":"AMEX:FBTC","title":"FBTC"},
-              {"proName":"AMEX:WGMI","title":"WGMI"}
-            ],
-            "showSymbolLogo": true,
-            "displayMode": "adaptive",
-            "isTransparent": false,
-            "locale": "en"
-          }
-        </script>
       </div>
     </div>
+
+    <div class="ticker"><div id="cryptoTape"></div></div>
+    <div class="ticker"><div id="stocksTape"></div></div>
   </header>
 
   <!-- CONTENT -->
-  <main class="main container">
-    <!-- ADVANCED CHART (user changeable) -->
+  <main class="main container" id="pageMain">
     <section class="section" id="chart">
       <h1>SPY — Advanced Chart</h1>
       <div class="card" style="height:600px">
@@ -138,7 +95,6 @@
       </div>
     </section>
 
-    <!-- U.S. STOCKS SCREENER -->
     <section class="section">
       <h2>U.S. Stock Screener</h2>
       <div class="card">
@@ -159,7 +115,6 @@
       </div>
     </section>
 
-    <!-- U.S. STOCKS HEAT MAP -->
     <section class="section desktop-only">
       <h2>U.S. Stocks Heat Map</h2>
       <div class="card">
@@ -188,7 +143,6 @@
       </div>
     </section>
 
-    <!-- MARKET NEWS -->
     <section class="section">
       <h2>Top Market News</h2>
       <div class="card">
@@ -209,10 +163,9 @@
     </section>
   </main>
 
-<footer class="footer">
-  © 2025 XRayCrypto · 
-  <a href="https://x.com/XRaymetax" target="_blank" class="x-link">X</a>
-</footer>
+  <footer class="footer">
+    © 2025 XRayCrypto · <a href="https://x.com/XRaymetax" target="_blank" class="x-link">X</a>
+  </footer>
   <script src="main.js"></script>
 </body>
 </html>
