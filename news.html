@@ -1,12 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
-
   <title>XRayCrypto — News</title>
   <meta name="description" content="Stay updated with live market news, crypto headlines, Bloomberg, Yahoo Finance, Sky News, Al Jazeera, and more."/>
   <meta name="keywords" content="crypto news, stock news, Bloomberg, Yahoo Finance, Al Jazeera, live financial news, XRayCrypto"/>
@@ -29,7 +26,7 @@
   <link rel="stylesheet" href="styles.css"/>
 </head>
 
-<body>
+<body class="light">
   <!-- HEADER -->
   <header class="header">
     <div class="topbar container">
@@ -44,7 +41,7 @@
         <a href="index.html" data-softnav>Home</a>
         <a href="markets.html" data-softnav>Markets</a>
         <a href="watchlist.html" data-softnav>Watchlist</a>
-        <a href="news.html" class="active" data-softnav>News</a>
+        <a href="news.html" data-softnav>News</a>
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
      </nav>
@@ -65,12 +62,48 @@
       <p>Watch live financial news streams and follow real-time crypto headlines.</p>
 
       <div class="card">
-        <h2 style="margin:0 0 8px">Yahoo Finance (Press Play to start)</h2>
+  <h2 style="margin:0 0 8px">Yahoo Finance (24/7 Market News)</h2>
+  <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
+    <iframe
+      title="Yahoo Finance Live"
+      src="https://www.youtube.com/embed/live_stream?channel=UCEAZeUIeJs0IjQiqTCdVSIg&autoplay=0&mute=1"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+      style="position:absolute;inset:0;width:100%;height:100%;border:0">
+    </iframe>
+  </div>
+  <div style="margin-top:8px">
+    <a class="button outline" target="_blank" rel="noopener"
+       href="https://www.youtube.com/@yahoofinance/live">Open on YouTube</a>
+  </div>
+</div>
+       <!-- TEMP: will only work while this exact broadcast is live -->
+<div class="card">
+  <h2 style="margin:0 0 8px">Live Stream (temporary)</h2>
+  <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
+    <iframe
+      src="https://www.youtube.com/embed/YDfiTGGPYCk?autoplay=0&mute=1"
+      title="Live Stream"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+  </div>
+  <div style="margin-top:8px">
+    <a class="button outline" target="_blank" rel="noopener" href="https://www.youtube.com/live/YDfiTGGPYCk">Open on YouTube</a>
+  </div>
+</div>
+       
+           <div class="card">
+        <h2 style="margin:0 0 8px">TRT World (24/7)</h2>
         <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
-          <iframe title="Yahoo Finance Live"
-            src="https://www.youtube.com/embed/live_stream?channel=UCIALMKvObZNtJ6AmdCLP7Lg&autoplay=0&mute=1"
+          <iframe title="TRT World Live"
+            src="https://www.youtube.com/embed/live_stream?channel=UC7fWeaHhqgM4Ry-RMpM2YYw&autoplay=0&mute=1"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+        </div>
+        <div style="margin-top:8px">
+          <a class="button outline" target="_blank" rel="noopener" href="https://www.youtube.com/@trtworld/live">Open on YouTube</a>
         </div>
       </div>
 
@@ -85,17 +118,17 @@
       </div>
 
       <div class="card">
-        <h2 style="margin:0 0 8px">Al Jazeera English</h2>
+        <h2 style="margin:0 0 8px">Al Jazeera English</h3>
         <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe title="Al Jazeera English Live"
-             src="https://www.youtube.com/embed/live_stream?channel=UCNye-wNBqNL5ZzHSJj3l8Bg&autoplay=0&mute=1"
-             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+            <iframe title="Al Jazeera English Live"
+               src="https://www.youtube.com/embed/live_stream?channel=UCNye-wNBqNL5ZzHSJj3l8Bg&autoplay=0&mute=1"
+               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
         </div>
       </div>
         
       <div class="card">     
-        <h2 style="margin:0 0 8px">FRANCE 24 (English)</h2>
+        <h32 style="margin:0 0 8px">FRANCE 24 (English)</h3>
         <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
           <iframe title="FRANCE 24 English Live"
             src="https://www.youtube.com/embed/live_stream?channel=UCCCPCZNChQdGa9EkATeye4g&autoplay=0&mute=1"
@@ -103,17 +136,19 @@
             allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
         </div>
       </div>
-          
-      <div class="card">     
-        <h2 style="margin:16px 0 8px">DW News</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe title="DW News Live"
-            src="https://www.youtube.com/embed/live_stream?channel=UCknLrEdhRCp1aegoMqRaCZg&autoplay=0&mute=1"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+            <!-- More live channels (open externally to bypass embed blocks) -->
+      <div class="card">
+        <h2 style="margin:0 0 8px">More Live Channels (Open on YouTube)</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <a class="button outline" target="_blank" rel="noopener" href="https://www.youtube.com/@SkyNews/live">Sky News</a>
+          <a class="button outline" target="_blank" rel="noopener" href="https://www.youtube.com/@ChannelNewsAsia/live">CNA</a>
+          <a class="button outline" target="_blank" rel="noopener" href="https://www.youtube.com/@euronews/live">Euronews</a>
+          <a class="button outline" target="_blank" rel="noopener" href="https://www.youtube.com/@Reuters/live">Reuters</a>
+          <a class="button outline" target="_blank" rel="noopener" href="https://www.youtube.com/@WION/live">WION</a>
         </div>
+        <p class="note" style="margin-top:8px">These open the official live pages to avoid regional embed blocks.</p>
       </div>
-
+   
       <div class="card">
         <h2 style="margin:40px 0 8px">📰 Live Crypto News (Powered by CryptoPanic)</h2>
         <iframe id="cryptoNews"
