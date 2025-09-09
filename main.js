@@ -1,4 +1,4 @@
-/* ========= Active nav highlight ========= */
+/* ========= Active nav highlight ========= */ 
 (function(){
   const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   document.querySelectorAll('.nav a').forEach(a=>{
@@ -12,11 +12,10 @@ function getTheme(){ return localStorage.getItem(THEME_KEY) || 'dark'; }
 function setTheme(t){ localStorage.setItem(THEME_KEY, t); }
 function applyThemeToDOM(){
   const t = getTheme();
-  // Normalize to either .light or .dark on <body>
   document.body.classList.remove('light','dark');
   document.body.classList.add(t === 'light' ? 'light' : 'dark');
   const btn = document.getElementById('themeToggle');
-  if(btn) btn.textContent = (t === 'light') ? '🌙 Dark' : '🌞 Light';
+  if(btn) btn.textContent = (t === 'light') ? '🌙' : '🌞';
 }
 
 /* ========= Keep nav consistent: force TV -> Chill everywhere ========= */
@@ -31,7 +30,7 @@ function normalizeNav(){
   });
 }
 
-/* ========= Helpers ========= */
+/* ========= Small helpers ========= */
 function safeParseJSON(text, fallback={}){ try { return JSON.parse(text); } catch(e){ return fallback; } }
 function ensureCachedConfig(container){
   if(container.dataset.tvCfg) return;
@@ -59,29 +58,38 @@ function rebuildOneWidget(container, scriptSrc, themeOverrides){
   injectTV(container, scriptSrc, merged);
 }
 
-/* ========= Two permanent ticker tapes ========= */
+/* ========= Two permanent ticker tapes (with HYPE) ========= */
+let tapesBuilt = false;
 function buildTickerTapes(theme, force=false){
   const cryptoHost = document.getElementById('cryptoTape');
   const stocksHost = document.getElementById('stocksTape');
-
   if(!cryptoHost && !stocksHost) return;
 
-  if(force){
+  if(force || !tapesBuilt){
     if(cryptoHost) cryptoHost.innerHTML = '';
     if(stocksHost) stocksHost.innerHTML = '';
-    delete document.body.dataset.tapesBuilt;
-  }
-  if(document.body.dataset.tapesBuilt) return;
 
-  if(cryptoHost){
-    const wrap = document.createElement('div');
-    wrap.className = 'tradingview-widget-container';
-    wrap.innerHTML = `<div class="tradingview-widget-container__widget"></div>`;
-    const s = document.createElement('script');
-    s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
-    s.async = true;
-    s.text = JSON.stringify({
-      symbols: [
+    const addTape = (host, symbols)=>{
+      const wrap = document.createElement('div');
+      wrap.className = 'tradingview-widget-container';
+      wrap.innerHTML = `<div class="tradingview-widget-container__widget"></div>`;
+      const s = document.createElement('script');
+      s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
+      s.async = true;
+      s.text = JSON.stringify({
+        symbols,
+        showSymbolLogo: true,
+        displayMode: "adaptive",
+        isTransparent: false,
+        colorTheme: theme,
+        locale: "en"
+      });
+      wrap.appendChild(s);
+      host.appendChild(wrap);
+    };
+
+    if(cryptoHost){
+      addTape(cryptoHost, [
         {"proName":"BINANCE:BTCUSDT","title":"BTC"},
         {"proName":"BINANCE:ETHUSDT","title":"ETH"},
         {"proName":"BINANCE:BNBUSDT","title":"BNB"},
@@ -110,33 +118,20 @@ function buildTickerTapes(theme, force=false){
         {"proName":"OKX:OKBUSDT","title":"OKB"},
         {"proName":"OKX:ZETAUSDT","title":"ZETA"},
         {"proName":"BINANCE:CETUSUSDT","title":"CETUS"},
-        {"proName":"BINANCE:BONKUSDT","title":"BONK"}
-      ],
-      showSymbolLogo: true,
-      displayMode: "adaptive",
-      isTransparent: false,
-      colorTheme: theme,
-      locale: "en"
-    });
-    wrap.appendChild(s); cryptoHost.appendChild(wrap);
-  }
-  if(stocksHost){
-    const wrap = document.createElement('div');
-    wrap.className = 'tradingview-widget-container';
-    wrap.innerHTML = `<div class="tradingview-widget-container__widget"></div>`;
-    const s = document.createElement('script');
-    s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
-    s.async = true;
-    s.text = JSON.stringify({
-      symbols: [
+        {"proName":"BINANCE:BONKUSDT","title":"BONK"},
+        {"proName":"OKX:HYPEUSDT","title":"HYPE"},
+        {"proName":"BYBIT:HYPEUSDT","title":"HYPE"}
+      ]);
+    }
+    if(stocksHost){
+      addTape(stocksHost, [
         {"proName":"SP:SPX","title":"S&P 500"},
-        {"proName":"INDEXDJX:DJI","title":"Dow"},
+        {"proName":"DJX:DJI","title":"DOW"},
         {"proName":"NASDAQ:IXIC","title":"Nasdaq"},
         {"proName":"AMEX:SPY","title":"SPY"},
         {"proName":"NASDAQ:QQQ","title":"QQQ"},
         {"proName":"AMEX:DIA","title":"DIA"},
         {"proName":"TVC:VIX","title":"VIX"},
-
         {"proName":"NASDAQ:NVDA","title":"NVDA"},
         {"proName":"NASDAQ:SMCI","title":"SMCI"},
         {"proName":"NASDAQ:PLTR","title":"PLTR"},
@@ -147,36 +142,11 @@ function buildTickerTapes(theme, force=false){
         {"proName":"NASDAQ:AMZN","title":"AMZN"},
         {"proName":"NASDAQ:AAPL","title":"AAPL"},
         {"proName":"NASDAQ:MSFT","title":"MSFT"},
-
         {"proName":"NYSE:BRK.B","title":"BRK.B"},
-        {"proName":"NYSE:JNJ","title":"JNJ"},
         {"proName":"NYSE:WMT","title":"WMT"},
         {"proName":"NYSE:JPM","title":"JPM"},
         {"proName":"NYSE:V","title":"V"},
         {"proName":"NYSE:PG","title":"PG"},
-        {"proName":"NYSE:GS","title":"GS"},
-        {"proName":"NASDAQ:COST","title":"COST"},
-        {"proName":"NYSE:UNH","title":"UNH"},
-        {"proName":"NYSE:HD","title":"HD"},
-        {"proName":"NYSE:MCD","title":"MCD"},
-        {"proName":"NYSE:NKE","title":"NKE"},
-        {"proName":"NYSE:DIS","title":"DIS"},
-        {"proName":"NYSE:BABA","title":"BABA"},
-        {"proName":"NYSE:CRM","title":"CRM"},
-        {"proName":"NASDAQ:PYPL","title":"PYPL"},
-        {"proName":"NASDAQ:ADBE","title":"ADBE"},
-        {"proName":"NYSE:ORCL","title":"ORCL"},
-        {"proName":"NYSE:CVX","title":"CVX"},
-        {"proName":"NYSE:XOM","title":"XOM"},
-        {"proName":"NYSE:BA","title":"BA"},
-        {"proName":"NYSE:CAT","title":"CAT"},
-        {"proName":"NYSE:IBM","title":"IBM"},
-        {"proName":"NYSE:MMM","title":"MMM"},
-        {"proName":"NYSE:GE","title":"GE"},
-        {"proName":"NYSE:F","title":"F"},
-        {"proName":"NASDAQ:SOFI","title":"SOFI"},
-        {"proName":"NYSE:BBAI","title":"BBAI"},
-
         {"proName":"NASDAQ:COIN","title":"COIN"},
         {"proName":"NASDAQ:MSTR","title":"MSTR"},
         {"proName":"NASDAQ:MARA","title":"MARA"},
@@ -184,16 +154,10 @@ function buildTickerTapes(theme, force=false){
         {"proName":"AMEX:IBIT","title":"IBIT"},
         {"proName":"AMEX:FBTC","title":"FBTC"},
         {"proName":"AMEX:WGMI","title":"WGMI"}
-      ],
-      showSymbolLogo: true,
-      displayMode: "adaptive",
-      isTransparent: false,
-      colorTheme: theme,
-      locale: "en"
-    });
-    wrap.appendChild(s); stocksHost.appendChild(wrap);
+      ]);
+    }
+    tapesBuilt = true;
   }
-  document.body.dataset.tapesBuilt = '1';
 }
 function rebuildTickerTapes(){ buildTickerTapes(getTheme(), true); }
 
@@ -212,6 +176,7 @@ function rebuildAdvancedChart(container){
   injectTV(container, 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js', merged);
 }
 function rebuildWidgetsIn(root){
+  if(!root) return;
   const theme = getTheme();
   root.querySelectorAll('[data-tv="advchart"]').forEach(wrap=> rebuildAdvancedChart(wrap));
   root.querySelectorAll('[data-tv="screener"]').forEach(wrap=>{
@@ -223,10 +188,16 @@ function rebuildWidgetsIn(root){
   root.querySelectorAll('[data-tv="stock-heatmap"]').forEach(wrap=>{
     rebuildOneWidget(wrap,'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js',{ colorTheme: theme });
   });
-  root.querySelectorAll('[data-tv="timeline"]').forEach(wrap=>{
-    rebuildOneWidget(wrap,'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js',{ colorTheme: theme, isTransparent: false });
+}
+
+/* === Refresh only Timeline widgets by reloading their iframes === */
+function refreshTimelines(root){
+  if(!root) return;
+  root.querySelectorAll('[data-tv="timeline"] iframe').forEach(f=>{
+    if(f && f.src){ try { f.src = f.src; } catch(e) {} }
   });
 }
+
 /* Ensure widgets actually mounted; retry once if blank */
 function ensureMounted(root, tries=2){
   const ok = () => root.querySelector('iframe[src*="tradingview"]');
@@ -289,7 +260,7 @@ const WL = {
   set(arr){ localStorage.setItem(WL_KEY, JSON.stringify(arr)); },
   add(sym){ const s = this.get(); if(!s.includes(sym)){ s.push(sym); this.set(s);} },
   remove(sym){ this.set(this.get().filter(x=>x!==sym)); },
-  clear(){ this.set([]); }
+  clear(){ this.set([]); }   // <-- FIXED (was `this set([]);`)
 };
 window.WL = WL;
 
@@ -315,19 +286,141 @@ function applyHomeDeepLink(){
   if(sym) swapHomeAdvancedSymbol(sym);
 }
 
+/* ========= News via Worker (split Crypto / Markets tabs) ========= */
+async function loadNewsFromWorker() {
+  const cfgEl = document.getElementById('news-config');
+  const { workerBase } = cfgEl ? safeParseJSON(cfgEl.textContent || '{}') : {};
+  const cryptoList = document.getElementById('newsListCrypto');
+  const marketList = document.getElementById('newsListMarkets');
+  const stampEl = document.getElementById('newsUpdatedAt');
+
+  if (!cryptoList || !marketList) return;
+
+  if (!workerBase) {
+    const msg = '<li>Worker URL not set. Edit the <code>news-config</code> script in index.html.</li>';
+    cryptoList.innerHTML = marketList.innerHTML = msg;
+    return;
+  }
+
+  cryptoList.innerHTML = '<li>Loading…</li>';
+  marketList.innerHTML = '<li>Loading…</li>';
+
+  const CRYPTO_FEEDS = [
+    'https://www.coindesk.com/arc/outboundfeeds/rss/',
+    'https://cointelegraph.com/rss',
+    'https://www.theblock.co/rss.xml',
+    'https://decrypt.co/feed',
+    'https://cryptoslate.com/feed/',
+    'https://bitcoinmagazine.com/feed',
+    'https://messari.io/rss'
+  ];
+
+  const MARKET_FEEDS = [
+    'https://feeds.a.dj.com/rss/RSSMarketsMain.xml',
+    'https://www.reuters.com/markets/rss',
+    'https://finance.yahoo.com/news/rssindex',
+    'https://www.cnbc.com/id/100003114/device/rss/rss.html',
+    'https://apnews.com/hub/apf-business?output=rss',
+    'https://www.ft.com/markets/rss',
+    'https://feeds.nbcnews.com/nbcnews/public/business',
+    'https://feeds.foxbusiness.com/foxbusiness/latest',
+    'https://rss.cnn.com/rss/money_latest.rss',
+    'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml'
+  ];
+
+  const parseFeed = (xmlText) => {
+    const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
+    if (xml.querySelector('parsererror')) throw new Error('XML parse error');
+    const items = [];
+
+    // RSS
+    xml.querySelectorAll('item').forEach(it => {
+      const title = it.querySelector('title')?.textContent?.trim() || '';
+      const link = it.querySelector('link')?.textContent?.trim() || '#';
+      const pubDate =
+        it.querySelector('pubDate')?.textContent ||
+        it.querySelector('dc\\:date')?.textContent || '';
+      const date = pubDate ? new Date(pubDate) : new Date();
+      if (title && link) items.push({ title, link, date });
+    });
+
+    // Atom
+    xml.querySelectorAll('entry').forEach(it => {
+      const title = it.querySelector('title')?.textContent?.trim() || '';
+      const link = it.querySelector('link')?.getAttribute('href') || '#';
+      const pubDate =
+        it.querySelector('updated')?.textContent ||
+        it.querySelector('published')?.textContent || '';
+      const date = pubDate ? new Date(pubDate) : new Date();
+      if (title && link) items.push({ title, link, date });
+    });
+
+    return items;
+  };
+
+  async function loadGroup(feeds) {
+    const out = [];
+    for (const url of feeds) {
+      try {
+        const r = await fetch(workerBase + encodeURIComponent(url), { cache: 'no-store' });
+        if (!r.ok) throw new Error(`${r.status}`);
+        const txt = await r.text();
+        out.push(...parseFeed(txt));
+      } catch (e) {
+        console.warn('Feed failed', url, e);
+      }
+    }
+    return out.sort((a,b)=>b.date-a.date);
+  }
+
+  const [cryptoItems, marketItems] = await Promise.all([
+    loadGroup(CRYPTO_FEEDS),
+    loadGroup(MARKET_FEEDS)
+  ]);
+
+  const render = (arr) =>
+    (arr.slice(0, 30).map(i =>
+      `<li><a href="${i.link}" target="_blank" rel="noopener">${i.title}</a><time>${i.date.toLocaleString()}</time></li>`
+    ).join('')) || '<li>No items returned.</li>';
+
+  cryptoList.innerHTML = render(cryptoItems);
+  marketList.innerHTML = render(marketItems);
+
+  if (stampEl) stampEl.textContent = 'Updated ' + new Date().toLocaleTimeString();
+}
+
 /* ========= Bind header controls (called after swaps) ========= */
 function bindHeaderControls(){
   applyThemeToDOM();
-  normalizeNav(); // <- ensure header link says Chill, not TV
+  normalizeNav();
 
   const themeBtn = document.getElementById('themeToggle');
   if(themeBtn){
     themeBtn.onclick = ()=>{
       setTheme(getTheme()==='light' ? 'dark' : 'light');
       applyThemeToDOM();
-      rebuildTickerTapes();                                   // recolor tapes
-      rebuildWidgetsIn(document.getElementById('pageMain'));  // recolor page widgets
+      rebuildTickerTapes();
+      rebuildWidgetsIn(document.getElementById('pageMain'));
+      loadNewsFromWorker();
     };
+  }
+
+  // News tab switcher (FIXED: add back)
+  const tabsEl = document.getElementById('newsTabs') || document.querySelector('#news .tabs');
+  if (tabsEl) {
+    tabsEl.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button[data-tab]');
+      if(!btn) return;
+      const tab = btn.dataset.tab; // 'crypto' | 'markets'
+      tabsEl.querySelectorAll('button[data-tab]').forEach(b=>{
+        const active = b === btn;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      document.querySelectorAll('#news [data-tab-panel]').forEach(panel=>{
+        panel.classList.toggle('hidden', panel.getAttribute('data-tab-panel') !== tab);
+      });
+    });
   }
 
   const homeForm = document.getElementById('symbolForm');
@@ -362,20 +455,62 @@ function bindHeaderControls(){
       if(!sym) return;
       WL.add(sym);
       document.getElementById('wlInput').value = '';
-      // notify watchlist page to re-render
       window.dispatchEvent(new CustomEvent('wl-updated'));
     };
+  }
+
+  // Tip jar copy button
+  const copyBtn = document.getElementById('tipCopy');
+  if(copyBtn){
+    copyBtn.onclick = ()=>{
+      const addr = document.getElementById('tipAddress')?.textContent?.trim();
+      if(!addr) return;
+      navigator.clipboard.writeText(addr).catch(()=>{});
+      copyBtn.textContent = 'Copied!';
+      setTimeout(()=> copyBtn.textContent = 'Copy', 1200);
+    };
+  }
+}
+
+/* ==== ChillZone: live frame & brand “woof” ==== */
+function bindChillZoneEffects() {
+  document.querySelectorAll('.video-frame').forEach(frame => {
+    frame.addEventListener('click', () => { frame.classList.add('playing'); }, { capture: true });
+  });
+
+  const brand = document.querySelector('.topbar .brand');
+  if (brand) {
+    if (!brand.querySelector('.woof-bubble')) {
+      const b = document.createElement('span');
+      b.className = 'woof-bubble';
+      b.textContent = 'woof!';
+      b.setAttribute('aria-hidden', 'true');
+      brand.style.position = 'relative';
+      brand.appendChild(b);
+    }
+    const logo = brand.querySelector('.logo');
+    if (logo) {
+      logo.addEventListener('click', (e) => {
+        e.preventDefault();
+        brand.classList.add('woof');
+        setTimeout(() => brand.classList.remove('woof'), 1200);
+      });
+    }
   }
 }
 
 /* ========= Init ========= */
 document.addEventListener('DOMContentLoaded', ()=>{
   try{
-    buildTickerTapes(getTheme());    // two tapes, mount with current theme
-    bindHeaderControls();            // bind current page header controls
-    normalizeNav();                  // <- extra safety on initial load
-    rebuildWidgetsIn(document.getElementById('pageMain'));
-    ensureMounted(document.getElementById('pageMain'));
+    buildTickerTapes(getTheme());
+    bindHeaderControls();
+    normalizeNav();
+    const mainRoot = document.getElementById('pageMain');
+    rebuildWidgetsIn(mainRoot);
+    ensureMounted(mainRoot);
+
+    loadNewsFromWorker();
+    setInterval(()=> loadNewsFromWorker(), 300000);
   }catch(e){ console.error('Init failed:', e); }
 
   // Bump super-short iframes that some mobile browsers collapse
@@ -385,6 +520,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });
 
   applyHomeDeepLink();
+  bindChillZoneEffects();
 
   /* ==== Mobile menu ==== */
   try{
@@ -403,9 +539,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
     if(menuBtn && nav){
       menuBtn.addEventListener('click', toggleMenu);
-      nav.addEventListener('click', (e)=>{
-        if(e.target.matches('a')) closeMenu();
-      });
+      nav.addEventListener('click', (e)=>{ if(e.target.matches('a')) closeMenu(); });
       document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMenu(); });
     }
   }catch(e){ console.error('Menu init failed:', e); }
@@ -462,7 +596,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       const currentHC = document.getElementById('headerControls');
       if(currentHC) currentHC.replaceWith(nextHeaderControls);
       bindHeaderControls();
-      normalizeNav(); // <- make sure the nav label/href is Chill
+      normalizeNav();
 
       // swap main
       currentMain.replaceWith(nextMain);
@@ -471,13 +605,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
       requestAnimationFrame(()=>{ requestAnimationFrame(()=>{
         rebuildWidgetsIn(nextMain);
         ensureMounted(nextMain);
+        loadNewsFromWorker();
+        bindChillZoneEffects();
       }); });
 
       document.title = nextTitle;
       setActiveNav(url);
       window.scrollTo({ top: 0, behavior: 'instant' });
 
-      // ===== Page-specific post-actions (delayed so listeners exist) =====
+      // Page-specific post-actions
       const parsed = new URL(url, location.href);
       const file = (parsed.pathname.split('/').pop() || 'index.html').toLowerCase();
       requestAnimationFrame(()=>{ requestAnimationFrame(()=>{
@@ -488,7 +624,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
           setTimeout(() => window.dispatchEvent(new CustomEvent('wl-updated')), 180);
         }
       }); });
-      // ===================================================================
 
       if(opts.push) history.pushState({ url }, '', url);
     }catch(err){
@@ -497,7 +632,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
   }
 
-  // Prefetch on hover/focus
   document.addEventListener('mouseover', (e)=>{
     const a = e.target.closest('#primaryNav a, .brand, a[data-softnav]');
     if(!a) return;
@@ -515,7 +649,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(!prefetchCache.has(url)) fetchNext(url).catch(()=>{});
   });
 
-  // Intercept header + softnav links
   document.addEventListener('click', (e)=>{
     const headerLink = e.target.closest('#primaryNav a, .brand, a[data-softnav]');
     const a = headerLink;

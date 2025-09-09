@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">`
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>XRayCrypto — Chill Zone</title>
   <meta name="description" content="Relax with 24/7 live YouTube streams: Lofi beats, nature, anime vibes, and more — only on XRayCrypto Chill Zone."/>
   <meta name="keywords" content="chill zone, lofi beats, anime music, crypto chill, live streams, XRayCrypto"/>
@@ -31,7 +31,7 @@
     <div class="topbar container">
       <a class="brand" href="index.html" data-softnav>
         <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
-        <span>XRayCrypto</span>
+        <span class="name">XRayCrypto<span class="tm" aria-hidden="true">™</span></span>
       </a>
 
       <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
@@ -46,7 +46,7 @@
       </nav>
 
       <div id="headerControls" class="symbol-form">
-        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙 Dark</button>
+        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
       </div>
     </div>
 
@@ -59,133 +59,196 @@
       <h1>🎶 Chill Zone</h1>
       <p>24/7 live streams & playlists for focus, vibes, and relaxation.</p>
 
-      <!-- Lofi Girl -->
-      <div class="card">
-        <h2 style="margin:0 0 8px">Lofi Girl (Chill Beats)</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&mute=1"
-            title="Lofi Girl Live"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+      <!-- GRID: 1 column on small screens, 2 columns on desktop -->
+      <div class="chill-grid">
 
-      <!-- New Chill Streams -->
-      <div class="card">
-        <h2 style="margin:0 0 8px">Synthwave Stream</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/4xDzrJKXOOY?autoplay=0&mute=1"
-            title="Nature Live"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+        <!-- Card 1 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>Lofi Girl (Chill Beats)</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&mute=1"
+              title="Lofi Girl Live"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
 
-      <div class="card">
-        <h2 style="margin:0 0 8px">Noir Chill</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/gLD-WKMVYhE?autoplay=0&mute=1"
-            title="Chill Playlist"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+        <!-- Card 2 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>Synthwave Stream</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/4xDzrJKXOOY?autoplay=0&mute=1"
+              title="Synthwave Stream"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
 
-      <div class="card">
-        <h2 style="margin:0 0 8px">Chill Beats</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/IxVLZsdpb2o?autoplay=0&mute=1"
-            title="Anime Chill"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+        <!-- Card 3 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>Noir Chill</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/gLD-WKMVYhE?autoplay=0&mute=1"
+              title="Noir Chill"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
 
-      <div class="card">
-        <h2 style="margin:0 0 8px">Study Chill</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/1oDrJba2PSs?autoplay=0&mute=1"
-            title="Relaxing Mix"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+        <!-- Card 4 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>Chill Beats</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/IxVLZsdpb2o?autoplay=0&mute=1"
+              title="Chill Beats"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
 
-      <div class="card">
-        <h2 style="margin:0 0 8px">Progressive Chill</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/UYOb37KRFqk?autoplay=0&mute=1"
-            title="Chillhop Cafe"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+        <!-- Card 5 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>Study Chill</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/1oDrJba2PSs?autoplay=0&mute=1"
+              title="Study Chill"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
 
-      <div class="card">
-        <h2 style="margin:0 0 8px">Roosts Stream</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/e76DpWphneg?autoplay=0&mute=1"
-            title="Ambient Stream"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+        <!-- Card 6 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>Progressive Chill</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/UYOb37KRFqk?autoplay=0&mute=1"
+              title="Progressive Chill"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
 
-      <div class="card">
-        <h2 style="margin:0 0 8px">ADHD Relief</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/gWdV17aBFeM?autoplay=0&mute=1"
-            title="Coffee Beats"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+        <!-- Card 7 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>Roosts Stream</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/e76DpWphneg?autoplay=0&mute=1"
+              title="Roosts Stream"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
 
-      <div class="card">
-        <h2 style="margin:0 0 8px">Mexican Drive</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/qtg-ZLDIKvY?autoplay=0&mute=1"
-            title="Synthwave Drive"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+        <!-- Card 8 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>ADHD Relief</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/gWdV17aBFeM?autoplay=0&mute=1"
+              title="ADHD Relief"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
 
-      <div class="card">
-        <h2 style="margin:0 0 8px">Deep Focus</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/iJi5a2c32n4?autoplay=0&mute=1"
-            title="Deep Focus"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+        <!-- Card 9 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>Mexican Drive</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/qtg-ZLDIKvY?autoplay=0&mute=1"
+              title="Mexican Drive"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
 
-      <div class="card">
-        <h2 style="margin:0 0 8px">Evening Chill</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/RQhODxdBB60?autoplay=0&mute=1"
-            title="Evening Chill"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+        <!-- Card 10 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>Deep Focus</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/iJi5a2c32n4?autoplay=0&mute=1"
+              title="Deep Focus"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
 
-      <div class="card">
-        <h2 style="margin:0 0 8px">Trap Session</h2>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe src="https://www.youtube.com/embed/oNMevWPa0Ms?autoplay=0&mute=1"
-            title="Chill Session"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
+        <!-- Card 11 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>Evening Chill</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/RQhODxdBB60?autoplay=0&mute=1"
+              title="Evening Chill"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
 
+        <!-- Card 12 -->
+        <article class="card video-card">
+          <header class="video-card-head">
+            <h2>Trap Session</h2>
+            <span class="live-badge"><span class="dot"></span>LIVE</span>
+          </header>
+          <div class="video-frame" data-chill>
+            <iframe
+              src="https://www.youtube.com/embed/oNMevWPa0Ms?autoplay=0&mute=1"
+              title="Trap Session"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
+
+      </div>
+      <!-- /chill-grid -->
     </section>
   </main>
 
   <footer class="footer">
-    © 2025 XRayCrypto · <a href="https://x.com/XRaymetax" target="_blank" class="x-link">X</a>
+    © 2025 XRayCrypto™· <a href="https://x.com/XRaycrypto101" target="_blank" class="x-link">X</a>
   </footer>
 
   <script src="main.js"></script>

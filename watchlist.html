@@ -3,10 +3,6 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
-
   <title>XRayCrypto — Watchlist</title>
   <meta name="description" content="Build your own crypto and stock watchlist. Save tickers, view mini charts, and track price moves instantly on XRayCrypto."/>
   <meta name="keywords" content="watchlist, crypto watchlist, stock watchlist, mini charts, tickers, XRayCrypto"/>
@@ -48,12 +44,15 @@
         <a href="news.html" data-softnav>News</a>
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
+        <a href="support.html" class="active support-link" data-softnav>
+          <span class="support-icon">❤</span><span class="support-text">Donate</span>
+        </a>
       </nav>
 
       <!-- Header controls block (soft-swapped) -->
       <div id="headerControls" class="symbol-form">
         <form id="wlForm">
-          <input id="wlInput" type="text" placeholder="Add: BTC, ETH, SOL or EXCHANGE:PAIR">
+          <input id="wlInput" type="text" placeholder="BTC, ETH, SOL or EXCHANGE:PAIR">
           <button class="button" id="wlAdd" type="submit">Add</button>
         </form>
         <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙 Dark</button>
@@ -107,8 +106,10 @@
     </section>
   </main>
 
-  <footer class="footer">
-    © 2025 XRayCrypto · <a href="https://x.com/XRaymetax" target="_blank" class="x-link">X</a>
+ <footer class="footer">
+    © 2025 XRayCrypto™ ·
+    <a href="https://x.com/XRayCrypto101" target="_blank" class="x-link">X</a>
+    <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
   </footer>
 
   <script src="main.js"></script>

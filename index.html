@@ -3,27 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
   <title>XRayCrypto — Home</title>
-  <meta name="description" content="XRayCrypto brings live crypto and stock tickers, watchlists, charts, and 24/7 streams. Track Bitcoin, Ethereum, Solana, Nasdaq, S&P500 and more."/>
-  <meta name="keywords" content="crypto, bitcoin, ethereum, solana, stock market, trading, watchlist, charts, XRayCrypto"/>
-  <link rel="canonical" href="https://xraymetax.online/"/>
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="XRayCrypto — Home"/>
-  <meta property="og:description" content="Live crypto & stock tickers, charts, watchlists, and 24/7 streams on XRayCrypto."/>
-  <meta property="og:image" content="https://xraymetax.online/pfp.png"/>
-  <meta property="og:url" content="https://xraymetax.online/"/>
-  <meta property="og:type" content="website"/>
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="XRayCrypto — Home"/>
-  <meta name="twitter:description" content="Live crypto & stock tickers, charts, watchlists, and 24/7 streams on XRayCrypto."/>
-  <meta name="twitter:image" content="https://xraymetax.online/pfp.png"/>
-
+  <meta name="description" content="Live crypto prices, charts, watchlist and curated news — XRayCrypto."/>
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
 </head>
@@ -33,46 +14,53 @@
   <header class="header">
     <div class="topbar container">
       <a class="brand" href="index.html" data-softnav>
-        <img src="pfp.png" alt="XRayCrypto logo" class="logo" />
-        <span>XRayCrypto</span>
+        <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
+        <span class="name">XRayCrypto<span class="tm" aria-hidden="true">™</span></span>
       </a>
 
       <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
 
-      <nav id="primaryNav" class="nav">
-        <a href="index.html" data-softnav>Home</a>
+     <nav id="primaryNav" class="nav">
+        <a href="index.html" class="active" data-softnav>Home</a>
         <a href="markets.html" data-softnav>Markets</a>
         <a href="watchlist.html" data-softnav>Watchlist</a>
         <a href="news.html" data-softnav>News</a>
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
+        <a href="support.html" class="support-link" data-softnav>
+          <span class="support-icon">❤</span><span class="Donate">Support</span>
+        </a>
       </nav>
 
-      <!-- page-specific controls (HOME = Open crypto) -->
       <div id="headerControls" class="symbol-form">
-        <form id="symbolForm">
-          <input id="symbolInput" type="text" placeholder="BTC, ETH, SOL…" />
+        <form id="symbolForm" class="symbol-form" autocomplete="off">
+          <input id="symbolInput" name="symbol" type="text" placeholder="BTC, ETH, SOL…" aria-label="Symbol"/>
           <button class="button" type="submit">Open</button>
         </form>
         <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙 Dark</button>
       </div>
     </div>
 
-    <!-- PERMANENT TICKERS (full width) -->
+    <!-- Tickers -->
     <div class="ticker"><div id="cryptoTape"></div></div>
     <div class="ticker"><div id="stocksTape"></div></div>
   </header>
 
-  <!-- CONTENT -->
+  <!-- CONFIG: Worker URL for the aggregated news -->
+  <script id="news-config" type="application/json">
+  { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/fetch?url=" }
+  </script>
+
+  <!-- MAIN -->
   <main class="main container" id="pageMain">
     <section class="section" id="chart">
-      <h1>BTCUSDT — Advanced Chart</h1>
+      <h1>BTC Advanced Chart</h1>
       <div class="card" style="height:600px">
-        <div class="tradingview-widget-container" data-tv="advchart" style="height:100%;width:100%">
-          <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+        <div id="adv-chart-wrap" class="tradingview-widget-container" data-tv="advchart" style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
           <div class="tradingview-widget-copyright">
             <a href="https://www.tradingview.com/symbols/BINANCE-BTCUSDT/?exchange=BINANCE" rel="noopener nofollow" target="_blank">
-              <span class="blue-text">BTCUSDT chart by TradingView</span>
+              <span class="blue-text"> BTC chart by TradingView</span>
             </a>
           </div>
           <script class="tv-config" type="application/json">
@@ -84,6 +72,7 @@
               "hide_top_toolbar": false,
               "hide_legend": false,
               "hide_volume": false,
+              "hotlist": true,
               "interval": "60",
               "locale": "en",
               "save_image": true,
@@ -98,73 +87,72 @@
       </div>
     </section>
 
+    <!-- Crypto Screener (full-width, directly under chart) -->
     <section class="section" id="screener">
-      <h2>Crypto Screener</h2>
       <div class="card">
+        <h3>Crypto Screener</h3>
         <div class="tradingview-widget-container" data-tv="screener">
           <div class="tradingview-widget-container__widget"></div>
-          <script class="tv-config" type="application/json">
-            {
-              "defaultColumn": "overview",
-              "screener_type": "crypto_mkt",
-              "displayCurrency": "USD",
-              "isTransparent": false,
-              "locale": "en",
-              "width": "100%",
-              "height": 550
-            }
+          <script>
+          {
+            "defaultColumn": "overview",
+            "defaultScreen": "general",
+            "market": "crypto",
+            "colorTheme": "light",
+            "width": "100%",
+            "height": 520
+          }
           </script>
+          <script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async></script>
         </div>
       </div>
     </section>
 
-    <section class="section" id="crypto-heatmap">
-      <h2>Crypto Coins Heatmap</h2>
+    <!-- Crypto Heatmap (full-width, under Screener) -->
+    <section class="section" id="heatmap">
       <div class="card">
+        <h3>Crypto Heatmap</h3>
         <div class="tradingview-widget-container" data-tv="crypto-heatmap">
           <div class="tradingview-widget-container__widget"></div>
-          <script class="tv-config" type="application/json">
-            {
-              "dataSource": "Crypto",
-              "blockSize": "market_cap_calc",
-              "blockColor": "24h_close_change|5",
-              "locale": "en",
-              "symbolUrl": "",
-              "hasTopBar": true,
-              "isDataSetEnabled": true,
-              "isZoomEnabled": true,
-              "hasSymbolTooltip": true,
-              "isMonoSize": false,
-              "width": "100%",
-              "height": 520
-            }
+          <script>
+          {
+            "blockSize": "market_cap_calc",
+            "colorTheme": "light",
+            "width": "100%",
+            "height": 460
+          }
           </script>
+          <script src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js" async></script>
         </div>
       </div>
     </section>
 
+    <!-- Latest News (two tabs: Crypto | Markets) -->
     <section class="section" id="news">
-      <h2>Top Crypto News</h2>
-      <div class="card">
-        <div class="tradingview-widget-container" data-tv="timeline">
-          <div class="tradingview-widget-container__widget"></div>
-          <script class="tv-config" type="application/json">
-            {
-              "feedMode": "market",
-              "market": "crypto",
-              "displayMode": "regular",
-              "width": "100%",
-              "height": 600,
-              "locale": "en"
-            }
-          </script>
+      <div class="card news-card">
+        <div class="news-head" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <h3 style="margin:0">News</h3>
+          <span id="newsUpdatedAt" class="updated"></span>
+
+          <!-- tabs -->
+          <div class="tabs" role="tablist" style="margin-left:auto" id="newsTabs">
+            <button class="tab active" data-tab="crypto" role="tab" aria-selected="true">Crypto</button>
+            <button class="tab" data-tab="markets" role="tab" aria-selected="false">Markets</button>
+          </div>
         </div>
+
+        <!-- two lists; we toggle visibility -->
+        <ul id="newsListCrypto" class="news-list" data-tab-panel="crypto"></ul>
+        <ul id="newsListMarkets" class="news-list hidden" data-tab-panel="markets"></ul>
       </div>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="footer">
-    © 2025 XRayCrypto · <a href="https://x.com/XRaymetax" target="_blank" class="x-link">X</a>
+    © 2025 XRayCrypto™ ·
+    <a href="https://x.com/XRayCrypto101" target="_blank" class="x-link">X</a>
+    <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
   </footer>
 
   <script src="main.js"></script>
