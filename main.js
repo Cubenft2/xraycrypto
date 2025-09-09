@@ -607,6 +607,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
         ensureMounted(nextMain);
         loadNewsFromWorker();
         bindChillZoneEffects();
+
+        // >>> Minimal fix: bind again AFTER main is in the DOM so News tabs work without refresh
+        bindHeaderControls();
       }); });
 
       document.title = nextTitle;
