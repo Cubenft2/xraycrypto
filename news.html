@@ -1,38 +1,37 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>XRayCrypto — News</title>
   <meta name="description" content="Stay updated with live market news, crypto headlines, Bloomberg, Yahoo Finance, Sky News, Al Jazeera, and more."/>
   <meta name="keywords" content="crypto news, stock news, Bloomberg, Yahoo Finance, Al Jazeera, live financial news, XRayCrypto"/>
-  <link rel="canonical" href="https://xraymetax.online/news.html"/>
+  <link rel="canonical" href="https://xraycrypto.io/news.html"/>
 
   <!-- Open Graph -->
   <meta property="og:title" content="XRayCrypto — News"/>
   <meta property="og:description" content="Stay updated with live market news, crypto headlines, Bloomberg, Yahoo Finance, Sky News, Al Jazeera, and more."/>
-  <meta property="og:image" content="https://xraymetax.online/pfp.png"/>
-  <meta property="og:url" content="https://xraymetax.online/news.html"/>
+  <meta property="og:image" content="https://xraycrypto.io/pfp.png"/>
+  <meta property="og:url" content="https://xraycrypto.io/news.html"/>
   <meta property="og:type" content="website"/>
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="XRayCrypto — News"/>
   <meta name="twitter:description" content="Stay updated with live market news, crypto headlines, Bloomberg, Yahoo Finance, Sky News, Al Jazeera, and more."/>
-  <meta name="twitter:image" content="https://xraymetax.online/pfp.png"/>
+  <meta name="twitter:image" content="https://xraycrypto.io/pfp.png"/>
 
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
 </head>
 
-<body class="light">
+<body>
   <!-- HEADER -->
   <header class="header">
     <div class="topbar container">
       <a class="brand" href="index.html" data-softnav>
         <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
-        <span>XRayCrypto</span>
+        <span class="name">XRayCrypto<span class="tm" aria-hidden="true">™</span></span>
       </a>
 
       <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
@@ -41,17 +40,17 @@
         <a href="index.html" data-softnav>Home</a>
         <a href="markets.html" data-softnav>Markets</a>
         <a href="watchlist.html" data-softnav>Watchlist</a>
-        <a href="news.html" data-softnav>News</a>
+        <a href="news.html" class="active" data-softnav>News</a>
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
-        <a href="support.html" class="active support-link" data-softnav>
+        <a href="support.html" class="support-link" data-softnav>
           <span class="support-icon">❤</span><span class="support-text">Support</span>
         </a>
       </nav>
 
       <!-- page-specific controls (NEWS = theme only) -->
       <div id="headerControls" class="symbol-form">
-        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙 Dark</button>
+        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
       </div>
     </div>
 
@@ -65,39 +64,40 @@
       <p>Watch live financial news streams and follow real-time crypto headlines.</p>
 
       <div class="card">
-  <h2 style="margin:0 0 8px">Yahoo Finance (24/7 Market News)</h2>
-  <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
-    <iframe
-      title="Yahoo Finance Live"
-      src="https://www.youtube.com/embed/live_stream?channel=UCEAZeUIeJs0IjQiqTCdVSIg&autoplay=0&mute=1"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen
-      style="position:absolute;inset:0;width:100%;height:100%;border:0">
-    </iframe>
-  </div>
-  <div style="margin-top:8px">
-    <a class="button outline" target="_blank" rel="noopener"
-       href="https://www.youtube.com/@yahoofinance/live">Open on YouTube</a>
-  </div>
-</div>
-       <!-- TEMP: will only work while this exact broadcast is live -->
-<div class="card">
-  <h2 style="margin:0 0 8px">Live Stream (temporary)</h2>
-  <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
-    <iframe
-      src="https://www.youtube.com/embed/YDfiTGGPYCk?autoplay=0&mute=1"
-      title="Live Stream"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen
-      style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-  </div>
-  <div style="margin-top:8px">
-    <a class="button outline" target="_blank" rel="noopener" href="https://www.youtube.com/live/YDfiTGGPYCk">Open on YouTube</a>
-  </div>
-</div>
-       
-           <div class="card">
+        <h2 style="margin:0 0 8px">Yahoo Finance (24/7 Market News)</h2>
+        <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
+          <iframe
+            title="Yahoo Finance Live"
+            src="https://www.youtube.com/embed/live_stream?channel=UCEAZeUIeJs0IjQiqTCdVSIg&autoplay=0&mute=1"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            style="position:absolute;inset:0;width:100%;height:100%;border:0">
+          </iframe>
+        </div>
+        <div style="margin-top:8px">
+          <a class="button outline" target="_blank" rel="noopener"
+             href="https://www.youtube.com/@yahoofinance/live">Open on YouTube</a>
+        </div>
+      </div>
+
+      <!-- TEMP: will only work while this exact broadcast is live -->
+      <div class="card">
+        <h2 style="margin:0 0 8px">Live Stream (temporary)</h2>
+        <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
+          <iframe
+            src="https://www.youtube.com/embed/YDfiTGGPYCk?autoplay=0&mute=1"
+            title="Live Stream"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+        </div>
+        <div style="margin-top:8px">
+          <a class="button outline" target="_blank" rel="noopener" href="https://www.youtube.com/live/YDfiTGGPYCk">Open on YouTube</a>
+        </div>
+      </div>
+
+      <div class="card">
         <h2 style="margin:0 0 8px">TRT World (24/7)</h2>
         <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden">
           <iframe title="TRT World Live"
@@ -121,25 +121,26 @@
       </div>
 
       <div class="card">
-        <h2 style="margin:0 0 8px">Al Jazeera English</h3>
+        <h2 style="margin:0 0 8px">Al Jazeera English</h2>
         <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-            <iframe title="Al Jazeera English Live"
-               src="https://www.youtube.com/embed/live_stream?channel=UCNye-wNBqNL5ZzHSJj3l8Bg&autoplay=0&mute=1"
-               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-        </div>
-      </div>
-        
-      <div class="card">     
-        <h32 style="margin:0 0 8px">FRANCE 24 (English)</h3>
-        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
-          <iframe title="FRANCE 24 English Live"
-            src="https://www.youtube.com/embed/live_stream?channel=UCCCPCZNChQdGa9EkATeye4g&autoplay=0&mute=1"
-             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          <iframe title="Al Jazeera English Live"
+            src="https://www.youtube.com/embed/live_stream?channel=UCNye-wNBqNL5ZzHSJj3l8Bg&autoplay=0&mute=1"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
         </div>
       </div>
-            <!-- More live channels (open externally to bypass embed blocks) -->
+
+      <div class="card">
+        <h2 style="margin:0 0 8px">FRANCE 24 (English)</h2>
+        <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden">
+          <iframe title="FRANCE 24 English Live"
+            src="https://www.youtube.com/embed/live_stream?channel=UCCCPCZNChQdGa9EkATeye4g&autoplay=0&mute=1"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+        </div>
+      </div>
+
+      <!-- More live channels (open externally to bypass embed blocks) -->
       <div class="card">
         <h2 style="margin:0 0 8px">More Live Channels (Open on YouTube)</h2>
         <div style="display:flex;flex-wrap:wrap;gap:10px">
@@ -151,7 +152,7 @@
         </div>
         <p class="note" style="margin-top:8px">These open the official live pages to avoid regional embed blocks.</p>
       </div>
-   
+
       <div class="card">
         <h2 style="margin:40px 0 8px">📰 Live Crypto News (Powered by CryptoPanic)</h2>
         <iframe id="cryptoNews"
@@ -166,6 +167,7 @@
   </main>
 
   <footer class="footer">
+    <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
     © 2025 XRayCrypto™ ·
     <a href="https://x.com/XRayCryptox" target="_blank" class="x-link">X</a>
     <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
@@ -173,7 +175,11 @@
 
   <script src="main.js"></script>
   <script>
-    setInterval(()=>{ const f = document.getElementById('cryptoNews'); if(f) f.src = f.src; }, 120000);
+    // Auto-refresh the CryptoPanic widget every 2 minutes
+    setInterval(() => {
+      const f = document.getElementById('cryptoNews');
+      if (f) f.src = f.src;
+    }, 120000);
   </script>
 </body>
 </html>

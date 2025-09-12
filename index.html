@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>XRayCrypto — Home</title>
-  <meta name="description" content="Live crypto prices, charts, watchlist and curated news — XRayCrypto."/>
+  <meta name="description" content="Live crypto prices, live market news, heatmap, crypto screene, Ethereum, Bitcoin, xrp, SUI, Tron, doge, doginaldogs, Hyperliquidity, Advanced charts, tradingview, watchlist and curated news — XRayCrypto."/>
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
 </head>
@@ -20,7 +20,7 @@
 
       <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
 
-     <nav id="primaryNav" class="nav">
+      <nav id="primaryNav" class="nav">
         <a href="index.html" class="active" data-softnav>Home</a>
         <a href="markets.html" data-softnav>Markets</a>
         <a href="watchlist.html" data-softnav>Watchlist</a>
@@ -28,7 +28,7 @@
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
         <a href="support.html" class="support-link" data-softnav>
-          <span class="support-icon">❤</span><span class="Donate">Support</span>
+          <span class="support-icon">❤</span><span class="support-text">Support</span>
         </a>
       </nav>
 
@@ -37,7 +37,7 @@
           <input id="symbolInput" name="symbol" type="text" placeholder="BTC, ETH, SOL…" aria-label="Symbol"/>
           <button class="button" type="submit">Open</button>
         </form>
-        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙 Dark</button>
+        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
       </div>
     </div>
 
@@ -48,7 +48,7 @@
 
   <!-- CONFIG: Worker URL for the aggregated news -->
   <script id="news-config" type="application/json">
-  { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/fetch?url=" }
+    { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/fetch?url=" }
   </script>
 
   <!-- MAIN -->
@@ -136,7 +136,7 @@
 
           <!-- tabs -->
           <div class="tabs" role="tablist" style="margin-left:auto" id="newsTabs">
-           <button id="newsRefresh" class="button outline" type="button" title="Refresh">↻ Refresh</button>
+            <button id="newsRefresh" class="button outline" type="button" title="Refresh">↻ Refresh</button>
             <button class="tab active" data-tab="crypto" role="tab" aria-selected="true">Crypto</button>
             <button class="tab" data-tab="markets" role="tab" aria-selected="false">Markets</button>
           </div>
@@ -151,11 +151,21 @@
 
   <!-- FOOTER -->
   <footer class="footer">
+    <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
     © 2025 XRayCrypto™ ·
     <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
     <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
   </footer>
 
   <script src="main.js"></script>
+
+  <!-- Make the Refresh button work right now -->
+  <script>
+    document.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'newsRefresh') {
+        try { loadNewsFromWorker(); } catch(_) {}
+      }
+    });
+  </script>
 </body>
 </html>

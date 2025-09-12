@@ -1,4 +1,4 @@
-/* ========= Active nav highlight ========= */ 
+/* ========= Active nav highlight ========= */
 (function(){
   const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   document.querySelectorAll('.nav a').forEach(a=>{
@@ -16,6 +16,152 @@ function applyThemeToDOM(){
   document.body.classList.add(t === 'light' ? 'light' : 'dark');
   const btn = document.getElementById('themeToggle');
   if(btn) btn.textContent = (t === 'light') ? '🌙' : '🌞';
+}
+
+/* ========= Ambient background (Fog / Stars) ========= */
+/* storage: 'off' | 'fog' | 'stars' */
+const AMBIENT_KEY = 'xr_ambient';
+
+function ensureFogMask(){
+  if(document.getElementById('xr-fog-defs')) return;
+  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.id = 'xr-fog-defs';
+  svg.setAttribute('width','0'); svg.setAttribute('height','0');
+  svg.style.position = 'fixed';
+  svg.style.zIndex = '-1';
+  svg.innerHTML = `
+    <defs>
+      <filter id="fogFilter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.008" numOctaves="3" seed="7">
+          <animate attributeName="baseFrequency" dur="32s"
+            values="0.006 0.008; 0.004 0.006; 0.006 0.008" repeatCount="indefinite"/>
+        </feTurbulence>
+        <feColorMatrix type="saturate" values="0"/>
+        <feGaussianBlur stdDeviation="12"/>
+      </filter>
+      <mask id="fogMask">
+        <rect x="0" y="0" width="100%" height="100%" filter="url(#fogFilter)" fill="#fff"/>
+      </mask>
+    </defs>`;
+  document.body.appendChild(svg);
+}
+
+let __XR_STARS = null;
+function ensureStarsCanvas(){
+  if(document.getElementById('bgStars')) return;
+  const c = document.createElement('canvas');
+  c.id = 'bgStars';
+  c.style.cssText = 'position:fixed;inset:0;z-index:-1;pointer-events:none;display:none';
+  document.body.appendChild(c);
+
+  // lightweight starfield module
+  (function(){
+    const cvs = c;
+    const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const ctx = cvs.getContext('2d');
+    let stars = [], w=0, h=0, animId=0, t=0;
+
+    function resize(){
+      const vw = innerWidth, vh = innerHeight;
+      w = cvs.width  = Math.floor(vw * DPR);
+      h = cvs.height = Math.floor(vh * DPR);
+      cvs.style.width  = vw + 'px';
+      cvs.style.height = vh + 'px';
+      makeStars();
+    }
+    function makeStars(){
+      const count = Math.floor((w*h) / (9000 * DPR));
+      stars = [];
+      for(let i=0;i<count;i++){
+        const x = Math.random()*w;
+        const y = Math.random()*h;
+        const r = Math.random()*1.6 + 0.2;
+        const tw = Math.random()*0.6 + 0.2;
+        stars.push({x,y,r,tw,phase:Math.random()*Math.PI*2});
+      }
+    }
+    function drawMilkyWay(){
+      const grad = ctx.createLinearGradient(0, h*0.2, w, h*0.8);
+      grad.addColorStop(0.00, 'rgba(255,255,255,0.00)');
+      grad.addColorStop(0.40, 'rgba(200,220,255,0.05)');
+      grad.addColorStop(0.50, 'rgba(180,200,255,0.10)');
+      grad.addColorStop(0.60, 'rgba(200,220,255,0.05)');
+      grad.addColorStop(1.00, 'rgba(255,255,255,0.00)');
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = grad;
+      ctx.fillRect(0,0,w,h);
+
+      const veil = ctx.createRadialGradient(w*0.65, h*0.35, 0, w*0.65, h*0.35, Math.max(w,h)*0.8);
+      veil.addColorStop(0, 'rgba(0,207,255,0.05)');
+      veil.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = veil;
+      ctx.fillRect(0,0,w,h);
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    function tick(){
+      t += 0.016;
+      ctx.clearRect(0,0,w,h);
+      const light = document.body.classList.contains('light');
+      ctx.fillStyle = light ? 'rgba(246,247,249,1)' : 'rgba(15,17,21,1)';
+      ctx.fillRect(0,0,w,h);
+
+      ctx.save();
+      ctx.fillStyle = '#fff';
+      for(const s of stars){
+        const flicker = 0.65 + 0.35*Math.sin(t*s.tw + s.phase);
+        const r = Math.max(0.6, s.r * flicker);
+        ctx.globalAlpha = 0.4 + 0.6*flicker;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y + Math.sin((s.x/w)*2*Math.PI + t*0.03)*2, r, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+
+      drawMilkyWay();
+      animId = requestAnimationFrame(tick);
+    }
+    function start(){
+      if(!document.body.classList.contains('stars-on')) return;
+      cancelAnimationFrame(animId);
+      cvs.style.display = 'block';
+      resize();
+      tick();
+    }
+    function stop(){
+      cancelAnimationFrame(animId);
+      ctx.clearRect(0,0,w,h);
+      cvs.style.display = 'none';
+    }
+    window.addEventListener('resize', ()=> document.body.classList.contains('stars-on') && resize());
+    __XR_STARS = { start, stop };
+  })();
+}
+
+/* apply current ambient mode and wire button */
+function applyAmbient(){
+  const mode = localStorage.getItem(AMBIENT_KEY) || 'off';
+  // ensure assets
+  if(mode === 'fog') ensureFogMask();
+  if(mode === 'stars'){ ensureStarsCanvas(); }
+
+  document.body.classList.toggle('fog-on',   mode === 'fog');
+  document.body.classList.toggle('stars-on', mode === 'stars');
+
+  if(__XR_STARS){
+    if(mode === 'stars') __XR_STARS.start(); else __XR_STARS.stop();
+  }
+}
+function cycleAmbient(){
+  const cur = localStorage.getItem(AMBIENT_KEY) || 'off';
+  const next = cur === 'off' ? 'fog' : cur === 'fog' ? 'stars' : 'off';
+  localStorage.setItem(AMBIENT_KEY, next);
+  applyAmbient();
+}
+function bindAmbientToggle(){
+  applyAmbient();
+  const btn = document.getElementById('ambientToggle');
+  if(!btn) return;
+  btn.onclick = cycleAmbient;
 }
 
 /* ========= Keep nav consistent: force TV -> Chill everywhere ========= */
@@ -260,7 +406,7 @@ const WL = {
   set(arr){ localStorage.setItem(WL_KEY, JSON.stringify(arr)); },
   add(sym){ const s = this.get(); if(!s.includes(sym)){ s.push(sym); this.set(s);} },
   remove(sym){ this.set(this.get().filter(x=>x!==sym)); },
-  clear(){ this.set([]); }   // <-- FIXED (was `this set([]);`)
+  clear(){ this.set([]); }   // fixed
 };
 window.WL = WL;
 
@@ -389,10 +535,27 @@ async function loadNewsFromWorker() {
   if (stampEl) stampEl.textContent = 'Updated ' + new Date().toLocaleTimeString();
 }
 
+/* ========= Twitch parent param fixer (works on Chill & anywhere) ========= */
+function fixTwitchParents(){
+  const host = location.hostname || 'localhost';
+  const defaults = ['xraycrypto.io','localhost'];
+  const parents = new Set([...defaults, host].filter(Boolean));
+  document.querySelectorAll('iframe[data-twitch-src]').forEach(f=>{
+    try{
+      const u = new URL(f.getAttribute('data-twitch-src'));
+      u.searchParams.delete('parent');
+      parents.forEach(p => u.searchParams.append('parent', p));
+      const next = u.toString();
+      if (f.src !== next) f.src = next;
+    }catch(e){}
+  });
+}
+
 /* ========= Bind header controls (called after swaps) ========= */
 function bindHeaderControls(){
   applyThemeToDOM();
   normalizeNav();
+  bindAmbientToggle(); // ✨ ambient cycle
 
   const themeBtn = document.getElementById('themeToggle');
   if(themeBtn){
@@ -405,7 +568,7 @@ function bindHeaderControls(){
     };
   }
 
-  // --- NEW: News Refresh button binding ---
+  // News Refresh button binding
   const refreshBtn = document.getElementById('newsRefresh');
   if (refreshBtn) {
     refreshBtn.onclick = () => { loadNewsFromWorker(); };
@@ -476,6 +639,9 @@ function bindHeaderControls(){
       setTimeout(()=> copyBtn.textContent = 'Copy', 1200);
     };
   }
+
+  // Keep Twitch embeds valid when navigating SPA-style
+  fixTwitchParents();
 }
 
 /* ==== ChillZone: live frame & brand “woof” ==== */
@@ -508,6 +674,11 @@ function bindChillZoneEffects() {
 /* ========= Init ========= */
 document.addEventListener('DOMContentLoaded', ()=>{
   try{
+    // ensure ambient assets exist early if needed
+    const mode = localStorage.getItem(AMBIENT_KEY) || 'off';
+    if(mode === 'fog') ensureFogMask();
+    if(mode === 'stars') ensureStarsCanvas();
+
     buildTickerTapes(getTheme());
     bindHeaderControls();
     normalizeNav();
@@ -517,7 +688,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     loadNewsFromWorker();
 
-    // --- NEW: only auto-refresh if the page actually has the news lists
     const hasNewsLists = document.getElementById('newsListCrypto') && document.getElementById('newsListMarkets');
     if (hasNewsLists) {
       setInterval(()=> loadNewsFromWorker(), 300000);
@@ -532,6 +702,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   applyHomeDeepLink();
   bindChillZoneEffects();
+  fixTwitchParents(); // ensure initial Twitch embeds have correct ?parent
+  applyAmbient();     // apply fog/stars on load
 
   /* ==== Mobile menu ==== */
   try{
@@ -601,7 +773,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       const { nextMain, nextHeaderControls, nextTitle } = extract(html);
       if(!nextMain || !nextHeaderControls) throw new Error('Missing main/headerControls');
 
-      // --- NEW: sync page-specific <body> classes from fetched page ---
+      // sync page-specific <body> classes from fetched page
       const theme = getTheme() === 'light' ? 'light' : 'dark';
       const tmpDoc = new DOMParser().parseFromString(html, 'text/html');
       const incomingBodyClass = (tmpDoc.body && tmpDoc.body.className) || '';
@@ -629,14 +801,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
         ensureMounted(nextMain);
         loadNewsFromWorker();
         bindChillZoneEffects();
-
-        // bind again AFTER main is in the DOM so News tabs work without refresh
-        bindHeaderControls();
+        fixTwitchParents();    // keep Twitch happy after swaps
+        bindHeaderControls();  // rebind after new DOM is in
+        applyAmbient();        // keep ambient active across pages
       }); });
 
       document.title = nextTitle;
       setActiveNav(url);
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      window.scrollTo({ top: 0, behavior: 'auto' });
 
       // Page-specific post-actions
       const parsed = new URL(url, location.href);

@@ -5,8 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>XRayCrypto — Support</title>
   <meta name="description" content="If this project helps you, feel free to tip any amount. Thank you!"/>
+
+  <!-- Canonical + Social -->
+  <link rel="canonical" href="https://xraycrypto.io/support.html"/>
+  <meta property="og:title" content="XRayCrypto — Support"/>
+  <meta property="og:description" content="If this project helps you, a small tip keeps it fast and ad-free. Thank you! ❤️"/>
+  <meta property="og:image" content="https://xraycrypto.io/pfp.png"/>
+  <meta property="og:url" content="https://xraycrypto.io/support.html"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="XRayCrypto — Support"/>
+  <meta name="twitter:description" content="If this project helps you, a small tip keeps it fast and ad-free. Thank you! ❤️"/>
+  <meta name="twitter:image" content="https://xraycrypto.io/pfp.png"/>
+
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
+
   <style>
     /* ===== Page-only tweaks (scoped to .support-page) ===== */
     .support-page .support-wrap{display:grid; gap:16px; align-items:start;}
@@ -36,6 +50,24 @@
       padding:6px 8px; border:1px solid var(--border); border-radius:8px; background:var(--surface); max-width:100%
     }
     .support-page .button.small{padding:6px 10px; font-weight:700}
+
+    /* ===== Ambient SVG (page-local styles so you can see it immediately) ===== */
+    .site-aurora {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      opacity: 0; transition: opacity .6s ease;
+      filter: blur(12px) saturate(120%);
+      background:
+        radial-gradient(1200px 800px at 20% 20%, rgba(0,207,255,.10), transparent 60%),
+        radial-gradient(900px 700px at 80% 30%, rgba(255,215,0,.08), transparent 60%),
+        radial-gradient(1200px 900px at 60% 80%, rgba(0,255,170,.06), transparent 65%);
+    }
+    body.aurora-on .site-aurora { opacity: .9; }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .site-aurora svg * [attributeName="transform"],
+      .site-aurora svg * [attributeName="opacity"] { display:none; }
+    }
   </style>
 </head>
 
@@ -68,6 +100,80 @@
     <div class="ticker"><div id="cryptoTape"></div></div>
     <div class="ticker"><div id="stocksTape"></div></div>
   </header>
+
+  <!-- ===== Ambient SVG (fog + subtle Milky Way) ===== -->
+  <div class="site-aurora" aria-hidden="true">
+    <svg viewBox="0 0 1440 900" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <!-- Soft fog blobs -->
+        <radialGradient id="fogCyan" r="1">
+          <stop offset="0%" stop-color="#00CFFF" stop-opacity=".35"/>
+          <stop offset="70%" stop-color="#00CFFF" stop-opacity=".05"/>
+          <stop offset="100%" stop-color="#00CFFF" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="fogGold" r="1">
+          <stop offset="0%" stop-color="#FFD700" stop-opacity=".28"/>
+          <stop offset="70%" stop-color="#FFD700" stop-opacity=".06"/>
+          <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="fogMint" r="1">
+          <stop offset="0%" stop-color="#00ffaa" stop-opacity=".22"/>
+          <stop offset="70%" stop-color="#00ffaa" stop-opacity=".05"/>
+          <stop offset="100%" stop-color="#00ffaa" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- Milky Way swash -->
+        <linearGradient id="mw" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity=".0"/>
+          <stop offset="35%" stop-color="#c2f9ff" stop-opacity=".25"/>
+          <stop offset="65%" stop-color="#fff3b0" stop-opacity=".20"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity=".0"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Big drifting fog fields -->
+      <g opacity=".75">
+        <circle cx="250" cy="180" r="420" fill="url(#fogCyan)">
+          <animateTransform attributeName="transform" type="translate"
+            values="0 0; 30 -20; 0 0" dur="20s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="1180" cy="220" r="380" fill="url(#fogGold)">
+          <animateTransform attributeName="transform" type="translate"
+            values="0 0; -25 25; 0 0" dur="24s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="900" cy="740" r="520" fill="url(#fogMint)">
+          <animateTransform attributeName="transform" type="translate"
+            values="0 0; -18 -12; 0 0" dur="22s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <!-- Subtle Milky Way ribbon -->
+      <g opacity=".35">
+        <path d="M-50,520
+                 C 280,420  520,560 780,500
+                 S 1180,380 1520,460
+                 L 1520,700  -50,700 Z"
+              fill="url(#mw)">
+          <animateTransform attributeName="transform" type="translate"
+            values="0 0; 0 -10; 0 0" dur="18s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values=".35;.48;.35" dur="9s" repeatCount="indefinite"/>
+        </path>
+      </g>
+
+      <!-- Sparse, gentle stars -->
+      <g fill="#ffffff" opacity=".6">
+        <circle cx="120" cy="140" r="1.2"><animate attributeName="opacity" dur="3.2s" values=".2;.7;.2" repeatCount="indefinite"/></circle>
+        <circle cx="410" cy="90"  r="1"><animate attributeName="opacity" dur="2.8s" values=".2;.6;.2" repeatCount="indefinite"/></circle>
+        <circle cx="980" cy="160" r="1.1"><animate attributeName="opacity" dur="3.6s" values=".2;.65;.2" repeatCount="indefinite"/></circle>
+        <circle cx="1320" cy="340" r="1"><animate attributeName="opacity" dur="3.0s" values=".2;.6;.2" repeatCount="indefinite"/></circle>
+        <circle cx="760" cy="260" r="1"><animate attributeName="opacity" dur="2.6s" values=".2;.7;.2" repeatCount="indefinite"/></circle>
+        <circle cx="640" cy="680" r="1.2"><animate attributeName="opacity" dur="3.4s" values=".2;.65;.2" repeatCount="indefinite"/></circle>
+        <circle cx="1100" cy="780" r="1"><animate attributeName="opacity" dur="2.9s" values=".2;.6;.2" repeatCount="indefinite"/></circle>
+        <circle cx="300" cy="820" r="1"><animate attributeName="opacity" dur="3.1s" values=".2;.65;.2" repeatCount="indefinite"/></circle>
+      </g>
+    </svg>
+  </div>
+  <!-- ===== /Ambient SVG ===== -->
 
   <!-- MAIN -->
   <main class="main container" id="pageMain">
@@ -120,23 +226,24 @@
   </main>
 
   <footer class="footer">
+    <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
     © 2025 XRayCrypto™ · <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
   </footer>
 
   <script src="main.js"></script>
   <script>
     // Copy buttons
-    document.addEventListener('click', async (e)=>{
+    document.addEventListener('click', async (e) => {
       const btn = e.target.closest('[data-copy]');
-      if(!btn) return;
+      if (!btn) return;
       const sel = btn.getAttribute('data-copy');
       const el = document.querySelector(sel);
-      if(!el) return;
-      try{
+      if (!el) return;
+      try {
         await navigator.clipboard.writeText(el.textContent.trim());
-        btn.textContent = 'Copied!'; setTimeout(()=> btn.textContent='Copy', 1200);
-      }catch{
-        btn.textContent='Failed'; setTimeout(()=> btn.textContent='Copy', 1200);
+        btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1200);
+      } catch {
+        btn.textContent = 'Failed'; setTimeout(() => btn.textContent = 'Copy', 1200);
       }
     });
   </script>

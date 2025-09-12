@@ -433,3 +433,52 @@ img[data-support-logo],
   max-width:160px!important; max-height:160px!important;
   object-fit:cover;
 }
+/* === Ambient aurora background (opt-in with body.aurora-on) === */
+body.aurora-on::before,
+body.aurora-on::after{
+  content:"";
+  position:fixed;
+  inset:-20%;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(40% 60% at 20% 30%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 60%),
+    radial-gradient(35% 50% at 80% 70%, color-mix(in srgb, var(--accent-2) 40%, transparent), transparent 60%),
+    radial-gradient(30% 40% at 50% 10%, color-mix(in srgb, #a442ff 28%, transparent), transparent 60%);
+  filter: blur(42px) saturate(120%);
+  opacity:.28;
+  transform: translate3d(0,0,0) rotate(0deg) scale(1.05);
+  animation: aurora-rotate 48s linear infinite, aurora-pulse 9s ease-in-out infinite;
+}
+body.light.aurora-on::before,
+body.light.aurora-on::after{
+  opacity:.22; /* slightly softer in light mode */
+}
+
+/* second layer adds parallax-y feel */
+body.aurora-on::after{
+  mix-blend-mode: screen;
+  opacity:.22;
+  animation: aurora-rotate-rev 72s linear infinite, aurora-pulse 10s ease-in-out infinite;
+}
+
+@keyframes aurora-rotate{
+  0%   { transform: translate3d(0,0,0) rotate(0deg)   scale(1.05); }
+  50%  { transform: translate3d(0,-1%,0) rotate(180deg) scale(1.06); }
+  100% { transform: translate3d(0,0,0) rotate(360deg) scale(1.05); }
+}
+@keyframes aurora-rotate-rev{
+  0%   { transform: translate3d(0,0,0) rotate(0deg)   scale(1.08); }
+  50%  { transform: translate3d(0,1%,0) rotate(-180deg) scale(1.07); }
+  100% { transform: translate3d(0,0,0) rotate(-360deg) scale(1.08); }
+}
+@keyframes aurora-pulse{
+  0%,100% { opacity: var(--aurora-o, .28); filter: blur(42px) saturate(120%); }
+  50%     { opacity: calc(var(--aurora-o, .28) + .06); filter: blur(48px) saturate(135%); }
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce){
+  body.aurora-on::before,
+  body.aurora-on::after{ animation:none; opacity:.18 }
+}

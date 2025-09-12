@@ -6,20 +6,18 @@
   <title>XRayCrypto — Watchlist</title>
   <meta name="description" content="Build your own crypto and stock watchlist. Save tickers, view mini charts, and track price moves instantly on XRayCrypto."/>
   <meta name="keywords" content="watchlist, crypto watchlist, stock watchlist, mini charts, tickers, XRayCrypto"/>
-  <link rel="canonical" href="https://xraymetax.online/watchlist.html"/>
 
-  <!-- Open Graph -->
+  <!-- Canonical + Social (moved to xraycrypto.io) -->
+  <link rel="canonical" href="https://xraycrypto.io/watchlist.html"/>
   <meta property="og:title" content="XRayCrypto — Watchlist"/>
   <meta property="og:description" content="Build your own crypto and stock watchlist with live mini charts and tickers."/>
-  <meta property="og:image" content="https://xraymetax.online/pfp.png"/>
-  <meta property="og:url" content="https://xraymetax.online/watchlist.html"/>
+  <meta property="og:image" content="https://xraycrypto.io/pfp.png"/>
+  <meta property="og:url" content="https://xraycrypto.io/watchlist.html"/>
   <meta property="og:type" content="website"/>
-
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="XRayCrypto — Watchlist"/>
   <meta name="twitter:description" content="Build your own crypto and stock watchlist with live mini charts and tickers."/>
-  <meta name="twitter:image" content="https://xraymetax.online/pfp.png"/>
+  <meta name="twitter:image" content="https://xraycrypto.io/pfp.png"/>
 
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
@@ -47,7 +45,7 @@
     <div class="topbar container">
       <a class="brand" href="index.html" data-softnav>
         <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
-        <span>XRayCrypto</span>
+        <span class="name">XRayCrypto<span class="tm" aria-hidden="true">™</span></span>
       </a>
 
       <!-- Hamburger -->
@@ -56,11 +54,11 @@
       <nav id="primaryNav" class="nav">
         <a href="index.html" data-softnav>Home</a>
         <a href="markets.html" data-softnav>Markets</a>
-        <a href="watchlist.html" data-softnav>Watchlist</a>
+        <a href="watchlist.html" class="active" data-softnav>Watchlist</a>
         <a href="news.html" data-softnav>News</a>
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
-        <a href="support.html" class="active support-link" data-softnav>
+        <a href="support.html" class="support-link" data-softnav>
           <span class="support-icon">❤</span><span class="support-text">Support</span>
         </a>
       </nav>
@@ -71,7 +69,7 @@
           <input id="wlInput" type="text" placeholder="BTC, ETH, SOL or EXCHANGE:PAIR">
           <button class="button" id="wlAdd" type="submit">Add</button>
         </form>
-        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙 Dark</button>
+        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
       </div>
     </div>
 
@@ -122,7 +120,9 @@
     </section>
   </main>
 
- <footer class="footer">
+  <footer class="footer">
+    <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
+
     © 2025 XRayCrypto™ ·
     <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
     <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
@@ -152,7 +152,7 @@
       s.async = true;
       s.text = JSON.stringify({
         symbol,
-        width: "100%",   // FIXED width to fill the card
+        width: "100%",
         height: 110,
         locale: "en",
         dateRange: "1M",
@@ -197,12 +197,11 @@
 
     // Theme change (from header button or another tab) -> refresh mini-cards
     window.addEventListener('storage', (e)=>{ if(e.key==='xr_theme') render(); });
-
-    // Also respond to the global event (kept from earlier version)
     window.addEventListener('wl-updated', render);
 
     render();
-    // Add this line anywhere after render() is defined:
+
+    // Re-render after theme toggle (so TradingView widgets match)
     document.getElementById('themeToggle')?.addEventListener('click', ()=> setTimeout(render, 0));
   </script>
 </body>

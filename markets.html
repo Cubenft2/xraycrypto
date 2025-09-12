@@ -4,7 +4,23 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>XRayCrypto — Markets</title>
-  <meta name="description" content="Track stock market performance with live tickers, advanced charts, heatmaps, and curated market news on XRayCrypto."/>
+  <meta name="description" content="Track stock market performance with live tickers, advanced charts, stock heatmaps, ETFs, crypto and curated financial news on XRayCrypto."/>
+  <meta name="keywords" content="XRayCrypto, markets, stock market, SPY, QQQ, DIA, NVDA, TSLA, AAPL, AMZN, MSFT, COIN, crypto markets, ETFs, stock screener, stock heatmap, market news, live tickers, tradingview"/>
+  <link rel="canonical" href="https://xraycrypto.io/markets.html"/>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="XRayCrypto — Markets"/>
+  <meta property="og:description" content="Live stock & crypto markets with tickers, advanced charts, heatmaps, ETFs, and curated financial news."/>
+  <meta property="og:image" content="https://xraycrypto.io/pfp.png"/>
+  <meta property="og:url" content="https://xraycrypto.io/markets.html"/>
+  <meta property="og:type" content="website"/>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="XRayCrypto — Markets"/>
+  <meta name="twitter:description" content="Track markets with live charts, tickers, and curated news on XRayCrypto."/>
+  <meta name="twitter:image" content="https://xraycrypto.io/pfp.png"/>
+
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
 </head>
@@ -20,22 +36,22 @@
 
       <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
 
-     <nav id="primaryNav" class="nav">
+      <nav id="primaryNav" class="nav">
         <a href="index.html" data-softnav>Home</a>
-        <a href="markets.html" data-softnav>Markets</a>
+        <a href="markets.html" class="active" data-softnav>Markets</a>
         <a href="watchlist.html" data-softnav>Watchlist</a>
         <a href="news.html" data-softnav>News</a>
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
-        <a href="support.html" class="active support-link" data-softnav>
+        <a href="support.html" class="support-link" data-softnav>
           <span class="support-icon">❤</span><span class="support-text">Support</span>
         </a>
       </nav>
 
-      <!-- page-specific controls (MARKETS = Open stocks/ETFs) -->
+      <!-- page-specific controls (Markets) -->
       <div id="headerControls" class="symbol-form">
         <form id="marketSymbolForm" autocomplete="off">
-          <input id="marketSymbolInput" type="text" placeholder="AAPL, SPY, NASDAQ:NVDA, AMEX:SPY, BTCUSDT"/>
+          <input id="marketSymbolInput" type="text" placeholder="AAPL, SPY, NVDA, AMZN, BTCUSDT"/>
           <button class="button" type="submit">Open</button>
         </form>
         <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
@@ -48,7 +64,7 @@
 
   <!-- CONFIG: Worker URL for aggregated news -->
   <script id="news-config" type="application/json">
-  { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/fetch?url=" }
+    { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/fetch?url=" }
   </script>
 
   <!-- CONTENT -->
@@ -126,7 +142,7 @@
           <h3 style="margin:0">News</h3>
           <span id="newsUpdatedAt" class="updated"></span>
           <div class="tabs" role="tablist" style="margin-left:auto" id="newsTabs">
-            <button id="newsRefresh" class="button outline" type="button" title="Refresh">↻ Refresh</button> 
+            <button id="newsRefresh" class="button outline" type="button" title="Refresh">↻ Refresh</button>
             <button class="tab active" data-tab="crypto" role="tab" aria-selected="true">Crypto</button>
             <button class="tab" data-tab="markets" role="tab" aria-selected="false">Markets</button>
           </div>
@@ -139,11 +155,21 @@
 
   <!-- FOOTER -->
   <footer class="footer">
+    <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
     © 2025 XRayCrypto™ ·
     <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
     <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
   </footer>
 
   <script src="main.js"></script>
+
+  <!-- Refresh news on click -->
+  <script>
+    document.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'newsRefresh') {
+        try { loadNewsFromWorker(); } catch(_) {}
+      }
+    });
+  </script>
 </body>
 </html>
