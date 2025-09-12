@@ -23,6 +23,22 @@
 
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
+
+  <style>
+    /* Watchlist grid: 2 cols by default, 3 on desktop, 1 on tiny phones */
+    .grid{ display:grid; gap:12px; }
+    .grid.cols-3{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+
+    @media (min-width:900px){
+      .grid.cols-3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+    }
+    @media (max-width:380px){
+      .grid.cols-3{ grid-template-columns: 1fr; }
+    }
+
+    /* Make mini cards flow nicely */
+    #wlList .card{ display:flex; flex-direction:column; gap:8px; }
+  </style>
 </head>
 
 <body>
@@ -45,7 +61,7 @@
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
         <a href="support.html" class="active support-link" data-softnav>
-          <span class="support-icon">❤</span><span class="support-text">Donate</span>
+          <span class="support-icon">❤</span><span class="support-text">Support</span>
         </a>
       </nav>
 
@@ -108,7 +124,7 @@
 
  <footer class="footer">
     © 2025 XRayCrypto™ ·
-    <a href="https://x.com/XRayCrypto101" target="_blank" class="x-link">X</a>
+    <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
     <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
   </footer>
 
@@ -136,8 +152,8 @@
       s.async = true;
       s.text = JSON.stringify({
         symbol,
-        width: "100%",
-        height: 220,
+        width: "100%",   // FIXED width to fill the card
+        height: 110,
         locale: "en",
         dateRange: "1M",
         colorTheme: theme,

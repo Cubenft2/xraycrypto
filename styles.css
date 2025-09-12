@@ -396,3 +396,40 @@ h1,h2,h3{margin:0 0 12px}
 .addr{ display:flex; gap:8px; margin-top:10px; }
 .addr code{ flex:1; padding:8px 10px; border:1px solid var(--border); border-radius:8px; overflow:auto; background:var(--surface-2); }
 .copy-btn{ white-space:nowrap }
+/* --- Support page image sizing --- */
+.support-hero img,
+.support-card img,
+.qr img {
+  display: block;
+  max-width: 180px;   /* cap it */
+  width: auto;        /* don't stretch */
+  height: auto;       /* keep aspect */
+  border-radius: 12px;
+}
+
+/* If any global rule sets img { width:100% }, constrain inside Support */
+.support-hero .pfp,
+.support-card .pfp {
+  max-width: 120px;   /* smaller avatar */
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* Layout helpers for Support */
+.support-hero{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:12px;
+}
+.support-card .addr { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+/* Safety clamp for Support PFP in any nav path (belt & suspenders) */
+#supportLogo,
+img[data-support-logo],
+.support-page .pfp-card img.pfp {
+  width:160px!important; height:160px!important;
+  max-width:160px!important; max-height:160px!important;
+  object-fit:cover;
+}

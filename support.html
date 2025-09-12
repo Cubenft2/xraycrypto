@@ -3,13 +3,59 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>XRayCrypto — Send a Coffee</title>
-  <meta name="description" content="Support XRayCrypto with a tip. Scan a QR or copy an address — thank you!"/>
+  <title>XRayCrypto — Support</title>
+  <meta name="description" content="If this project helps you, feel free to tip any amount. Thank you!"/>
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
+  <style>
+    /* ===== Page-only tweaks (scoped to .support-page) ===== */
+    .support-page .support-wrap{display:grid; gap:16px; align-items:start;}
+    .support-page .pfp-card{display:grid; place-items:center; padding:20px}
+
+    /* Guard against any global img wideners after soft-nav */
+    .support-page .pfp-card img.pfp{
+      display:block;
+      width:160px !important;
+      height:160px !important;
+      max-width:160px !important;
+      max-height:160px !important;
+      object-fit:cover;
+      border-radius:20px;
+      box-shadow:0 0 0 3px var(--accent);
+    }
+
+    .support-page .wallet-list{display:grid; gap:12px}
+    .support-page .wallet-row{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+      padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--surface-2)
+    }
+    .support-page .wallet-row h3{margin:0; font-size:1rem}
+    .support-page .addr-wrap{display:flex; gap:8px; align-items:center; flex:1; min-width:220px}
+    .support-page .addr-wrap code{
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      padding:6px 8px; border:1px solid var(--border); border-radius:8px; background:var(--surface); max-width:100%
+    }
+    .support-page .button.small{padding:6px 10px; font-weight:700}
+
+    /* Mobile wallet CTA */
+    .support-page .mobile-wallet-cta{position:sticky; bottom:12px; display:block; margin-top:12px; text-align:center}
+    .support-page #openWalletBtn{width:auto; min-width:170px;} /* <<< not full width */
+
+    .support-page .wallet-sheet{
+      position:fixed; inset:auto 12px 12px 12px; display:none;
+      background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:12px;
+      text-align:center;
+    }
+    .support-page .wallet-sheet h4{margin:0 0 8px}
+    .support-page .wallet-sheet a{display:inline-flex; justify-content:center; margin:4px 6px; text-decoration:none}
+    .support-page .wallet-sheet .button{width:auto}
+    @media (max-width:640px){
+      .support-page .mobile-wallet-cta{display:block}
+    }
+  </style>
 </head>
 
-<body>
+<body class="support-page">
   <!-- HEADER -->
   <header class="header">
     <div class="topbar container">
@@ -17,6 +63,7 @@
         <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
         <span class="name">XRayCrypto<span class="tm" aria-hidden="true">™</span></span>
       </a>
+
       <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
 
       <nav id="primaryNav" class="nav">
@@ -26,9 +73,7 @@
         <a href="news.html" data-softnav>News</a>
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
-        <a href="support.html" class="active support-link" data-softnav>
-          <span class="support-icon">❤</span><span class="support-text">Donate</span>
-        </a>
+        <a href="support.html" class="active" data-softnav>Support</a>
       </nav>
 
       <div id="headerControls" class="symbol-form">
@@ -36,7 +81,6 @@
       </div>
     </div>
 
-    <!-- tickers -->
     <div class="ticker"><div id="cryptoTape"></div></div>
     <div class="ticker"><div id="stocksTape"></div></div>
   </header>
@@ -44,58 +88,75 @@
   <!-- MAIN -->
   <main class="main container" id="pageMain">
     <section class="section">
-      <div class="card">
-        <h1 style="margin-bottom:4px">Support XRayCrypto</h1>
-        <p class="note">Totally optional. Tips help me keep the site fast, ad-free, and add new features. Thank you! 🙏</p>
-
-        <div class="qr-grid" style="margin-top:14px">
-          <!-- Example: USDT (Solana) -->
-          <div class="qr">
-            <h3>USDT (Solana)</h3>
-            <img src="qr-usdt-sol.png" alt="USDT SOL tip QR"/>
-            <div class="addr">
-              <code id="addr-usdtsol">6ixinnKDET3LwFGvQcFvCdb7zYbc9kRdjmSWTwdxgHtd</code>
-              <button class="button copy-btn" data-copy="#addr-usdtsol">Copy</button>
-            </div>
-          </div>
-
-          <!-- Add/remove as you like -->
-          <div class="qr">
-            <h3>Ethereum (ETH)</h3>
-            <img src="qr-eth.png" alt="ETH tip QR"/>
-            <div class="addr">
-              <code id="addr-eth">0x389FBAc26ab800269Aa29E7273C83889B501bc29</code>
-              <button class="button copy-btn" data-copy="#addr-eth">Copy</button>
-            </div>
-          </div>
-
-          <div class="qr">
-            <h3>Solana (SOL)</h3>
-            <img src="qr-sol.png" alt="SOL tip QR"/>
-            <div class="addr">
-              <code id="addr-sol">6ixinnKDET3LwFGvQcFvCdb7zYbc9kRdjmSWTwdxgHtd</code>
-              <button class="button copy-btn" data-copy="#addr-sol">Copy</button>
-            </div>
-          </div>
+      <div class="support-wrap">
+        <div class="card pfp-card">
+          <!-- Added id + data-support-logo so main.js clampSupportLogo() always catches it -->
+          <img src="pfp.png" alt="XRayCrypto avatar" class="pfp" id="supportLogo" data-support-logo loading="lazy">
+          <p class="note" style="margin:10px 0 0">If this project helps you, a small tip keeps it fast and ad-free. Thank you! ❤️</p>
         </div>
 
-        <p class="note" style="margin-top:14px">
-          Prefer a readable name? You can also tip to <strong>xraymetax.online</strong> (if you’re using UD).  
-          Most wallets that support UD will resolve it automatically.
-        </p>
+        <div class="card">
+          <h2 style="margin:0 0 10px">Tip Addresses</h2>
+          <div class="wallet-list">
+
+            <!-- BTC -->
+            <div class="wallet-row">
+              <h3>Bitcoin (BTC)</h3>
+              <div class="addr-wrap" style="flex:1">
+                <code id="addr-btc">bc1qlnldyzwzvu0wtej24kgk9c9tr7naz2fcdarrt6</code>
+                <button class="button small" data-copy="#addr-btc">Copy</button>
+              </div>
+            </div>
+
+            <!-- ETH -->
+            <div class="wallet-row">
+              <h3>Ethereum (ETH)</h3>
+              <div class="addr-wrap" style="flex:1">
+                <code id="addr-eth">0x26423bffa264bb913fb152401dbb63ff8176e6a3</code>
+                <button class="button small" data-copy="#addr-eth">Copy</button>
+              </div>
+            </div>
+
+            <!-- SOL -->
+            <div class="wallet-row">
+              <h3>Solana (SOL)</h3>
+              <div class="addr-wrap" style="flex:1">
+                <code id="addr-sol">6y6KMjsXoaWcUjz6pGty73gYTXtVahukCQdyk1vX6DLn</code>
+                <button class="button small" data-copy="#addr-sol">Copy</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Mobile open-in-wallet CTA -->
+          <div class="mobile-wallet-cta">
+            <button id="openWalletBtn" class="button" type="button">Open in Wallet</button>
+            <div id="walletSheet" class="wallet-sheet" role="dialog" aria-modal="true" aria-labelledby="wTitle">
+              <h4 id="wTitle">Choose a network</h4>
+              <a class="button outline" href="#" id="deeplink-btc">Open Bitcoin</a>
+              <a class="button outline" href="#" id="deeplink-eth">Open Ethereum</a>
+              <a class="button outline" href="#" id="deeplink-sol">Open Solana</a>
+              <div style="display:flex; gap:8px; margin-top:8px; justify-content:center">
+                <button id="sheetClose" class="button outline">Close</button>
+              </div>
+            </div>
+          </div>
+
+          <p class="note" style="margin-top:10px">
+            Want human-readable? If your wallet supports UD, you can also tip <strong>xraymetax.online</strong>.
+          </p>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    © 2025 XRayCrypto™ ·
-    <a href="https://x.com/XRayCrypto101" target="_blank" class="x-link">X</a>
-    <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
+    © 2025 XRayCrypto™ · <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
   </footer>
 
   <script src="main.js"></script>
   <script>
-    // tiny copy helper (keeps using your existing style)
+    // Copy buttons
     document.addEventListener('click', async (e)=>{
       const btn = e.target.closest('[data-copy]');
       if(!btn) return;
@@ -105,7 +166,59 @@
       try{
         await navigator.clipboard.writeText(el.textContent.trim());
         btn.textContent = 'Copied!'; setTimeout(()=> btn.textContent='Copy', 1200);
-      }catch{ btn.textContent='Failed'; setTimeout(()=> btn.textContent='Copy', 1200); }
+      }catch{
+        btn.textContent='Failed'; setTimeout(()=> btn.textContent='Copy', 1200);
+      }
+    });
+
+    // Build deeplinks from visible addresses
+    function setDeepLinks() {
+      const btc = document.getElementById('addr-btc')?.textContent.trim();
+      const eth = document.getElementById('addr-eth')?.textContent.trim();
+      const sol = document.getElementById('addr-sol')?.textContent.trim();
+
+      // BIP21: bitcoin:<addr>[?amount=...]
+      const btcURL = new URL(`bitcoin:${encodeURIComponent(btc || '')}`);
+
+      // ETH: ethereum:<addr>  (for amounts you could use EIP-681)
+      const ethURL = `ethereum:${encodeURIComponent(eth || '')}`;
+
+      // SOL: solana:<addr>
+      const solURL = `solana:${encodeURIComponent(sol || '')}`;
+
+      document.getElementById('deeplink-btc').href = btcURL.toString();
+      document.getElementById('deeplink-eth').href = ethURL;
+      document.getElementById('deeplink-sol').href = solURL;
+    }
+
+    // Helper: try to open a wallet app; if no handler, show a hint
+    function tryOpen(url) {
+      const timer = setTimeout(() => {
+        if (!document.hidden) alert('No wallet app handled this link. Please open your wallet first or use Copy.');
+      }, 1200);
+      // cancel timer if the page becomes hidden (app took over)
+      const cancel = () => { clearTimeout(timer); document.removeEventListener('visibilitychange', cancel); };
+      document.addEventListener('visibilitychange', cancel, { once: true });
+
+      window.location.href = url;
+    }
+
+    // Simple sheet for mobile “Open in Wallet”
+    const openBtn = document.getElementById('openWalletBtn');
+    const sheet  = document.getElementById('walletSheet');
+    const close  = document.getElementById('sheetClose');
+
+    openBtn?.addEventListener('click', ()=>{ setDeepLinks(); sheet.style.display='block'; });
+    close?.addEventListener('click', ()=>{ sheet.style.display='none'; });
+
+    // Intercept deeplink clicks to use tryOpen()
+    ['deeplink-btc','deeplink-eth','deeplink-sol'].forEach(id => {
+      const a = document.getElementById(id);
+      if (!a) return;
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        tryOpen(a.href);
+      });
     });
   </script>
 </body>

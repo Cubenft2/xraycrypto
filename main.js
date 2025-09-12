@@ -405,7 +405,13 @@ function bindHeaderControls(){
     };
   }
 
-  // News tab switcher (FIXED: add back)
+  // --- NEW: News Refresh button binding ---
+  const refreshBtn = document.getElementById('newsRefresh');
+  if (refreshBtn) {
+    refreshBtn.onclick = () => { loadNewsFromWorker(); };
+  }
+
+  // News tab switcher
   const tabsEl = document.getElementById('newsTabs') || document.querySelector('#news .tabs');
   if (tabsEl) {
     tabsEl.addEventListener('click', (e)=>{
@@ -510,7 +516,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
     ensureMounted(mainRoot);
 
     loadNewsFromWorker();
-    setInterval(()=> loadNewsFromWorker(), 300000);
+
+    // --- NEW: only auto-refresh if the page actually has the news lists
+    const hasNewsLists = document.getElementById('newsListCrypto') && document.getElementById('newsListMarkets');
+    if (hasNewsLists) {
+      setInterval(()=> loadNewsFromWorker(), 300000);
+    }
   }catch(e){ console.error('Init failed:', e); }
 
   // Bump super-short iframes that some mobile browsers collapse
@@ -590,6 +601,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
       const { nextMain, nextHeaderControls, nextTitle } = extract(html);
       if(!nextMain || !nextHeaderControls) throw new Error('Missing main/headerControls');
 
+      // --- NEW: sync page-specific <body> classes from fetched page ---
+      const theme = getTheme() === 'light' ? 'light' : 'dark';
+      const tmpDoc = new DOMParser().parseFromString(html, 'text/html');
+      const incomingBodyClass = (tmpDoc.body && tmpDoc.body.className) || '';
+      const kept = document.body.className
+        .split(/\s+/)
+        .filter(c => c && !/-page$/.test(c) && c !== 'light' && c !== 'dark');
+      document.body.className = kept.join(' ');
+      incomingBodyClass.split(/\s+/).forEach(c => { if (c) document.body.classList.add(c); });
+      document.body.classList.add(theme);
+
       const currentMain = document.getElementById(MAIN_ID);
 
       // swap header controls first
@@ -608,7 +630,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         loadNewsFromWorker();
         bindChillZoneEffects();
 
-        // >>> Minimal fix: bind again AFTER main is in the DOM so News tabs work without refresh
+        // bind again AFTER main is in the DOM so News tabs work without refresh
         bindHeaderControls();
       }); });
 

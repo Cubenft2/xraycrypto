@@ -4,13 +4,13 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>XRayCrypto — Chill Zone</title>
-  <meta name="description" content="Relax with 24/7 live YouTube streams: Lofi beats, nature, anime vibes, and more — only on XRayCrypto Chill Zone."/>
-  <meta name="keywords" content="chill zone, lofi beats, anime music, crypto chill, live streams, XRayCrypto"/>
+  <meta name="description" content="Relax with 24/7 live YouTube, Spotify, and Twitch streams — only on XRayCrypto Chill Zone."/>
+  <meta name="keywords" content="chill zone, lofi beats, synthwave, twitch, spotify, live streams, XRayCrypto"/>
   <link rel="canonical" href="https://xraymetax.online/chill.html"/>
 
   <!-- Open Graph -->
   <meta property="og:title" content="XRayCrypto — Chill Zone"/>
-  <meta property="og:description" content="Relax with 24/7 live YouTube streams: Lofi beats, nature, anime vibes, and more — only on XRayCrypto Chill Zone."/>
+  <meta property="og:description" content="Relax with 24/7 live YouTube, Spotify, and Twitch streams — lofi, synthwave, study, and more."/>
   <meta property="og:image" content="https://xraymetax.online/pfp.png"/>
   <meta property="og:url" content="https://xraymetax.online/chill.html"/>
   <meta property="og:type" content="website"/>
@@ -18,11 +18,33 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="XRayCrypto — Chill Zone"/>
-  <meta name="twitter:description" content="Relax with 24/7 live YouTube streams: Lofi beats, nature, anime vibes, and more — only on XRayCrypto Chill Zone."/>
+  <meta name="twitter:description" content="Relax with 24/7 live YouTube, Spotify, and Twitch streams — lofi, synthwave, study, and more."/>
   <meta name="twitter:image" content="https://xraymetax.online/pfp.png"/>
 
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
+
+  <style>
+    /* tiny tabs for source switcher */
+    .source-tabs{display:flex;gap:6px;margin:8px 0 10px;flex-wrap:wrap}
+    .source-tabs .tab{
+      appearance:none;cursor:pointer;border:1px solid var(--border);
+      background:var(--surface-2);color:var(--text);padding:6px 10px;
+      border-radius:999px;font-weight:700;font-size:.85rem;
+      transition:background .15s ease,color .15s ease,border-color .15s ease,box-shadow .15s ease;
+    }
+    .source-tabs .tab:hover{border-color:var(--accent);color:var(--accent)}
+    .source-tabs .tab.active{background:var(--accent-2);color:#000;border-color:var(--accent-2);box-shadow:0 0 0 1px var(--accent-2) inset}
+
+    /* keep iframes tidy */
+    .provider[hidden]{display:none !important}
+    .provider iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .provider{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/9}
+
+    /* Better card spacing for this page */
+    .video-card{ padding:12px; }
+    .video-card h2{ margin:0; font-size:1rem; }
+  </style>
 </head>
 
 <body>
@@ -42,7 +64,10 @@
         <a href="watchlist.html" data-softnav>Watchlist</a>
         <a href="news.html" data-softnav>News</a>
         <a href="store.html" data-softnav>Store</a>
-        <a href="chill.html" class="active" data-softnav>Chill Zone</a>
+        <a href="chill.html" class="active" data-softnav>ChillZone</a>
+        <a href="support.html" class="support-link" data-softnav>
+          <span class="support-icon">❤</span><span class="support-text">support</span>
+        </a>
       </nav>
 
       <div id="headerControls" class="symbol-form">
@@ -62,183 +87,308 @@
       <!-- GRID: 1 column on small screens, 2 columns on desktop -->
       <div class="chill-grid">
 
-        <!-- Card 1 -->
+        <!-- Helper: Twitch requires your domain in ?parent= – we’ll inject it at runtime -->
+        <script id="twitch-parent" type="application/json">
+          {"defaults":["xraymetax.online","localhost"]}
+        </script>
+
+        <!-- CARD 1 -->
         <article class="card video-card">
           <header class="video-card-head">
             <h2>Lofi Girl (Chill Beats)</h2>
             <span class="live-badge"><span class="dot"></span>LIVE</span>
           </header>
-          <div class="video-frame" data-chill>
+
+          <div class="source-tabs" role="tablist" aria-label="Choose source">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+
+          <!-- YouTube -->
+          <div class="provider video-frame" data-kind="yt">
             <iframe
               src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&mute=1"
               title="Lofi Girl Live"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen loading="lazy"></iframe>
           </div>
+
+          <!-- Spotify -->
+          <div class="provider video-frame" data-kind="sp" hidden>
+            <iframe
+              src="https://open.spotify.com/embed/playlist/37i9dQZF1DX8Uebhn9wzrS"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy" title="Spotify lofi beats"></iframe>
+          </div>
+
+          <!-- Twitch -->
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe
+              data-twitch-src="https://player.twitch.tv/?channel=lofigirl&muted=true"
+              allow="autoplay; fullscreen; picture-in-picture"
+              loading="lazy" title="Twitch Lofi Girl"></iframe>
+          </div>
         </article>
 
-        <!-- Card 2 -->
+        <!-- CARD 2 -->
         <article class="card video-card">
           <header class="video-card-head">
             <h2>Synthwave Stream</h2>
             <span class="live-badge"><span class="dot"></span>LIVE</span>
           </header>
-          <div class="video-frame" data-chill>
+
+          <div class="source-tabs" role="tablist">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+
+          <div class="provider video-frame" data-kind="yt">
             <iframe
               src="https://www.youtube.com/embed/4xDzrJKXOOY?autoplay=0&mute=1"
-              title="Synthwave Stream"
+              title="Synthwave Live"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen loading="lazy"></iframe>
           </div>
+
+          <div class="provider video-frame" data-kind="sp" hidden>
+            <iframe
+              src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0FXhZ0w5bPS"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy" title="Spotify Synthwave"></iframe>
+          </div>
+
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe
+              data-twitch-src="https://player.twitch.tv/?channel=chillhopmusic&muted=true"
+              allow="autoplay; fullscreen; picture-in-picture"
+              loading="lazy" title="Twitch Chillhop"></iframe>
+          </div>
         </article>
 
-        <!-- Card 3 -->
+        <!-- CARD 3 -->
         <article class="card video-card">
           <header class="video-card-head">
             <h2>Noir Chill</h2>
             <span class="live-badge"><span class="dot"></span>LIVE</span>
           </header>
-          <div class="video-frame" data-chill>
+
+          <div class="source-tabs" role="tablist">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+
+          <div class="provider video-frame" data-kind="yt">
             <iframe
               src="https://www.youtube.com/embed/gLD-WKMVYhE?autoplay=0&mute=1"
               title="Noir Chill"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen loading="lazy"></iframe>
           </div>
-        </article>
 
-        <!-- Card 4 -->
-        <article class="card video-card">
-          <header class="video-card-head">
-            <h2>Chill Beats</h2>
-            <span class="live-badge"><span class="dot"></span>LIVE</span>
-          </header>
-          <div class="video-frame" data-chill>
+          <div class="provider video-frame" data-kind="sp" hidden>
             <iframe
-              src="https://www.youtube.com/embed/IxVLZsdpb2o?autoplay=0&mute=1"
-              title="Chill Beats"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
+              src="https://open.spotify.com/embed/playlist/37i9dQZF1DXbITWG1ZJKYt"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy" title="Spotify Noir Jazz"></iframe>
+          </div>
+
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe
+              data-twitch-src="https://player.twitch.tv/?channel=thejazzhopcafe&muted=true"
+              allow="autoplay; fullscreen; picture-in-picture"
+              loading="lazy" title="Twitch Jazz Hop Café"></iframe>
           </div>
         </article>
 
-        <!-- Card 5 -->
+        <!-- CARD 4 -->
         <article class="card video-card">
-          <header class="video-card-head">
-            <h2>Study Chill</h2>
-            <span class="live-badge"><span class="dot"></span>LIVE</span>
-          </header>
-          <div class="video-frame" data-chill>
-            <iframe
-              src="https://www.youtube.com/embed/1oDrJba2PSs?autoplay=0&mute=1"
-              title="Study Chill"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
+          <header class="video-card-head"><h2>Chill Beats</h2><span class="live-badge"><span class="dot"></span>LIVE</span></header>
+          <div class="source-tabs" role="tablist">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+          <div class="provider video-frame" data-kind="yt">
+            <iframe src="https://www.youtube.com/embed/IxVLZsdpb2o?autoplay=0&mute=1" title="Chill Beats"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="sp" hidden>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX889U0CL85jj" loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Chill Beats"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe data-twitch-src="https://player.twitch.tv/?channel=chillhopmusic&muted=true" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" title="Chillhop Twitch"></iframe>
           </div>
         </article>
 
-        <!-- Card 6 -->
+        <!-- CARD 5 -->
         <article class="card video-card">
-          <header class="video-card-head">
-            <h2>Progressive Chill</h2>
-            <span class="live-badge"><span class="dot"></span>LIVE</span>
-          </header>
-          <div class="video-frame" data-chill>
-            <iframe
-              src="https://www.youtube.com/embed/UYOb37KRFqk?autoplay=0&mute=1"
-              title="Progressive Chill"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
+          <header class="video-card-head"><h2>Study Chill</h2><span class="live-badge"><span class="dot"></span>LIVE</span></header>
+          <div class="source-tabs" role="tablist">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+          <div class="provider video-frame" data-kind="yt">
+            <iframe src="https://www.youtube.com/embed/1oDrJba2PSs?autoplay=0&mute=1" title="Study Chill"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="sp" hidden>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO" loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Deep Focus"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe data-twitch-src="https://player.twitch.tv/?channel=lofigirl&muted=true" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" title="Lofi Girl Twitch"></iframe>
           </div>
         </article>
 
-        <!-- Card 7 -->
+        <!-- CARD 6 -->
         <article class="card video-card">
-          <header class="video-card-head">
-            <h2>Roosts Stream</h2>
-            <span class="live-badge"><span class="dot"></span>LIVE</span>
-          </header>
-          <div class="video-frame" data-chill>
-            <iframe
-              src="https://www.youtube.com/embed/e76DpWphneg?autoplay=0&mute=1"
-              title="Roosts Stream"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
+          <header class="video-card-head"><h2>Progressive Chill</h2><span class="live-badge"><span class="dot"></span>LIVE</span></header>
+          <div class="source-tabs" role="tablist">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+          <div class="provider video-frame" data-kind="yt">
+            <iframe src="https://www.youtube.com/embed/UYOb37KRFqk?autoplay=0&mute=1" title="Progressive Chill"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="sp" hidden>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ" loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Progressive House"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe data-twitch-src="https://player.twitch.tv/?channel=Monstercat&muted=true" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" title="Monstercat Twitch"></iframe>
           </div>
         </article>
 
-        <!-- Card 8 -->
+        <!-- CARD 7 -->
         <article class="card video-card">
-          <header class="video-card-head">
-            <h2>ADHD Relief</h2>
-            <span class="live-badge"><span class="dot"></span>LIVE</span>
-          </header>
-          <div class="video-frame" data-chill>
-            <iframe
-              src="https://www.youtube.com/embed/gWdV17aBFeM?autoplay=0&mute=1"
-              title="ADHD Relief"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
+          <header class="video-card-head"><h2>Roosts Stream</h2><span class="live-badge"><span class="dot"></span>LIVE</span></header>
+          <div class="source-tabs" role="tablist">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+          <div class="provider video-frame" data-kind="yt">
+            <iframe src="https://www.youtube.com/embed/e76DpWphneg?autoplay=0&mute=1" title="Roosts Stream"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="sp" hidden>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXa3hMzzadsxK" loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Ambient Chill"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe data-twitch-src="https://player.twitch.tv/?channel=chillhopmusic&muted=true" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" title="Chillhop Twitch"></iframe>
           </div>
         </article>
 
-        <!-- Card 9 -->
+        <!-- CARD 8 -->
         <article class="card video-card">
-          <header class="video-card-head">
-            <h2>Mexican Drive</h2>
-            <span class="live-badge"><span class="dot"></span>LIVE</span>
-          </header>
-          <div class="video-frame" data-chill>
-            <iframe
-              src="https://www.youtube.com/embed/qtg-ZLDIKvY?autoplay=0&mute=1"
-              title="Mexican Drive"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
+          <header class="video-card-head"><h2>ADHD Relief</h2><span class="live-badge"><span class="dot"></span>LIVE</span></header>
+          <div class="source-tabs" role="tablist">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+          <div class="provider video-frame" data-kind="yt">
+            <iframe src="https://www.youtube.com/embed/gWdV17aBFeM?autoplay=0&mute=1" title="ADHD Relief"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="sp" hidden>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWXLeA8Omikj7" loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Brain Food"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe data-twitch-src="https://player.twitch.tv/?channel=thebootlegboy&muted=true" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" title="bootleg boy Twitch"></iframe>
           </div>
         </article>
 
-        <!-- Card 10 -->
+        <!-- CARD 9 -->
         <article class="card video-card">
-          <header class="video-card-head">
-            <h2>Deep Focus</h2>
-            <span class="live-badge"><span class="dot"></span>LIVE</span>
-          </header>
-          <div class="video-frame" data-chill>
-            <iframe
-              src="https://www.youtube.com/embed/iJi5a2c32n4?autoplay=0&mute=1"
-              title="Deep Focus"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
+          <header class="video-card-head"><h2>Mexican Drive</h2><span class="live-badge"><span class="dot"></span>LIVE</span></header>
+          <div class="source-tabs" role="tablist">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+          <div class="provider video-frame" data-kind="yt">
+            <iframe src="https://www.youtube.com/embed/qtg-ZLDIKvY?autoplay=0&mute=1" title="Mexican Drive"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="sp" hidden>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX9OZisIoJQhG" loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Road Trip"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe data-twitch-src="https://player.twitch.tv/?channel=MrSuicideSheep&muted=true" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" title="MrSuicideSheep Twitch"></iframe>
           </div>
         </article>
 
-        <!-- Card 11 -->
+        <!-- CARD 10 -->
         <article class="card video-card">
-          <header class="video-card-head">
-            <h2>Evening Chill</h2>
-            <span class="live-badge"><span class="dot"></span>LIVE</span>
-          </header>
-          <div class="video-frame" data-chill>
-            <iframe
-              src="https://www.youtube.com/embed/RQhODxdBB60?autoplay=0&mute=1"
-              title="Evening Chill"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
+          <header class="video-card-head"><h2>Deep Focus</h2><span class="live-badge"><span class="dot"></span>LIVE</span></header>
+          <div class="source-tabs" role="tablist">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+          <div class="provider video-frame" data-kind="yt">
+            <iframe src="https://www.youtube.com/embed/iJi5a2c32n4?autoplay=0&mute=1" title="Deep Focus"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="sp" hidden>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ" loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Deep Focus"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe data-twitch-src="https://player.twitch.tv/?channel=chillhopmusic&muted=true" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" title="Chillhop Twitch"></iframe>
           </div>
         </article>
 
-        <!-- Card 12 -->
+        <!-- CARD 11 -->
         <article class="card video-card">
-          <header class="video-card-head">
-            <h2>Trap Session</h2>
-            <span class="live-badge"><span class="dot"></span>LIVE</span>
-          </header>
-          <div class="video-frame" data-chill>
-            <iframe
-              src="https://www.youtube.com/embed/oNMevWPa0Ms?autoplay=0&mute=1"
-              title="Trap Session"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
+          <header class="video-card-head"><h2>Evening Chill</h2><span class="live-badge"><span class="dot"></span>LIVE</span></header>
+          <div class="source-tabs" role="tablist">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+          <div class="provider video-frame" data-kind="yt">
+            <iframe src="https://www.youtube.com/embed/RQhODxdBB60?autoplay=0&mute=1" title="Evening Chill"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="sp" hidden>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4WYpdgoIcn6" loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Evening Acoustic"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe data-twitch-src="https://player.twitch.tv/?channel=thebootlegboy&muted=true" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" title="bootleg boy Twitch"></iframe>
+          </div>
+        </article>
+
+        <!-- CARD 12 -->
+        <article class="card video-card">
+          <header class="video-card-head"><h2>Trap Session</h2><span class="live-badge"><span class="dot"></span>LIVE</span></header>
+          <div class="source-tabs" role="tablist">
+            <button class="tab active" data-src="yt" role="tab" aria-selected="true">YouTube</button>
+            <button class="tab" data-src="sp" role="tab" aria-selected="false">Spotify</button>
+            <button class="tab" data-src="tw" role="tab" aria-selected="false">Twitch</button>
+          </div>
+          <div class="provider video-frame" data-kind="yt">
+            <iframe src="https://www.youtube.com/embed/oNMevWPa0Ms?autoplay=0&mute=1" title="Trap Session"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="sp" hidden>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4pAtJteyweF" loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Trap Mojito"></iframe>
+          </div>
+          <div class="provider video-frame" data-kind="tw" hidden>
+            <iframe data-twitch-src="https://player.twitch.tv/?channel=Monstercat&muted=true" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" title="Monstercat Twitch"></iframe>
           </div>
         </article>
 
@@ -248,9 +398,55 @@
   </main>
 
   <footer class="footer">
-    © 2025 XRayCrypto™· <a href="https://x.com/XRaycrypto101" target="_blank" class="x-link">X</a>
+    © 2025 XRayCrypto™ ·
+    <a href="https://x.com/XRayCryptox" target="_blank" class="x-link">X</a>
+    <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
   </footer>
 
   <script src="main.js"></script>
+
+  <!-- Page-local helpers: tabs + Twitch parent injector -->
+  <script>
+    // Tab switching (works with soft-nav)
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.source-tabs .tab');
+      if (!btn) return;
+
+      const tabs = btn.parentElement;
+      const card = tabs.closest('.video-card');
+      const target = btn.dataset.src; // 'yt' | 'sp' | 'tw'
+
+      // Toggle button state
+      tabs.querySelectorAll('.tab').forEach(b => {
+        const active = b === btn;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+
+      // Toggle providers
+      card.querySelectorAll('.provider').forEach(p => {
+        const kind = p.getAttribute('data-kind');
+        p.hidden = (kind !== target);
+      });
+    });
+
+    // Twitch parent injector: add current host to each Twitch iframe ?parent=
+    (function(){
+      const cfg = document.getElementById('twitch-parent');
+      const host = location.hostname;
+      const defaults = cfg ? (JSON.parse(cfg.textContent || '{}').defaults || []) : [];
+      const parents = new Set([...defaults, host].filter(Boolean));
+
+      document.querySelectorAll('iframe[data-twitch-src]').forEach(f => {
+        try{
+          const u = new URL(f.getAttribute('data-twitch-src'));
+          // Remove any existing parent params, re-add canonical list
+          u.searchParams.delete('parent');
+          parents.forEach(p => u.searchParams.append('parent', p));
+          f.src = u.toString();
+        }catch(e){}
+      });
+    })();
+  </script>
 </body>
 </html>
