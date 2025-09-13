@@ -23,6 +23,35 @@
 
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
+
+  <!-- Fullscreen chart controls (same as Home) -->
+  <style>
+    .chart-expand-btn{
+      position:absolute; right:12px; top:10px; z-index:5;
+      font:600 12px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      padding:6px 10px; border-radius:8px; border:1px solid var(--border);
+      background:var(--surface); color:var(--text);
+      opacity:.85; cursor:pointer;
+    }
+    .chart-expand-btn:hover{ opacity:1 }
+
+    body.chart-full .header,
+    body.chart-full .footer,
+    body.chart-full .ticker { display:none !important; }
+
+    body.chart-full .main{
+      max-width:none !important; width:100% !important;
+      padding:0 !important; margin:0 !important;
+    }
+    body.chart-full #chart{ margin:0 !important; padding:0 !important; }
+    body.chart-full #chart .card{
+      height:100vh !important; width:100% !important; border-radius:0 !important;
+    }
+
+    #chartClose{ display:none; }
+    body.chart-full #chartOpen{ display:none; }
+    body.chart-full #chartClose{ display:inline-block; }
+  </style>
 </head>
 
 <body>
@@ -48,7 +77,6 @@
         </a>
       </nav>
 
-      <!-- page-specific controls (Markets) -->
       <div id="headerControls" class="symbol-form">
         <form id="marketSymbolForm" autocomplete="off">
           <input id="marketSymbolInput" type="text" placeholder="AAPL, SPY, NVDA, AMZN, BTCUSDT"/>
@@ -71,7 +99,12 @@
   <main class="main container" id="pageMain">
     <section class="section" id="chart">
       <h1>SPY — Advanced Chart</h1>
-      <div class="card" style="height:600px">
+
+      <!-- Expand / Close buttons -->
+      <button id="chartOpen" class="chart-expand-btn" type="button" title="Expand chart (fullscreen)">⤢ Expand</button>
+      <button id="chartClose" class="chart-expand-btn" type="button" title="Close fullscreen">⤡ Close</button>
+
+      <div class="card" style="height:600px; position:relative">
         <div id="adv-chart-wrap" class="tradingview-widget-container" data-tv="advchart" style="height:100%;width:100%">
           <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
           <div class="tradingview-widget-copyright">
@@ -135,7 +168,7 @@
       </div>
     </section>
 
-    <!-- Latest News (two tabs: Crypto | Markets) -->
+    <!-- News -->
     <section class="section" id="news">
       <div class="card news-card">
         <div class="news-head" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
@@ -163,13 +196,28 @@
 
   <script src="main.js"></script>
 
-  <!-- Refresh news on click -->
+  <!-- Same fullscreen controller as Home -->
   <script>
-    document.addEventListener('click', (e) => {
-      if (e.target && e.target.id === 'newsRefresh') {
-        try { loadNewsFromWorker(); } catch(_) {}
+    (function(){
+      const openBtn  = document.getElementById('chartOpen');
+      const closeBtn = document.getElementById('chartClose');
+      function pumpResize(){
+        window.dispatchEvent(new Event('resize'));
+        setTimeout(()=>window.dispatchEvent(new Event('resize')), 120);
       }
-    });
+      function openFull(){
+        document.body.classList.add('chart-full');
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        pumpResize();
+      }
+      function closeFull(){
+        document.body.classList.remove('chart-full');
+        pumpResize();
+      }
+      if(openBtn) openBtn.addEventListener('click', openFull);
+      if(closeBtn) closeBtn.addEventListener('click', closeFull);
+      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeFull(); });
+    })();
   </script>
 </body>
 </html>

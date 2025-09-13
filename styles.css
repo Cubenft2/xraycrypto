@@ -482,3 +482,498 @@ body.aurora-on::after{
   body.aurora-on::before,
   body.aurora-on::after{ animation:none; opacity:.18 }
 }
+/* === Duo grid (Screener + News side-by-side) === */
+.duo-grid{
+  display:grid; gap:16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 980px){
+  .duo-grid{ grid-template-columns: 1.2fr .8fr; }
+}
+
+/* make card children stretch to equal heights */
+.equal{ display:flex; flex-direction:column; }
+.equal > *:last-child{ flex:1; min-height:0; }
+
+/* scroll area for news so it matches screener height visually */
+.news-scroll{ height:520px; overflow:auto; }
+
+/* === Pro layout === */
+body.pro .chart-card{ height:78vh !important; }
+@media (min-width: 980px){
+  body.pro #duo .news-card .news-scroll{ height:78vh; }
+  body.pro #duo .news-card{ position:sticky; top: calc(var(--topbar-h) + var(--ticker-h) * 2 + 12px); }
+}
+/* Pro button state */
+#proToggle.is-on{ box-shadow:0 0 0 2px var(--accent) inset; border-color:var(--accent); color:var(--accent); }
+/* ====== XR DESKTOP "TALL DECK" LAYOUT (shared by Home & Markets) ====== */
+/* Height equals full viewport minus header + both tickers + a bit of margin */
+:root{
+  --deck-h: calc(100vh - (var(--topbar-h) + var(--ticker-h)*2 + 64px));
+}
+
+.section.tall { margin-top: 18px; }
+.card.tall {
+  height: var(--deck-h);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Make all TradingView widgets fill the tall card */
+.card.tall .tradingview-widget-container,
+.card.tall .tradingview-widget-container__widget{
+  width:100%!important;
+  height:100%!important;
+}
+
+/* Two-up row for Screener + News (same height, internal scrollbars) */
+.decks-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:16px;
+  margin-top:18px;
+}
+.card.tall .scroll-body{
+  position:absolute; inset:12px;
+  overflow:auto; border-radius: var(--radius);
+}
+
+/* News card tweaks + internal scroll */
+.card.news-card.tall{ border-width:4px; }
+.card.news-card.tall .news-head{ position:sticky; top:0; background:var(--surface); z-index:1; padding-top:4px; }
+.card.news-card.tall .news-scroll{ height: calc(100% - 46px); overflow:auto; padding-right:4px; }
+
+/* On small screens: stack everything */
+@media (max-width: 900px){
+  :root{ --deck-h: min(70vh, 640px); }
+  .decks-grid{ grid-template-columns: 1fr; }
+  .card.tall{ height: auto; min-height: 420px; }
+  .card.news-card.tall .news-scroll{ height:auto; max-height: 520px; }
+}
+/* ====== Shared wide desktop layout for Home & Markets ====== */
+.container.wide{ max-width: 1680px; } /* make content span most of the monitor */
+
+:root{
+  --panel-h: 760px; /* desktop panel height for chart/heatmap/screener/news */
+}
+
+/* Big equal-height panels */
+.panel{
+  height: var(--panel-h);
+}
+
+/* Two-column row for Screener + News */
+.row-2{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:16px;
+}
+
+/* Card that can scroll internally (for long lists) */
+.scroll-card{
+  overflow: hidden; /* keep borders clean */
+  display:flex;
+  flex-direction:column;
+}
+.scroll-card .news-head{ padding-bottom:8px; border-bottom:1px solid var(--border); }
+.scroll-card .news-list{
+  flex:1 1 auto;
+  min-height:0;              /* allow child to shrink */
+  overflow:auto;             /* <— vertical scrollbar for news */
+  padding-right:6px;         /* room for scrollbar */
+}
+
+/* Screener container should fill the panel (TV widget handles its own internal scrollbars) */
+[data-tv="screener"] .tradingview-widget-container__widget{ height:100% !important; }
+
+/* Heatmap height: match panel height */
+[data-tv="crypto-heatmap"] .tradingview-widget-container__widget,
+[data-tv="stock-heatmap"] .tradingview-widget-container__widget{ height:100% !important; }
+
+/* Chart container keeps tools visible and expands side-to-side */
+#adv-chart-wrap .tradingview-widget-container__widget{ height:100% !important; }
+
+/* Mobile stacking */
+@media (max-width: 900px){
+  .container.wide{ max-width: 100%; }
+  :root{ --panel-h: 520px; }            /* shorter on phones */
+  .row-2{ grid-template-columns: 1fr; } /* stack screener + news */
+  .panel{ height: var(--panel-h); }
+}
+/* ====== Equal-height stacked panels (desktop), scroll inside widgets/news ====== */
+:root{
+  /* desktop panel height — tweak to taste */
+  --panel-h: 78vh;
+}
+.panel .panel-card{
+  height: var(--panel-h);
+  display: block;
+}
+.h-100{ height:100%; }
+
+/* Make all TradingView widget containers stretch to the panel height */
+.panel .tradingview-widget-container,
+.panel .tradingview-widget-container__widget{
+  height:100%!important; width:100%!important;
+}
+
+/* News card uses flex: header (auto) + scroll area (fills) */
+.flex-vert{ display:flex; flex-direction:column; }
+.news-card .news-head{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  margin-bottom:8px;
+}
+.news-card .news-scroll{
+  flex:1 1 auto; min-height:0;      /* enables the overflow child below */
+  overflow:auto; padding-right:6px; /* inner scrollbar */
+  border-top:1px solid var(--border);
+}
+.news-card .news-list{ margin:0; }
+
+/* On small screens, let panels size naturally (stacked like before) */
+@media (max-width: 900px){
+  :root{ --panel-h: auto; }
+  .panel .panel-card{ height:auto; }
+  .news-card .news-scroll{ max-height: 520px; }
+}
+<section class="section" id="chart">
+  <h1>SPY — Advanced Chart</h1>
+  <div class="card full-bleed vh-78">
+    <div id="adv-chart-wrap" class="tradingview-widget-container" data-tv="advchart" style="height:100%;width:100%">
+      <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+      <div class="tradingview-widget-copyright">
+        <a href="https://www.tradingview.com/symbols/AMEX-SPY/?exchange=AMEX" rel="noopener nofollow" target="_blank">
+          <span class="blue-text">SPY chart by TradingView</span>
+        </a>
+      </div>
+      <script class="tv-config" type="application/json">
+        {
+          "allow_symbol_change": true,
+          "calendar": false,
+          "details": true,
+          "hide_side_toolbar": false,
+          "hide_top_toolbar": false,
+          "hide_legend": false,
+          "hide_volume": false,
+          "hotlist": true,
+          "interval": "60",
+          "locale": "en",
+          "save_image": true,
+          "style": "1",
+          "symbol": "AMEX:SPY",
+          "timezone": "Etc/UTC",
+          "withdateranges": true,
+          "autosize": true
+        }
+      </script>
+    </div>
+  </div>
+</section>
+/* ==== Equal panel heights & news scroll (desktop) ==== */
+:root { --panel-h: 600px; } /* match your chart/heatmap height */
+
+@media (min-width: 1024px) {
+  /* Cap the News card to the same height as chart/heatmap */
+  #news .news-card {
+    max-height: var(--panel-h);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* clip inside, not the card itself */
+  }
+
+  /* Head stays fixed; lists scroll inside */
+  #news .news-card .news-head {
+    flex: 0 0 auto;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+
+  /* Both lists get the same scrollable height */
+  #news .news-card .news-list {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;            /* important for flex scroll */
+    padding-right: 4px;       /* room for scrollbar */
+  }
+
+  /* Optional nice gap between big sections */
+  .section + .section { margin-top: 16px; }
+}
+/* ===== Full-screen chart layout (Expand) ===== */
+body.chart-full { overflow: hidden; }
+
+/* Hide chrome while expanded */
+body.chart-full .header,
+body.chart-full .footer,
+body.chart-full .ticker { display: none !important; }
+
+/* Let the main area take the entire viewport */
+body.chart-full .main,
+body.chart-full .container {
+  position: static;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: 100vw !important;
+  width: 100vw !important;
+}
+
+/* Pin the chart section to the viewport */
+body.chart-full #chart {
+  position: fixed;
+  inset: 0;                 /* top:0 right:0 bottom:0 left:0 */
+  z-index: 9999;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: var(--bg, #0f1115);
+}
+
+/* Make the card + widget span the whole screen */
+body.chart-full #chart .card {
+  height: 100vh !important;
+  width: 100vw !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+body.chart-full #adv-chart-wrap,
+body.chart-full #adv-chart-wrap .tradingview-widget-container__widget {
+  height: 100vh !important;
+  width: 100vw !important;
+}
+/* === Expanded chart sizing (bounded) === */
+:root{
+  /* Tweak these two to change how much “air” you want around the chart */
+  --chart-full-hpad: 12.5vw; /* left/right pad ≈ 25% total width trimmed */
+  --chart-full-vpad: 6vh;    /* top/bottom pad */
+}
+
+/* When body.chart-full is on (your Expand button), make chart fill the
+   viewport minus the pads above. */
+body.chart-full header,
+body.chart-full .ticker,
+body.chart-full footer{ display:none !important; }
+
+body.chart-full #pageMain{ padding:0 !important; }
+
+body.chart-full #chart .card,
+body.chart-full .chart-card{
+  position: fixed;
+  z-index: 1000;
+  left: var(--chart-full-hpad);
+  right: var(--chart-full-hpad);
+  top: var(--chart-full-vpad);
+  bottom: var(--chart-full-vpad);
+  margin: 0;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Ensure the TradingView widget stretches perfectly inside */
+body.chart-full #chart .tradingview-widget-container,
+body.chart-full #chart .tradingview-widget-container__widget{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Put the Close button inside the padded area */
+body.chart-full #chartExpand{
+  position: fixed;
+  top: calc(var(--chart-full-vpad) - 36px);
+  right: calc(var(--chart-full-hpad) - 4px);
+}
+:root{ --panel-height: 600px; } /* match your regular chart card height */
+
+.news-card{ max-height: var(--panel-height); overflow: auto; }
+.section .tradingview-widget-container[data-tv="screener"] .tradingview-widget-container__widget{
+  height: var(--panel-height) !important;
+}
+/* Fullscreen mode for chart */
+body.chart-full header,
+body.chart-full footer,
+body.chart-full .ticker,
+body.chart-full #heatmap,
+body.chart-full #screener,
+body.chart-full #news,
+body.chart-full .section:not(#chart) {
+  display: none !important;
+}
+
+body.chart-full #chart {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  margin: 0 !important;
+  border-radius: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+body.chart-full #chart [data-tv="advchart"] {
+  width: 100% !important;
+  height: 100vh !important;
+}
+
+body.chart-full #chartExpand {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 10000;
+}
+/* === Chart "expand under header" mode (keep nav + tickers on screen) === */
+:root{
+  --hdr-h: 56px;     /* your top bar height */
+  --tape-h: 28px;    /* height of ONE ticker bar */
+  --expand-gap: 8px; /* small gap below tapes */
+}
+
+/* Lock page scrolling while expanded */
+body.chart-expand {
+  overflow: hidden;
+}
+
+/* Put the chart card in a fixed, centered stage */
+body.chart-expand #chart .card {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+
+  /* sit just below header + two ticker rows */
+  top: calc(var(--hdr-h) + (2 * var(--tape-h)) + var(--expand-gap));
+
+  /* target: 75% width, full remaining height */
+  width: 75vw;
+  height: calc(100vh - (var(--hdr-h) + (2 * var(--tape-h)) + (2 * var(--expand-gap))));
+  margin: 0; /* neutralize any section margins while fixed */
+}
+
+/* Make the TradingView widget fill the card perfectly */
+body.chart-expand #chart .card .tradingview-widget-container,
+body.chart-expand #chart .card .tradingview-widget-container__widget {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Optional: dim the page behind the chart a bit (nice focus) */
+body.chart-expand::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.25);
+  z-index: 50;
+  pointer-events: none;
+}
+/* ===== XR overrides: panels + news height + centered expand ===== */
+
+/* 1) One single panel height to rule them all (chart, heatmap, screener, news) */
+:root{
+  --panel-h: 600px;            /* tweak to taste */
+  --expand-gap: 8px;           /* gap below tickers when expanded */
+}
+
+/* Make TV widgets fill their host panels */
+#adv-chart-wrap .tradingview-widget-container__widget,
+.panel .tradingview-widget-container,
+.panel .tradingview-widget-container__widget,
+.section .tradingview-widget-container[data-tv="screener"] .tradingview-widget-container__widget,
+[data-tv="crypto-heatmap"] .tradingview-widget-container__widget,
+[data-tv="stock-heatmap"]  .tradingview-widget-container__widget{
+  height: 100% !important;
+  width: 100% !important;
+}
+
+/* Ensure your “panel” cards are equal height on desktop */
+.panel,
+.panel .panel-card{
+  height: var(--panel-h);
+}
+
+/* News card: cap height to panel & scroll lists inside */
+#news .news-card{
+  max-height: var(--panel-h);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* keep border crisp */
+}
+#news .news-card .news-head{
+  flex: 0 0 auto;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+#news .news-card .news-list{
+  flex: 1 1 auto;
+  min-height: 0;      /* important for flex scroll */
+  overflow-y: auto;
+  padding-right: 6px; /* room for scrollbar */
+}
+
+/* Slightly wider content on big screens */
+.container.wide{ max-width: 1680px; }
+
+/* Mobile: stack & let cards auto-size a bit shorter */
+@media (max-width: 900px){
+  :root{ --panel-h: 520px; }
+  .panel, .panel .panel-card{ height: var(--panel-h); }
+  #news .news-card .news-list{ max-height: 520px; }
+}
+
+/* 2) Clean, centered EXPAND that keeps header + both tickers visible */
+:root{
+  --hdr-h: var(--topbar-h, 56px);
+  --tape-h: var(--ticker-h, 52px); /* height of one ticker row */
+}
+
+/* Lock page scroll while expanded and add a subtle backdrop */
+body.chart-expand{ overflow: hidden; }
+body.chart-expand::before{
+  content:"";
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.28);
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* The expanded chart card sits centered under header + two tickers */
+body.chart-expand #chart .card{
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(var(--hdr-h) + (2 * var(--tape-h)) + var(--expand-gap));
+  width: 75vw;  /* target width */
+  height: calc(100vh - (var(--hdr-h) + (2 * var(--tape-h)) + (2 * var(--expand-gap))));
+  margin: 0;
+  border-radius: 10px; /* keep your rounded look */
+  box-shadow: var(--shadow);
+}
+
+/* Make the TradingView widget fully fill the expanded card */
+body.chart-expand #chart .tradingview-widget-container,
+body.chart-expand #chart .tradingview-widget-container__widget{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Keep the rest of the sections visible behind; no need to hide header/tickers */
+body.chart-expand header,
+body.chart-expand .ticker,
+body.chart-expand footer{ display: block; }
+
+/* Position for your Expand/Close button inside the card */
+#chartExpand{
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  z-index: 70;
+}
+
+/* 3) Neutralize any older “chart-full” rules if they still exist */
+body.chart-full .header,
+body.chart-full .footer,
+body.chart-full .ticker,
+body.chart-full #chart,
+body.chart-full #adv-chart-wrap{ all: unset; } /* no-op old mode */
+
