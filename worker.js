@@ -32,6 +32,7 @@ export default {
       'coindesk.com', 'cointelegraph.com', 'theblock.co', 'decrypt.co', 'messari.io',
       'cryptoslate.com', 'bitcoinmagazine.com', 'blockworks.co', 'thedefiant.io',
       'protos.com', 'ambcrypto.com', 'beincrypto.com', 'coingape.com', 'chain.link',
+      'coinpedia.org', 'cryptopotato.com',   // <-- added
 
       // Markets / Business
       'reuters.com', 'cnbc.com', 'foxbusiness.com', 'apnews.com', 'wsj.com',
@@ -63,7 +64,7 @@ export default {
       if (!/^https?:$/.test(targetUrl.protocol)) {
         return withCORS('Only http(s) allowed', { status: 400 });
       }
-      // OPTIONAL SECURITY: comment out next 3 lines if you truly want open proxying
+      // OPTIONAL SECURITY
       if (!isAllowedHost(targetUrl.hostname.replace(/^www\./,''))) {
         return withCORS('Host not allowed', { status: 403 });
       }
@@ -108,7 +109,10 @@ export default {
           'https://protos.com/feed/',
           'https://ambcrypto.com/feed/',
           'https://beincrypto.com/feed/',
-          'https://coingape.com/feed/'
+          'https://coingape.com/feed/',
+          // new (requested)
+          'https://coinpedia.org/feed/',
+          'https://cryptopotato.com/feed/'
         ],
         stocks: [
           // existing

@@ -4,58 +4,12 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>XRayCrypto — Markets</title>
-  <meta name="description" content="Track stock market performance with live tickers, advanced charts, stock heatmaps, ETFs, crypto and curated financial news on XRayCrypto."/>
-  <meta name="keywords" content="XRayCrypto, markets, stock market, SPY, QQQ, DIA, NVDA, TSLA, AAPL, AMZN, MSFT, COIN, crypto markets, ETFs, stock screener, stock heatmap, market news, live tickers, tradingview"/>
-  <link rel="canonical" href="https://xraycrypto.io/markets.html"/>
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="XRayCrypto — Markets"/>
-  <meta property="og:description" content="Live stock & crypto markets with tickers, advanced charts, heatmaps, ETFs, and curated financial news."/>
-  <meta property="og:image" content="https://xraycrypto.io/pfp.png"/>
-  <meta property="og:url" content="https://xraycrypto.io/markets.html"/>
-  <meta property="og:type" content="website"/>
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="XRayCrypto — Markets"/>
-  <meta name="twitter:description" content="Track markets with live charts, tickers, and curated news on XRayCrypto."/>
-  <meta name="twitter:image" content="https://xraycrypto.io/pfp.png"/>
-
+  <meta name="description" content="Stocks & ETFs with advanced TradingView chart, stock heatmap, screener, and live market tickers — XRayCrypto."/>
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
-
-  <!-- Fullscreen chart controls (same as Home) -->
-  <style>
-    .chart-expand-btn{
-      position:absolute; right:12px; top:10px; z-index:5;
-      font:600 12px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      padding:6px 10px; border-radius:8px; border:1px solid var(--border);
-      background:var(--surface); color:var(--text);
-      opacity:.85; cursor:pointer;
-    }
-    .chart-expand-btn:hover{ opacity:1 }
-
-    body.chart-full .header,
-    body.chart-full .footer,
-    body.chart-full .ticker { display:none !important; }
-
-    body.chart-full .main{
-      max-width:none !important; width:100% !important;
-      padding:0 !important; margin:0 !important;
-    }
-    body.chart-full #chart{ margin:0 !important; padding:0 !important; }
-    body.chart-full #chart .card{
-      height:100vh !important; width:100% !important; border-radius:0 !important;
-    }
-
-    #chartClose{ display:none; }
-    body.chart-full #chartOpen{ display:none; }
-    body.chart-full #chartClose{ display:inline-block; }
-  </style>
 </head>
 
-<body>
-  <!-- HEADER -->
+<body class="markets-page">
   <header class="header">
     <div class="topbar container">
       <a class="brand" href="index.html" data-softnav>
@@ -73,16 +27,17 @@
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
         <a href="support.html" class="support-link" data-softnav>
-          <span class="support-icon">❤</span><span class="support-text">Support</span>
+          <span class="support-icon">❤</span><span class="support-text">💸</span>
         </a>
       </nav>
 
       <div id="headerControls" class="symbol-form">
         <form id="marketSymbolForm" autocomplete="off">
-          <input id="marketSymbolInput" type="text" placeholder="AAPL, SPY, NVDA, AMZN, BTCUSDT"/>
+          <input id="marketSymbolInput" name="symbol" type="text" placeholder="NVDA, AAPL, SPY…" aria-label="Symbol"/>
           <button class="button" type="submit">Open</button>
         </form>
         <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
+        <button id="chartExpand" class="button outline" type="button" title="Expand chart to fullscreen" aria-pressed="false">⤢</button>
       </div>
     </div>
 
@@ -90,37 +45,43 @@
     <div class="ticker"><div id="stocksTape"></div></div>
   </header>
 
-  <!-- CONFIG: Worker URL for aggregated news -->
+  <!-- Worker config (needed for News tabs to load on this page too) -->
   <script id="news-config" type="application/json">
     { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/fetch?url=" }
   </script>
 
-  <!-- CONTENT -->
   <main class="main container" id="pageMain">
+    <!-- Chart -->
     <section class="section" id="chart">
-      <h1>SPY — Advanced Chart</h1>
+      <h1>NVDA — Advanced Chart</h1>
 
-      <!-- Expand / Close buttons -->
-      <button id="chartOpen" class="chart-expand-btn" type="button" title="Expand chart (fullscreen)">⤢ Expand</button>
-      <button id="chartClose" class="chart-expand-btn" type="button" title="Close fullscreen">⤡ Close</button>
+      <div class="card">
+        <button id="chartFsClose" type="button" title="Close chart (Esc)">⤡</button>
 
-      <div class="card" style="height:600px; position:relative">
         <div id="adv-chart-wrap" class="tradingview-widget-container" data-tv="advchart" style="height:100%;width:100%">
           <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
           <div class="tradingview-widget-copyright">
-            <a href="https://www.tradingview.com/symbols/AMEX-SPY/?exchange=AMEX" rel="noopener nofollow" target="_blank">
-              <span class="blue-text">SPY chart by TradingView</span>
+            <a href="https://www.tradingview.com/symbols/NASDAQ-NVDA/" rel="noopener nofollow" target="_blank">
+              <span class="blue-text">NVDA chart by TradingView</span>
             </a>
           </div>
           <script class="tv-config" type="application/json">
             {
               "allow_symbol_change": true,
+              "calendar": false,
               "details": true,
+              "hide_side_toolbar": false,
+              "hide_top_toolbar": false,
+              "hide_legend": false,
+              "hide_volume": false,
+              "hotlist": true,
               "interval": "60",
               "locale": "en",
+              "save_image": true,
               "style": "1",
-              "symbol": "AMEX:SPY",
+              "symbol": "NASDAQ:NVDA",
               "timezone": "Etc/UTC",
+              "withdateranges": true,
               "autosize": true
             }
           </script>
@@ -128,65 +89,55 @@
       </div>
     </section>
 
-    <section class="section">
-      <h2>U.S. Stock Screener</h2>
+    <!-- Stock Heatmap -->
+    <section class="section" id="heatmap-eq">
       <div class="card">
-        <div class="tradingview-widget-container" data-tv="screener">
-          <div class="tradingview-widget-container__widget"></div>
-          <script class="tv-config" type="application/json">
-            {
-              "market": "america",
-              "defaultColumn": "overview",
-              "defaultScreen": "most_capitalized",
-              "locale": "en",
-              "width": "100%",
-              "height": 550
-            }
-          </script>
-        </div>
-      </div>
-    </section>
-
-    <section class="section desktop-only">
-      <h2>U.S. Stocks Heatmap</h2>
-      <div class="card">
+        <h3>Stock Heatmap</h3>
         <div class="tradingview-widget-container" data-tv="stock-heatmap">
           <div class="tradingview-widget-container__widget"></div>
-          <script class="tv-config" type="application/json">
-            {
-              "dataSource": "AllUSA",
-              "blockSize": "market_cap_basic",
-              "blockColor": "change",
-              "grouping": "sector",
-              "locale": "en",
-              "width": "100%",
-              "height": 520
-            }
-          </script>
+          <script>{ "dataSource":"S&P500","blockSize":"market_cap_basic","grouping":"sector","colorTheme":"light","width":"100%","height":460 }</script>
+          <script src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async></script>
         </div>
-        <p class="note">Hidden on mobile to keep the page fast.</p>
       </div>
     </section>
 
-    <!-- News -->
+    <!-- Stock Screener -->
+    <section class="section" id="screener-eq">
+      <div class="card">
+        <h3>Stock Screener</h3>
+        <div class="tradingview-widget-container" data-tv="screener">
+          <div class="tradingview-widget-container__widget"></div>
+          <script>{ "defaultColumn":"overview","defaultScreen":"most_capitalized","market":"america","colorTheme":"light","width":"100%","height":520 }</script>
+          <script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async></script>
+        </div>
+      </div>
+    </section>
+
+    <!-- News (same component as Home; main.js binds it) -->
     <section class="section" id="news">
+      <h1>Live Market News</h1>
+      <p>Curated real-time headlines from crypto + global markets.</p>
+
       <div class="card news-card">
         <div class="news-head" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
           <h3 style="margin:0">News</h3>
           <span id="newsUpdatedAt" class="updated"></span>
+
           <div class="tabs" role="tablist" style="margin-left:auto" id="newsTabs">
             <button id="newsRefresh" class="button outline" type="button" title="Refresh">↻ Refresh</button>
             <button class="tab active" data-tab="crypto" role="tab" aria-selected="true">Crypto</button>
             <button class="tab" data-tab="markets" role="tab" aria-selected="false">Markets</button>
           </div>
         </div>
-        <ul id="newsListCrypto" class="news-list" data-tab-panel="crypto"></ul>
-        <ul id="newsListMarkets" class="news-list hidden" data-tab-panel="markets"></ul>
+
+        <div class="news-scroll">
+          <ul id="newsListCrypto" class="news-list" data-tab-panel="crypto"></ul>
+          <ul id="newsListMarkets" class="news-list hidden" data-tab-panel="markets"></ul>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
     © 2025 XRayCrypto™ ·
@@ -195,29 +146,5 @@
   </footer>
 
   <script src="main.js"></script>
-
-  <!-- Same fullscreen controller as Home -->
-  <script>
-    (function(){
-      const openBtn  = document.getElementById('chartOpen');
-      const closeBtn = document.getElementById('chartClose');
-      function pumpResize(){
-        window.dispatchEvent(new Event('resize'));
-        setTimeout(()=>window.dispatchEvent(new Event('resize')), 120);
-      }
-      function openFull(){
-        document.body.classList.add('chart-full');
-        window.scrollTo({ top: 0, behavior: 'auto' });
-        pumpResize();
-      }
-      function closeFull(){
-        document.body.classList.remove('chart-full');
-        pumpResize();
-      }
-      if(openBtn) openBtn.addEventListener('click', openFull);
-      if(closeBtn) closeBtn.addEventListener('click', closeFull);
-      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeFull(); });
-    })();
-  </script>
 </body>
 </html>

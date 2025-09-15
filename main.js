@@ -66,8 +66,7 @@ function ensureStarsCanvas(){
       const count = Math.floor((w*h) / (9000 * DPR));
       stars = [];
       for(let i=0;i<count;i++){
-        const x = Math.random()*w;
-        const y = Math.random()*h;
+        const x = Math.random()*w, y = Math.random()*h;
         const r = Math.random()*1.6 + 0.2;
         const tw = Math.random()*0.6 + 0.2;
         stars.push({x,y,r,tw,phase:Math.random()*Math.PI*2});
@@ -81,13 +80,10 @@ function ensureStarsCanvas(){
       grad.addColorStop(0.60, 'rgba(200,220,255,0.05)');
       grad.addColorStop(1.00, 'rgba(255,255,255,0.00)');
       ctx.globalCompositeOperation = 'lighter';
-      ctx.fillStyle = grad;
-      ctx.fillRect(0,0,w,h);
+      ctx.fillStyle = grad; ctx.fillRect(0,0,w,h);
       const veil = ctx.createRadialGradient(w*0.65, h*0.35, 0, w*0.65, h*0.35, Math.max(w,h)*0.8);
-      veil.addColorStop(0, 'rgba(0,207,255,0.05)');
-      veil.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = veil;
-      ctx.fillRect(0,0,w,h);
+      veil.addColorStop(0, 'rgba(0,207,255,0.05)'); veil.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = veil; ctx.fillRect(0,0,w,h);
       ctx.globalCompositeOperation = 'source-over';
     }
     function tick(){
@@ -96,14 +92,12 @@ function ensureStarsCanvas(){
       const light = document.body.classList.contains('light');
       ctx.fillStyle = light ? 'rgba(246,247,249,1)' : 'rgba(15,17,21,1)';
       ctx.fillRect(0,0,w,h);
-      ctx.save();
-      ctx.fillStyle = '#fff';
+      ctx.save(); ctx.fillStyle = '#fff';
       for(const s of stars){
         const flicker = 0.65 + 0.35*Math.sin(t*s.tw + s.phase);
         const r = Math.max(0.6, s.r * flicker);
         ctx.globalAlpha = 0.4 + 0.6*flicker;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y + Math.sin((s.x/w)*2*Math.PI + t*0.03)*2, r, 0, Math.PI*2);
+        ctx.beginPath(); ctx.arc(s.x, s.y + Math.sin((s.x/w)*2*Math.PI + t*0.03)*2, r, 0, Math.PI*2);
         ctx.fill();
       }
       ctx.restore();
@@ -114,14 +108,9 @@ function ensureStarsCanvas(){
       if(!document.body.classList.contains('stars-on')) return;
       cancelAnimationFrame(animId);
       cvs.style.display = 'block';
-      resize();
-      tick();
+      resize(); tick();
     }
-    function stop(){
-      cancelAnimationFrame(animId);
-      ctx.clearRect(0,0,w,h);
-      cvs.style.display = 'none';
-    }
+    function stop(){ cancelAnimationFrame(animId); ctx.clearRect(0,0,w,h); cvs.style.display = 'none'; }
     window.addEventListener('resize', ()=> document.body.classList.contains('stars-on') && resize());
     __XR_STARS = { start, stop };
   })();
@@ -132,9 +121,7 @@ function applyAmbient(){
   if(mode === 'stars') ensureStarsCanvas();
   document.body.classList.toggle('fog-on',   mode === 'fog');
   document.body.classList.toggle('stars-on', mode === 'stars');
-  if(__XR_STARS){
-    if(mode === 'stars') __XR_STARS.start(); else __XR_STARS.stop();
-  }
+  if(__XR_STARS){ if(mode === 'stars') __XR_STARS.start(); else __XR_STARS.stop(); }
 }
 function cycleAmbient(){
   const cur = localStorage.getItem(AMBIENT_KEY) || 'off';
@@ -145,8 +132,7 @@ function cycleAmbient(){
 function bindAmbientToggle(){
   applyAmbient();
   const btn = document.getElementById('ambientToggle');
-  if(!btn) return;
-  btn.onclick = cycleAmbient;
+  if(btn) btn.onclick = cycleAmbient;
 }
 
 /* ========= Keep nav consistent: force TV -> Chill ========= */
@@ -161,7 +147,7 @@ function normalizeNav(){
   });
 }
 
-/* ========= Small helpers ========= */
+/* ========= Helpers for TradingView embeds ========= */
 function safeParseJSON(text, fallback={}){ try { return JSON.parse(text); } catch(e){ return fallback; } }
 function ensureCachedConfig(container){
   if(container.dataset.tvCfg) return;
@@ -206,12 +192,8 @@ function buildTickerTapes(theme, force=false){
       s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
       s.async = true;
       s.text = JSON.stringify({
-        symbols,
-        showSymbolLogo: true,
-        displayMode: "adaptive",
-        isTransparent: false,
-        colorTheme: theme,
-        locale: "en"
+        symbols, showSymbolLogo:true, displayMode:"adaptive", isTransparent:false,
+        colorTheme: theme, locale:"en"
       });
       wrap.appendChild(s);
       host.appendChild(wrap);
@@ -296,7 +278,7 @@ function rebuildAdvancedChart(container){
   const theme = getTheme();
   const base = safeParseJSON(container.dataset.tvCfg || '{}', {});
   const merged = Object.assign({}, base, {
-    theme: theme,
+    theme,
     backgroundColor: theme === 'light' ? '#ffffff' : '#0f1115',
     gridColor: theme === 'light' ? 'rgba(46,46,46,0.06)' : 'rgba(255,255,255,0.06)'
   });
@@ -319,9 +301,7 @@ function rebuildWidgetsIn(root){
 }
 function refreshTimelines(root){
   if(!root) return;
-  root.querySelectorAll('[data-tv="timeline"] iframe').forEach(f=>{
-    if(f && f.src){ try { f.src = f.src; } catch(e) {} }
-  });
+  root.querySelectorAll('[data-tv="timeline"] iframe').forEach(f=>{ if(f && f.src){ try { f.src = f.src; } catch(e) {} }});
 }
 function ensureMounted(root, tries=2){
   const ok = () => root.querySelector('iframe[src*="tradingview"]');
@@ -343,7 +323,6 @@ function mapShortToSymbol(raw){
 window.mapShortToSymbol = mapShortToSymbol;
 
 /* ========= Home / Markets helpers ========= */
-/* NEW: robust finder for the Home advanced-chart container */
 function getHomeAdvRoot(){
   return (
     document.querySelector('#chart [data-tv="advchart"]') ||
@@ -397,7 +376,6 @@ const WL = {
 window.WL = WL;
 
 /* ========= Deep-link to Home chart ========= */
-/* NEW: also accepts "#symbol=BTCUSDT" (no "?") */
 function parseHashQuery(){
   const h = location.hash || '';
   if(!h) return {};
@@ -434,6 +412,7 @@ async function loadNewsFromWorker() {
   }
   cryptoList.innerHTML = '<li>Loading…</li>';
   marketList.innerHTML = '<li>Loading…</li>';
+
   const CRYPTO_FEEDS = [
     'https://www.coindesk.com/arc/outboundfeeds/rss/',
     'https://cointelegraph.com/rss',
@@ -441,7 +420,9 @@ async function loadNewsFromWorker() {
     'https://decrypt.co/feed',
     'https://cryptoslate.com/feed/',
     'https://bitcoinmagazine.com/feed',
-    'https://messari.io/rss'
+    'https://messari.io/rss',
+    'https://coinpedia.org/feed/',
+    'https://cryptopotato.com/feed/'
   ];
   const MARKET_FEEDS = [
     'https://feeds.a.dj.com/rss/RSSMarketsMain.xml',
@@ -455,6 +436,7 @@ async function loadNewsFromWorker() {
     'https://rss.cnn.com/rss/money_latest.rss',
     'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml'
   ];
+
   const parseFeed = (xmlText) => {
     const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
     if (xml.querySelector('parsererror')) throw new Error('XML parse error');
@@ -479,6 +461,7 @@ async function loadNewsFromWorker() {
     });
     return items;
   };
+
   async function loadGroup(feeds) {
     const out = [];
     for (const url of feeds) {
@@ -493,14 +476,17 @@ async function loadNewsFromWorker() {
     }
     return out.sort((a,b)=>b.date-a.date);
   }
+
   const [cryptoItems, marketItems] = await Promise.all([
     loadGroup(CRYPTO_FEEDS),
     loadGroup(MARKET_FEEDS)
   ]);
+
   const render = (arr) =>
     (arr.slice(0, 30).map(i =>
       `<li><a href="${i.link}" target="_blank" rel="noopener">${i.title}</a><time>${i.date.toLocaleString()}</time></li>`
     ).join('')) || '<li>No items returned.</li>';
+
   cryptoList.innerHTML = render(cryptoItems);
   marketList.innerHTML = render(marketItems);
   if (stampEl) stampEl.textContent = 'Updated ' + new Date().toLocaleTimeString();
@@ -519,6 +505,50 @@ function fixTwitchParents(){
       const next = u.toString();
       if (f.src !== next) f.src = next;
     }catch(e){}
+  });
+}
+
+/* ========= FULLSCREEN CHART (shared for all pages) ========= */
+function tvPumpResize(){
+  window.dispatchEvent(new Event('resize'));
+  setTimeout(()=>window.dispatchEvent(new Event('resize')), 150);
+}
+function bindChartFullscreen(){
+  const expandBtn = document.getElementById('chartExpand');   // header button
+  const closeBtn  = document.getElementById('chartFsClose');  // inside #chart .card
+
+  function enterFS(){
+    document.body.classList.add('chart-fullscreen');
+    if(expandBtn){
+      expandBtn.setAttribute('aria-pressed','true');
+      expandBtn.textContent = '⤡';
+      expandBtn.title = 'Close chart';
+    }
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    tvPumpResize();
+  }
+  function exitFS(){
+    document.body.classList.remove('chart-fullscreen');
+    if(expandBtn){
+      expandBtn.setAttribute('aria-pressed','false');
+      expandBtn.textContent = '⤢';
+      expandBtn.title = 'Expand chart to fullscreen';
+    }
+    tvPumpResize();
+  }
+  function toggleFS(){ document.body.classList.contains('chart-fullscreen') ? exitFS() : enterFS(); }
+
+  if(expandBtn) expandBtn.onclick = toggleFS;
+  if(closeBtn)  closeBtn.onclick  = exitFS;
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') exitFS(); });
+
+  // keep header button label consistent on SPA back/forward
+  window.addEventListener('pageshow', ()=>{
+    const on = document.body.classList.contains('chart-fullscreen');
+    if(expandBtn){
+      expandBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      expandBtn.textContent = on ? '⤡ Close' : '⤢ Expand';
+    }
   });
 }
 
@@ -559,7 +589,7 @@ function bindHeaderControls(){
     });
   }
 
-  /* HOME: Open button (fixed to always find the chart) */
+  /* HOME: Open button */
   const homeForm = document.getElementById('symbolForm');
   if(homeForm){
     homeForm.onsubmit = (e)=>{
@@ -612,6 +642,7 @@ function bindHeaderControls(){
   }
 
   fixTwitchParents();
+  bindChartFullscreen();  // <— hook up the shared fullscreen logic
 }
 
 /* ==== ChillZone effects ==== */
@@ -775,7 +806,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       const parsed = new URL(url, location.href);
       const file = (parsed.pathname.split('/').pop() || 'index.html').toLowerCase();
       requestAnimationFrame(()=>{ requestAnimationFrame(()=>{
-        /* If we navigated to home with a symbol in hash, apply it */
         const hasHashSymbol = (parsed.hash && /symbol=/i.test(parsed.hash));
         if(file === 'index.html' && hasHashSymbol) {
           applyHomeDeepLink();
@@ -828,8 +858,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   if(!history.state) history.replaceState({ url: location.href }, '', location.href);
 
-  /* === GLOBAL helper: open on Home from anywhere ===
-     Use <button data-open-home="BTCUSDT"> or <a data-open-home="BTCUSDT"> */
+  /* === GLOBAL helper: open on Home from anywhere === */
   document.addEventListener('click', (e)=>{
     const btn = e.target.closest('[data-open-home]');
     if(!btn) return;
@@ -838,7 +867,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(!raw) return;
     sessionStorage.setItem('xr_symbol', raw);
     const dest = 'index.html#?symbol=' + encodeURIComponent(raw);
-    // Try SPA route if available; otherwise fall back to hard nav
     const a = document.createElement('a');
     a.href = dest; a.setAttribute('data-softnav','');
     document.body.appendChild(a);
@@ -846,7 +874,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     a.remove();
   });
 
-  /* ===== Global: robust copy-to-clipboard for [data-copy] buttons ===== */
+  /* ===== Global: copy-to-clipboard for [data-copy] ===== */
   document.addEventListener('click', async (e) => {
     const btn = e.target.closest('[data-copy]');
     if (!btn) return;
@@ -867,7 +895,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       await navigator.clipboard.writeText(text);
       flash('Copied!');
     } catch (_) {
-      // Fallback for older browsers or blocked clipboard API
       const ta = document.createElement('textarea');
       ta.value = text;
       ta.setAttribute('readonly', '');
@@ -885,69 +912,4 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
   });
 
-})();  // <-- end Soft Navigation IIFE
-/* ==== Chart Expand/Close (centered below nav & tickers) ==== */
-(function(){
-  function reflowTV() {
-    // Make TradingView re-measure after layout changes
-    window.dispatchEvent(new Event('resize'));
-    setTimeout(() => window.dispatchEvent(new Event('resize')), 60);
-  }
-
-  function toggleExpand(on) {
-    document.body.classList.toggle('chart-expand', !!on);
-    reflowTV();
-  }
-
-  // Button: <button id="chartExpand">⤢ Expand</button> (already in your h1 bar)
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('#chartExpand');
-    if (!btn) return;
-    e.preventDefault();
-    const on = !document.body.classList.contains('chart-expand');
-    toggleExpand(on);
-    // Swap label for clarity
-    btn.textContent = on ? '⤡ Close' : '⤢ Expand';
-  });
-
-  // Esc to close
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && document.body.classList.contains('chart-expand')) {
-      toggleExpand(false);
-      const btn = document.getElementById('chartExpand');
-      if (btn) btn.textContent = '⤢ Expand';
-    }
-  });
-})();
-
-
-/* ==== Chart Expand/Close (full screen) ==== */
-(function(){
-  function reflowTV() {
-    // Make sure TradingView resizes correctly
-    window.dispatchEvent(new Event('resize'));
-    setTimeout(() => window.dispatchEvent(new Event('resize')), 60);
-  }
-
-  function toggleFull(on) {
-    document.body.classList.toggle('chart-full', on);
-    reflowTV();
-  }
-
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('#chartExpand');
-    if (!btn) return;
-    e.preventDefault();
-    const on = !document.body.classList.contains('chart-full');
-    toggleFull(on);
-    btn.textContent = on ? '⤡' : '⤢'; // ⤡ = collapse, ⤢ = expand
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && document.body.classList.contains('chart-full')) {
-      toggleFull(false);
-      const btn = document.getElementById('chartExpand');
-      if(btn) btn.textContent = '⤢';
-    }
-  });
-})();
+})(); // end Soft Navigation IIFE

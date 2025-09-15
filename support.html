@@ -89,7 +89,7 @@
         <a href="news.html" data-softnav>News</a>
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
-        <a href="support.html" class="active" data-softnav>Support</a>
+        <a href="support.html" class="active" data-softnav>💸</a>
       </nav>
 
       <div id="headerControls" class="symbol-form">
@@ -160,21 +160,5 @@
   </footer>
 
   <script src="main.js"></script>
-  <script>
-    // Robust copy handler (delegated so it survives SPA swaps)
-    document.addEventListener('click', async (e) => {
-      const btn = e.target.closest('[data-copy]');
-      if (!btn) return;
-      const sel = btn.getAttribute('data-copy');
-      const el = document.querySelector(sel);
-      if (!el) return;
-      try {
-        await navigator.clipboard.writeText(el.textContent.trim());
-        btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1200);
-      } catch {
-        btn.textContent = 'Failed'; setTimeout(() => btn.textContent = 'Copy', 1200);
-      }
-    });
-  </script>
 </body>
 </html>

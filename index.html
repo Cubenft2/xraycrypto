@@ -4,43 +4,9 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>XRayCrypto — Home</title>
-  <meta name="description" content="Live crypto prices, live market news, heatmap, crypto screene, Ethereum, Bitcoin, xrp, SUI, Tron, doge, doginaldogs, Hyperliquidity, Advanced charts, tradingview, watchlist and curated news — XRayCrypto."/>
+  <meta name="description" content="Live crypto prices, live market news, heatmap, crypto screener, Ethereum, Bitcoin, XRP, SUI, TRX, DOGE, doginaldogs, Hyperliquidity, advanced TradingView charts, watchlist and curated news — XRayCrypto."/>
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
-
-  <!-- Fullscreen chart (page-local CSS, minimal) -->
-  <style>
-    /* Button that appears in the chart card */
-    .chart-expand-btn{
-      position:absolute; right:12px; top:10px; z-index:5;
-      font:600 12px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      padding:6px 10px; border-radius:8px; border:1px solid var(--border);
-      background:var(--surface); color:var(--text);
-      opacity:.85; cursor:pointer;
-    }
-    .chart-expand-btn:hover{ opacity:1 }
-
-    /* When expanded, give the chart the entire viewport */
-    body.chart-full .header,
-    body.chart-full .footer,
-    body.chart-full .ticker { display:none !important; }
-
-    body.chart-full .main{
-      max-width:none !important; width:100% !important;
-      padding:0 !important; margin:0 !important;
-    }
-    body.chart-full #chart{
-      margin:0 !important; padding:0 !important;
-    }
-    body.chart-full #chart .card{
-      height:100vh !important; width:100% !important; border-radius:0 !important;
-    }
-
-    /* Show Close button only while expanded */
-    #chartClose{ display:none; }
-    body.chart-full #chartOpen{ display:none; }
-    body.chart-full #chartClose{ display:inline-block; }
-  </style>
 </head>
 
 <body>
@@ -62,25 +28,25 @@
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
         <a href="support.html" class="support-link" data-softnav>
-          <span class="support-icon">❤</span><span class="support-text">Support</span>
+          <span class="support-icon">❤</span><span class="support-text">💸</span>
         </a>
       </nav>
 
       <div id="headerControls" class="symbol-form">
-        <form id="symbolForm" class="symbol-form" autocomplete="off">
+        <form id="symbolForm" autocomplete="off">
           <input id="symbolInput" name="symbol" type="text" placeholder="BTC, ETH, SOL…" aria-label="Symbol"/>
           <button class="button" type="submit">Open</button>
         </form>
         <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
+        <button id="chartExpand" class="button outline" type="button" title="Expand chart to fullscreen" aria-pressed="false">⤢</button>
       </div>
     </div>
 
-    <!-- Tickers -->
     <div class="ticker"><div id="cryptoTape"></div></div>
     <div class="ticker"><div id="stocksTape"></div></div>
   </header>
 
-  <!-- CONFIG: Worker URL for the aggregated news -->
+  <!-- Worker config -->
   <script id="news-config" type="application/json">
     { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/fetch?url=" }
   </script>
@@ -89,17 +55,15 @@
   <main class="main container" id="pageMain">
     <section class="section" id="chart">
       <h1>BTC — Advanced Chart</h1>
-      
 
+      <div class="card">
+        <button id="chartFsClose" type="button" title="Close chart (Esc)">⤡</button>
 
-      <!-- Expand / Close buttons (float over the chart) -->
-     
-      <div class="card" style="height:600px; position:relative">
         <div id="adv-chart-wrap" class="tradingview-widget-container" data-tv="advchart" style="height:100%;width:100%">
           <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
           <div class="tradingview-widget-copyright">
             <a href="https://www.tradingview.com/symbols/BINANCE-BTCUSDT/?exchange=BINANCE" rel="noopener nofollow" target="_blank">
-              <span class="blue-text"> BTC chart by TradingView</span>
+              <span class="blue-text">BTC chart by TradingView</span>
             </a>
           </div>
           <script class="tv-config" type="application/json">
@@ -124,58 +88,35 @@
           </script>
         </div>
       </div>
-      <button id="chartOpen" class="chart-expand-btn" type="button" title="Expand chart (fullscreen)">⤢ Expand</button>
-      <button id="chartClose" class="chart-expand-btn" type="button" title="Close fullscreen">⤡ Close</button>
-      <button id="chartExpand" class="expand-btn" title="Expand chart">⤢</button>
     </section>
 
-    <!-- Crypto Heatmap -->
     <section class="section" id="heatmap">
       <div class="card">
         <h3>Crypto Heatmap</h3>
         <div class="tradingview-widget-container" data-tv="crypto-heatmap">
           <div class="tradingview-widget-container__widget"></div>
-          <script>
-          {
-            "blockSize": "market_cap_calc",
-            "colorTheme": "light",
-            "width": "100%",
-            "height": 460
-          }
-          </script>
+          <script>{ "blockSize":"market_cap_calc","colorTheme":"light","width":"100%","height":460 }</script>
           <script src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js" async></script>
         </div>
       </div>
     </section>
 
-    <!-- Crypto Screener -->
     <section class="section" id="screener">
       <div class="card">
         <h3>Crypto Screener</h3>
         <div class="tradingview-widget-container" data-tv="screener">
           <div class="tradingview-widget-container__widget"></div>
-          <script>
-          {
-            "defaultColumn": "overview",
-            "defaultScreen": "general",
-            "market": "crypto",
-            "colorTheme": "light",
-            "width": "100%",
-            "height": 520
-          }
-          </script>
+          <script>{ "defaultColumn":"overview","defaultScreen":"general","market":"crypto","colorTheme":"light","width":"100%","height":520 }</script>
           <script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async></script>
         </div>
       </div>
     </section>
 
-    <!-- News -->
     <section class="section" id="news">
       <div class="card news-card">
         <div class="news-head" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
           <h3 style="margin:0">News</h3>
           <span id="newsUpdatedAt" class="updated"></span>
-
           <div class="tabs" role="tablist" style="margin-left:auto" id="newsTabs">
             <button id="newsRefresh" class="button outline" type="button" title="Refresh">↻ Refresh</button>
             <button class="tab active" data-tab="crypto" role="tab" aria-selected="true">Crypto</button>
@@ -183,8 +124,10 @@
           </div>
         </div>
 
-        <ul id="newsListCrypto" class="news-list" data-tab-panel="crypto"></ul>
-        <ul id="newsListMarkets" class="news-list hidden" data-tab-panel="markets"></ul>
+        <div class="news-scroll">
+          <ul id="newsListCrypto" class="news-list" data-tab-panel="crypto"></ul>
+          <ul id="newsListMarkets" class="news-list hidden" data-tab-panel="markets"></ul>
+        </div>
       </div>
     </section>
   </main>
@@ -198,29 +141,5 @@
   </footer>
 
   <script src="main.js"></script>
-
-  <!-- Minimal fullscreen toggle (calls resize so TV reflows) -->
-  <script>
-    (function(){
-      const openBtn  = document.getElementById('chartOpen');
-      const closeBtn = document.getElementById('chartClose');
-      function pumpResize(){
-        window.dispatchEvent(new Event('resize'));
-        setTimeout(()=>window.dispatchEvent(new Event('resize')), 120);
-      }
-      function openFull(){
-        document.body.classList.add('chart-full');
-        window.scrollTo({ top: 0, behavior: 'auto' });
-        pumpResize();
-      }
-      function closeFull(){
-        document.body.classList.remove('chart-full');
-        pumpResize();
-      }
-      if(openBtn) openBtn.addEventListener('click', openFull);
-      if(closeBtn) closeBtn.addEventListener('click', closeFull);
-      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeFull(); });
-    })();
-  </script>
 </body>
 </html>

@@ -7,7 +7,7 @@
   <meta name="description" content="Build your own crypto and stock watchlist. Save tickers, view mini charts, and track price moves instantly on XRayCrypto."/>
   <meta name="keywords" content="watchlist, crypto watchlist, stock watchlist, mini charts, tickers, XRayCrypto"/>
 
-  <!-- Canonical + Social (moved to xraycrypto.io) -->
+  <!-- Canonical + Social -->
   <link rel="canonical" href="https://xraycrypto.io/watchlist.html"/>
   <meta property="og:title" content="XRayCrypto — Watchlist"/>
   <meta property="og:description" content="Build your own crypto and stock watchlist with live mini charts and tickers."/>
@@ -23,7 +23,6 @@
   <link rel="stylesheet" href="styles.css"/>
 
   <style>
-    /* Watchlist grid: 2 cols by default, 3 on desktop, 1 on tiny phones */
     .grid{ display:grid; gap:12px; }
     .grid.cols-3{ grid-template-columns: repeat(2, minmax(0,1fr)); }
 
@@ -34,8 +33,8 @@
       .grid.cols-3{ grid-template-columns: 1fr; }
     }
 
-    /* Make mini cards flow nicely */
     #wlList .card{ display:flex; flex-direction:column; gap:8px; }
+    form#wlForm { display:flex; gap:8px; flex-wrap:wrap; margin: 12px 0; }
   </style>
 </head>
 
@@ -48,7 +47,6 @@
         <span class="name">XRayCrypto<span class="tm" aria-hidden="true">™</span></span>
       </a>
 
-      <!-- Hamburger -->
       <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
 
       <nav id="primaryNav" class="nav">
@@ -59,21 +57,16 @@
         <a href="store.html" data-softnav>Store</a>
         <a href="chill.html" data-softnav>ChillZone</a>
         <a href="support.html" class="support-link" data-softnav>
-          <span class="support-icon">❤</span><span class="support-text">Support</span>
+          <span class="support-icon">❤</span><span class="support-text">💸</span>
         </a>
       </nav>
 
-      <!-- Header controls block (soft-swapped) -->
+      <!-- Header controls now only has theme toggle -->
       <div id="headerControls" class="symbol-form">
-        <form id="wlForm">
-          <input id="wlInput" type="text" placeholder="BTC, ETH, SOL or EXCHANGE:PAIR">
-          <button class="button" id="wlAdd" type="submit">Add</button>
-        </form>
         <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
       </div>
     </div>
 
-    <!-- Two permanent ticker tapes -->
     <div class="ticker"><div id="cryptoTape"></div></div>
     <div class="ticker"><div id="stocksTape"></div></div>
   </header>
@@ -92,12 +85,6 @@
               "blockSize": "market_cap_calc",
               "blockColor": "24h_close_change|5",
               "locale": "en",
-              "symbolUrl": "",
-              "hasTopBar": true,
-              "isDataSetEnabled": true,
-              "isZoomEnabled": true,
-              "hasSymbolTooltip": true,
-              "isMonoSize": false,
               "width": "100%",
               "height": 520
             }
@@ -106,12 +93,17 @@
       </div>
     </section>
 
+    <!-- WATCHLIST SECTION -->
     <section class="section">
       <h1>Watchlist</h1>
-      <p class="note">Add coins above (BTC or BTCUSDT). We store your list in your browser.</p>
-    </section>
+      <p class="note">Add coins below (BTC or BTCUSDT).List get store your list in your browser.</p>
 
-    <section class="section">
+      <!-- Add form moved here -->
+      <form id="wlForm">
+        <input id="wlInput" type="text" placeholder="BTC, ETH, SOL or EXCHANGE:PAIR">
+        <button class="button" id="wlAdd" type="submit">Add</button>
+      </form>
+
       <div id="wlList" class="grid cols-3"></div>
       <p id="wlEmpty" class="note" style="display:none">Your watchlist is empty.</p>
       <div style="margin-top:12px">
@@ -122,7 +114,6 @@
 
   <footer class="footer">
     <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
-
     © 2025 XRayCrypto™ ·
     <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
     <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
@@ -165,14 +156,12 @@
     }
 
     function render(){
-      window.WL_render = render;
       list.innerHTML = '';
       const wl = WL.get();
       empty.style.display = wl.length ? 'none' : '';
       wl.forEach(sym => list.appendChild(miniCard(sym)));
     }
 
-    // Local handlers to make "Add" work 100% of the time
     function addCurrent(){
       const raw = document.getElementById('wlInput').value || '';
       const sym = mapShortToSymbol(raw);
@@ -184,7 +173,6 @@
     document.getElementById('wlForm').addEventListener('submit', (e)=>{ e.preventDefault(); addCurrent(); });
     document.getElementById('wlAdd').addEventListener('click', (e)=>{ e.preventDefault(); addCurrent(); });
 
-    // Remove / clear actions
     list.addEventListener('click', (e)=>{
       const btn = e.target.closest('button[data-remove]');
       if(!btn) return;
@@ -195,13 +183,10 @@
       if(confirm('Clear your entire watchlist?')){ WL.clear(); render(); }
     });
 
-    // Theme change (from header button or another tab) -> refresh mini-cards
     window.addEventListener('storage', (e)=>{ if(e.key==='xr_theme') render(); });
     window.addEventListener('wl-updated', render);
 
     render();
-
-    // Re-render after theme toggle (so TradingView widgets match)
     document.getElementById('themeToggle')?.addEventListener('click', ()=> setTimeout(render, 0));
   </script>
 </body>

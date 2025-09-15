@@ -1,8 +1,8 @@
 /* ===== TOKENS ===== */
 :root{
   /* brand accents (from PFP) */
-  --accent: #00CFFF;      /* cyan */
-  --accent-2: #FFD700;    /* pixel yellow */
+  --accent:#00CFFF;      /* cyan */
+  --accent-2:#FFD700;    /* pixel yellow */
 
   /* dark */
   --bg:#0f1115;
@@ -18,10 +18,12 @@
   --radius:10px;
   --radius-pixel:0px;
   --shadow:0 0 12px rgba(0,0,0,0.35);
+
+  /* panels */
+  --panel-h:600px;
 }
 
 body.light{
-  /* light */
   --bg:#f6f7f9;
   --surface:#ffffff;
   --surface-2:#f1f3f6;
@@ -44,11 +46,9 @@ body{
 .container{max-width:1100px;margin:0 auto;padding:12px 16px}
 
 /* ===== HEADER & NAV ===== */
-.header{position:sticky;top:0;z-index:20;background:var(--bg);
-  border-bottom:2px solid var(--accent-2);}
+.header{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:2px solid var(--accent-2)}
 .topbar{display:flex;align-items:center;gap:12px;min-height:var(--topbar-h)}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--text);
-  text-decoration:none;letter-spacing:.2px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:.2px}
 .brand .name{display:inline-flex;align-items:center;gap:4px}
 .brand .tm{font-size:.75em;opacity:.75}
 .logo{width:28px;height:28px;border-radius:6px;box-shadow:0 0 0 2px var(--accent)}
@@ -60,45 +60,18 @@ body{
   transition:color .15s ease, background .15s ease, border-color .15s ease;
 }
 .nav a:hover{color:var(--text);background:var(--surface-2);border-color:var(--border)}
-.nav a.active{
-  color:var(--text);
-  border-color:var(--accent);
-  box-shadow:0 0 0 1px var(--accent) inset;
-}
+.nav a.active{color:var(--text);border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
 
 /* ===== HEADER CONTROLS ===== */
-.symbol-form{
-  margin-left:auto;
-  display:flex;
-  gap:8px;
-  align-items:center;
-  flex-wrap:wrap;
-  min-height:40px;
-}
+.symbol-form{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-height:40px}
 .symbol-form input{
-  background:var(--surface-2);
-  border:1px solid var(--border);
-  color:var(--text);
-  padding:8px 10px;
-  border-radius:8px;
-  min-width:70px;   /* desktop shorter */
-  width:70px;
-  outline:none;
+  background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+  padding:8px 10px;border-radius:8px;min-width:70px;width:70px;outline:none;
 }
-.symbol-form input:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent);
-}
+.symbol-form input:focus{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent)}
 .button{
-  appearance:none;
-  cursor:pointer;
-  padding:8px 12px;
-  border-radius:8px;
-  border:1px solid transparent;
-  font-weight:800;
-  letter-spacing:.25px;
-  background:var(--accent-2);
-  color:#000;
+  appearance:none;cursor:pointer;padding:8px 12px;border-radius:8px;border:1px solid transparent;
+  font-weight:800;letter-spacing:.25px;background:var(--accent-2);color:#000;
 }
 .button:hover{filter:brightness(1.05)}
 .button:active{transform:translateY(1px)}
@@ -108,30 +81,20 @@ body{
 
 /* ===== MOBILE NAV (drawer) ===== */
 .hamburger{
-  display:none;
-  margin-left:auto;
-  background:transparent;
-  border:1px solid var(--border);
-  color:var(--text);
-  padding:6px 10px;
-  border-radius:8px;
-  font-size:18px;
-  cursor:pointer;
+  display:none;margin-left:auto;background:transparent;border:1px solid var(--border);
+  color:var(--text);padding:6px 10px;border-radius:8px;font-size:18px;cursor:pointer;
 }
 @media (max-width:900px){
   .hamburger{display:block}
   .symbol-form{margin:0}
-  .symbol-form input{
-    min-width:50px;   /* mobile extra short */
-    width:50px;
-    flex:0 0 auto;
-  }
+  .symbol-form input{min-width:50px;width:50px;flex:0 0 auto}
   .symbol-form .button{flex:0 0 auto}
   .nav{
     position:fixed;inset:calc(var(--topbar-h) + 4px) 0 0 auto;width:260px;
     max-height:calc(100% - var(--topbar-h));background:var(--surface);
     border-left:2px solid var(--accent-2);padding:12px;flex-direction:column;gap:8px;
-    transform:translateX(100%);transition:transform .2s ease;z-index:10000}
+    transform:translateX(100%);transition:transform .2s ease;z-index:10000;
+  }
   .nav.open{transform:translateX(0)}
 }
 
@@ -143,37 +106,39 @@ h1,h2,h3{margin:0 0 12px}
 .note{color:var(--muted);margin-top:8px}
 
 /* ===== TICKERS ===== */
-.ticker{border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+.ticker{
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
   height:var(--ticker-h);display:flex;align-items:center;overflow:hidden;
-  contain:layout paint style;backface-visibility:hidden;transform:translateZ(0)}
+  contain:layout paint style;backface-visibility:hidden;transform:translateZ(0);
+}
 .ticker>div{width:100%;height:100%}
 .ticker .tradingview-widget-container,
 .ticker .tradingview-widget-container__widget{width:100%!important;height:100%!important}
 
-/* ===== NEWS LIST (pixel look) ===== */
-.card.news-card{
-  background:var(--surface);
-  border:4px solid var(--accent-2);
-  border-radius:var(--radius-pixel);
-  box-shadow:var(--shadow);
-}
+/* ===== NEWS (pixel frame + scroll) ===== */
+.card.news-card{background:var(--surface);border:4px solid var(--accent-2);border-radius:var(--radius-pixel);box-shadow:var(--shadow)}
 .news-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.card.news-card h3{
-  color:var(--accent); text-transform:uppercase; letter-spacing:1px;
-  margin:0; padding-bottom:6px; border-bottom:2px solid var(--accent-2); flex:0 0 auto;
-}
+.card.news-card h3{color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin:0;padding-bottom:6px;border-bottom:2px solid var(--accent-2);flex:0 0 auto}
+#news .news-card{max-height:var(--panel-h);display:flex;flex-direction:column;overflow:hidden}
+#news .news-card .news-head{flex:0 0 auto;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:8px}
+#news .news-card .news-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:6px}
 .news-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.news-list li{
-  display:flex;justify-content:space-between;gap:10px;align-items:center;
-  padding:8px 0;border-bottom:1px solid var(--border)
-}
-.news-list li a{
-  color:var(--text); text-decoration:none; flex:1;
-  transition:color .15s ease, text-shadow .15s ease;
-}
+.news-list li{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.news-list li a{color:var(--text);text-decoration:none;flex:1;transition:color .15s ease,text-shadow .15s ease}
 .news-list li a:hover{color:var(--accent);text-shadow:0 0 6px color-mix(in srgb, var(--accent) 55%, transparent)}
 .news-list li time{color:var(--muted);font-size:.85em;white-space:nowrap}
 .updated{color:var(--accent-2);font-size:.85em}
+
+/* ===== NEWS TABS ===== */
+#newsTabs{display:flex;gap:8px;margin:6px 0 10px;flex-wrap:wrap}
+#newsTabs .tab{
+  appearance:none;cursor:pointer;padding:6px 10px;border-radius:8px;border:1px solid var(--border);
+  background:var(--surface-2);color:var(--text);font-weight:700;letter-spacing:.25px;
+  transition:background .15s ease,color .15s ease,border-color .15s ease,box-shadow .15s ease;
+}
+#newsTabs .tab:hover{border-color:var(--accent);color:var(--accent)}
+#newsTabs .tab.active{background:var(--accent-2);color:#000;border-color:var(--accent-2);box-shadow:0 0 0 1px var(--accent-2) inset}
+.hidden{display:none!important}
 
 /* ===== FOOTER & misc ===== */
 .footer{border-top:1px solid var(--border);padding:16px;text-align:center;color:var(--muted)}
@@ -187,793 +152,103 @@ h1,h2,h3{margin:0 0 12px}
   .news-list li time{display:none}
 }
 
-/* SPA fade (future-proof) */
+/* SPA fade */
 #pageMain{transition:opacity .12s ease}
 #pageMain.fading{opacity:0}
 
-/* Prevent ticker flicker and layout thrash (dup safe) */
-.ticker{
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  height: var(--ticker-h, 52px);
-  display:flex; align-items:center;
-  overflow:hidden;
-  contain: layout paint style;
-  backface-visibility:hidden;
-  transform: translateZ(0);
-}
-.ticker > div{ width:100%; height:100%; padding:0; margin:0; }
-.ticker .tradingview-widget-container,
-.ticker .tradingview-widget-container__widget{
-  width:100%!important;
-  height:100%!important;
-}
-
 /* Keep TV iframes from collapsing before load */
-#adv-chart-wrap .tradingview-widget-container__widget{ min-height:560px; }
-[data-tv="screener"] .tradingview-widget-container__widget{ min-height:520px; }
-[data-tv="crypto-heatmap"] .tradingview-widget-container__widget{ min-height:460px; }
+#adv-chart-wrap .tradingview-widget-container__widget{min-height:560px}
+[data-tv="screener"] .tradingview-widget-container__widget{min-height:520px}
+[data-tv="crypto-heatmap"] .tradingview-widget-container__widget{min-height:460px}
 
-/* ===== NEWS TABS (Crypto / Markets) ===== */
-#newsTabs{
-  display:flex;
-  gap:8px;
-  margin:6px 0 10px;
-  flex-wrap:wrap;
-}
-#newsTabs .tab{
-  appearance:none;
-  cursor:pointer;
-  padding:6px 10px;
-  border-radius:8px;
-  border:1px solid var(--border);
-  background:var(--surface-2);
-  color:var(--text);
-  font-weight:700;
-  letter-spacing:.25px;
-  transition:background .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease;
-}
-#newsTabs .tab:hover{
-  border-color:var(--accent);
-  color:var(--accent);
-}
-#newsTabs .tab.active{
-  background:var(--accent-2);
-  color:#000;
-  border-color:var(--accent-2);
-  box-shadow:0 0 0 1px var(--accent-2) inset;
-}
-
-/* Small helper to hide inactive lists */
-.hidden{ display:none !important; }
-
-/* === ChillZone video frames & grid === */
-.video-frame {
-  position: relative;
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 0 0 rgba(0, 207, 255, 0);
-  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, transparent), var(--surface-2));
-}
-.video-frame:hover {
-  box-shadow: 0 0 16px rgba(0, 207, 255, 0.15);
-  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
-}
-.video-frame.playing {
-  border-color: var(--accent);
-  box-shadow:
-    0 0 10px rgba(0, 207, 255, 0.35),
-    0 0 32px rgba(255, 215, 0, 0.18);
-  animation: livePulse 1.8s ease-in-out infinite;
-}
-@keyframes livePulse {
-  0%, 100% { box-shadow:
-    0 0 10px rgba(0, 207, 255, 0.28),
-    0 0 28px rgba(255, 215, 0, 0.10);
-  }
-  50% { box-shadow:
-    0 0 16px rgba(0, 207, 255, 0.45),
-    0 0 40px rgba(255, 215, 0, 0.24);
-  }
-}
-.video-frame .live-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  font-size: 12px;
-  font-weight: 800;
-  color: #000;
-  background: var(--accent-2);
-  border-radius: 999px;
-  letter-spacing: .3px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.25);
-  opacity: .9;
-  user-select: none;
-  pointer-events: none;
-}
-.video-frame .live-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: #ff2d55;
-  box-shadow: 0 0 10px #ff2d55;
-  animation: dotBlink 1s ease-in-out infinite;
-}
-@keyframes dotBlink {
-  0%,100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(0.75); opacity: .75; }
-}
+/* === ChillZone frames === */
+.video-frame{position:relative;border:2px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 0 0 0 rgba(0,207,255,0);transition:border-color .2s,box-shadow .2s,transform .2s;background:linear-gradient(180deg,color-mix(in srgb,var(--surface) 96%,transparent),var(--surface-2))}
+.video-frame:hover{box-shadow:0 0 16px rgba(0,207,255,.15);border-color:color-mix(in srgb,var(--accent) 35%,var(--border))}
+.video-frame.playing{border-color:var(--accent);box-shadow:0 0 10px rgba(0,207,255,.35),0 0 32px rgba(255,215,0,.18);animation:livePulse 1.8s ease-in-out infinite}
+@keyframes livePulse{0%,100%{box-shadow:0 0 10px rgba(0,207,255,.28),0 0 28px rgba(255,215,0,.10)}50%{box-shadow:0 0 16px rgba(0,207,255,.45),0 0 40px rgba(255,215,0,.24)}}
+.video-frame .live-badge{position:absolute;top:10px;left:10px;display:inline-flex;align-items:center;gap:6px;padding:4px 8px;font-size:12px;font-weight:800;color:#000;background:var(--accent-2);border-radius:999px;letter-spacing:.3px;box-shadow:0 2px 8px rgba(0,0,0,.25);opacity:.9;user-select:none;pointer-events:none}
+.video-frame .live-dot{width:8px;height:8px;border-radius:50%;background:#ff2d55;box-shadow:0 0 10px #ff2d55;animation:dotBlink 1s ease-in-out infinite}
+@keyframes dotBlink{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.75);opacity:.75}}
 
 /* Chill grid */
-.chill-grid{
-  display:grid;
-  gap:16px;
-  grid-template-columns: 1fr;
-}
-@media (min-width: 900px){
-  .chill-grid{ grid-template-columns: 1fr 1fr; }
-}
-.video-card{ padding:12px; }
-.video-card-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:8px;
-}
-.video-card h2{ font-size:1rem; margin:0; }
-.live-badge{
-  display:inline-flex; align-items:center; gap:6px;
-  font-size:.75rem; font-weight:800; letter-spacing:.25px;
-  color:#000; background:var(--accent-2);
-  border:1px solid var(--accent-2); padding:4px 8px; border-radius:999px;
-  box-shadow:0 0 0 1px var(--accent-2) inset;
-}
-.live-badge .dot{
-  width:8px; height:8px; border-radius:50%;
-  background:#f43f5e; animation: dotBlink 1.25s infinite;
-}
+.chill-grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:900px){.chill-grid{grid-template-columns:1fr 1fr}}
+.video-card{padding:12px}
+.video-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.video-card h2{font-size:1rem;margin:0}
+.live-badge{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:800;letter-spacing:.25px;color:#000;background:var(--accent-2);border:1px solid var(--accent-2);padding:4px 8px;border-radius:999px;box-shadow:0 0 0 1px var(--accent-2) inset}
+.live-badge .dot{width:8px;height:8px;border-radius:50%;background:#f43f5e;animation:dotBlink 1.25s infinite}
 
 /* Brand micro-interactions */
-.brand .logo { transition: transform .4s ease; }
-.brand .logo:hover { transform: rotate(12deg) scale(1.04); }
-.brand.woof .logo { animation: logoShake .5s ease; }
-@keyframes logoShake {
-  0% { transform: translateX(0) rotate(0); }
-  20% { transform: translateX(-2px) rotate(-3deg); }
-  40% { transform: translateX(2px) rotate(3deg); }
-  60% { transform: translateX(-1px) rotate(-2deg); }
-  80% { transform: translateX(1px) rotate(2deg); }
-  100% { transform: translateX(0) rotate(0); }
-}
-.brand .woof-bubble {
-  position: absolute; top: -8px; left: 44px;
-  background: var(--surface-2); color: var(--text);
-  border: 1px solid var(--border); border-radius: 8px;
-  padding: 6px 8px; font-size: 12px; box-shadow: var(--shadow);
-  opacity: 0; transform: translateY(-6px);
-  transition: opacity .2s ease, transform .2s ease; pointer-events: none;
-}
-.brand.woof .woof-bubble { opacity: 1; transform: translateY(0); }
+.brand .logo{transition:transform .4s ease}
+.brand .logo:hover{transform:rotate(12deg) scale(1.04)}
+.brand.woof .logo{animation:logoShake .5s ease}
+@keyframes logoShake{0%{transform:translateX(0) rotate(0)}20%{transform:translateX(-2px) rotate(-3deg)}40%{transform:translateX(2px) rotate(3deg)}60%{transform:translateX(-1px) rotate(-2deg)}80%{transform:translateX(1px) rotate(2deg)}100%{transform:translateX(0) rotate(0)}}
+.brand .woof-bubble{position:absolute;top:-8px;left:44px;background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:6px 8px;font-size:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(-6px);transition:opacity .2s ease,transform .2s ease;pointer-events:none}
+.brand.woof .woof-bubble{opacity:1;transform:translateY(0)}
 
-/* Tip jar minor styles */
-.tip-grid{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-.tip-grid img{width:160px;height:160px;border-radius:12px;border:1px solid var(--border)}
-.mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;}
-/* ---- Support link behaves like text on desktop, icon-only on mobile ---- */
-.nav .support-link {
-  display:inline-flex; align-items:center; gap:8px;
-}
-.nav .support-icon { font-size:16px; line-height:1 }
-@media (max-width:900px){
-  .nav .support-text{ display:none }   /* keep only the heart on small screens */
+/* Support page safety clamp */
+#supportLogo,img[data-support-logo],.support-page .pfp-card img.pfp{
+  width:160px!important;height:160px!important;max-width:160px!important;max-height:160px!important;object-fit:cover;
 }
 
-/* Footer pill CTA */
-.footer .support-cta{
-  display:inline-flex; align-items:center; gap:8px;
-  margin-left:10px; padding:6px 10px; border-radius:999px;
-  border:1px solid var(--border); background:var(--surface-2); color:var(--text);
-  text-decoration:none; font-weight:700;
-  animation:supportWiggle 4.5s ease-in-out infinite;
-}
-@keyframes supportWiggle{
-  0%,92%,100%{ transform:rotate(0) }
-  94%{ transform:rotate(-6deg) }
-  96%{ transform:rotate(6deg) }
-  98%{ transform:rotate(-3deg) }
-}
-
-/* Simple QR card layout */
-.qr-grid{ display:grid; gap:16px; grid-template-columns: 1fr; }
-@media(min-width:720px){ .qr-grid{ grid-template-columns: repeat(2,1fr); } }
-.qr{ text-align:center; }
-.qr img{ max-width:220px; width:100%; height:auto; border-radius:12px; border:1px solid var(--border); box-shadow:var(--shadow); background:var(--surface); }
-.addr{ display:flex; gap:8px; margin-top:10px; }
-.addr code{ flex:1; padding:8px 10px; border:1px solid var(--border); border-radius:8px; overflow:auto; background:var(--surface-2); }
-.copy-btn{ white-space:nowrap }
-/* --- Support page image sizing --- */
-.support-hero img,
-.support-card img,
-.qr img {
-  display: block;
-  max-width: 180px;   /* cap it */
-  width: auto;        /* don't stretch */
-  height: auto;       /* keep aspect */
-  border-radius: 12px;
-}
-
-/* If any global rule sets img { width:100% }, constrain inside Support */
-.support-hero .pfp,
-.support-card .pfp {
-  max-width: 120px;   /* smaller avatar */
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 16px;
-}
-
-/* Layout helpers for Support */
-.support-hero{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-bottom:12px;
-}
-.support-card .addr { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-/* Safety clamp for Support PFP in any nav path (belt & suspenders) */
-#supportLogo,
-img[data-support-logo],
-.support-page .pfp-card img.pfp {
-  width:160px!important; height:160px!important;
-  max-width:160px!important; max-height:160px!important;
-  object-fit:cover;
-}
-/* === Ambient aurora background (opt-in with body.aurora-on) === */
-body.aurora-on::before,
-body.aurora-on::after{
-  content:"";
-  position:fixed;
-  inset:-20%;
-  z-index:-1;
-  pointer-events:none;
+/* === Ambient aurora (opt-in with body.aurora-on) === */
+body.aurora-on::before,body.aurora-on::after{
+  content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none;
   background:
     radial-gradient(40% 60% at 20% 30%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 60%),
     radial-gradient(35% 50% at 80% 70%, color-mix(in srgb, var(--accent-2) 40%, transparent), transparent 60%),
     radial-gradient(30% 40% at 50% 10%, color-mix(in srgb, #a442ff 28%, transparent), transparent 60%);
-  filter: blur(42px) saturate(120%);
-  opacity:.28;
-  transform: translate3d(0,0,0) rotate(0deg) scale(1.05);
-  animation: aurora-rotate 48s linear infinite, aurora-pulse 9s ease-in-out infinite;
+  filter:blur(42px) saturate(120%);opacity:.28;transform:translate3d(0,0,0) rotate(0deg) scale(1.05);
+  animation:aurora-rotate 48s linear infinite, aurora-pulse 9s ease-in-out infinite;
 }
-body.light.aurora-on::before,
-body.light.aurora-on::after{
-  opacity:.22; /* slightly softer in light mode */
-}
+body.light.aurora-on::before,body.light.aurora-on::after{opacity:.22}
+body.aurora-on::after{mix-blend-mode:screen;opacity:.22;animation:aurora-rotate-rev 72s linear infinite, aurora-pulse 10s ease-in-out infinite}
+@keyframes aurora-rotate{0%{transform:translate3d(0,0,0) rotate(0) scale(1.05)}50%{transform:translate3d(0,-1%,0) rotate(180deg) scale(1.06)}100%{transform:translate3d(0,0,0) rotate(360deg) scale(1.05)}}
+@keyframes aurora-rotate-rev{0%{transform:translate3d(0,0,0) rotate(0) scale(1.08)}50%{transform:translate3d(0,1%,0) rotate(-180deg) scale(1.07)}100%{transform:translate3d(0,0,0) rotate(-360deg) scale(1.08)}}
+@keyframes aurora-pulse{0%,100%{opacity:.28;filter:blur(42px) saturate(120%)}50%{opacity:.34;filter:blur(48px) saturate(135%)}}
+@media (prefers-reduced-motion: reduce){ body.aurora-on::before,body.aurora-on::after{animation:none;opacity:.18} }
 
-/* second layer adds parallax-y feel */
-body.aurora-on::after{
-  mix-blend-mode: screen;
-  opacity:.22;
-  animation: aurora-rotate-rev 72s linear infinite, aurora-pulse 10s ease-in-out infinite;
-}
-
-@keyframes aurora-rotate{
-  0%   { transform: translate3d(0,0,0) rotate(0deg)   scale(1.05); }
-  50%  { transform: translate3d(0,-1%,0) rotate(180deg) scale(1.06); }
-  100% { transform: translate3d(0,0,0) rotate(360deg) scale(1.05); }
-}
-@keyframes aurora-rotate-rev{
-  0%   { transform: translate3d(0,0,0) rotate(0deg)   scale(1.08); }
-  50%  { transform: translate3d(0,1%,0) rotate(-180deg) scale(1.07); }
-  100% { transform: translate3d(0,0,0) rotate(-360deg) scale(1.08); }
-}
-@keyframes aurora-pulse{
-  0%,100% { opacity: var(--aurora-o, .28); filter: blur(42px) saturate(120%); }
-  50%     { opacity: calc(var(--aurora-o, .28) + .06); filter: blur(48px) saturate(135%); }
+/* ===== Panels (equal heights on desktop) ===== */
+.panel,.panel .panel-card{height:var(--panel-h)}
+.panel .tradingview-widget-container,.panel .tradingview-widget-container__widget{height:100%!important;width:100%!important}
+.container.wide{max-width:1680px}
+@media (max-width:900px){
+  :root{--panel-h:520px}
+  .panel,.panel .panel-card{height:var(--panel-h)}
 }
 
-/* Respect user motion preferences */
-@media (prefers-reduced-motion: reduce){
-  body.aurora-on::before,
-  body.aurora-on::after{ animation:none; opacity:.18 }
+/* ==================================================== */
+/* === TRUE FULLSCREEN CHART, SHARED (Home+Markets) ==== */
+/* ==================================================== */
+:root{ --chart-card-h: 600px }          /* normal in-flow height */
+#chart .card{ height:var(--chart-card-h); position:relative }
+
+/* the “close” button that shows only when fullscreen */
+#chartFsClose{
+  position:absolute;top:12px;left:12px;z-index:10001;display:none;
+  padding:6px 10px;border-radius:8px;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);font-weight:700;letter-spacing:.25px;
 }
-/* === Duo grid (Screener + News side-by-side) === */
-.duo-grid{
-  display:grid; gap:16px;
-  grid-template-columns: 1fr;
+#chartFsClose:hover{border-color:var(--accent);color:var(--accent)}
+
+body.chart-fullscreen{overflow:hidden}
+body.chart-fullscreen .header,
+body.chart-fullscreen .footer,
+body.chart-fullscreen .ticker,
+body.chart-fullscreen .main > :not(#chart){display:none!important}
+
+body.chart-fullscreen #chart{
+  position:fixed;inset:0;z-index:10000;margin:0!important;padding:0!important;background:var(--bg)
 }
-@media (min-width: 980px){
-  .duo-grid{ grid-template-columns: 1.2fr .8fr; }
+body.chart-fullscreen #chart .card{
+  position:absolute;inset:0;width:100vw!important;height:100vh!important;border-radius:0!important;box-shadow:none!important;margin:0!important
 }
-
-/* make card children stretch to equal heights */
-.equal{ display:flex; flex-direction:column; }
-.equal > *:last-child{ flex:1; min-height:0; }
-
-/* scroll area for news so it matches screener height visually */
-.news-scroll{ height:520px; overflow:auto; }
-
-/* === Pro layout === */
-body.pro .chart-card{ height:78vh !important; }
-@media (min-width: 980px){
-  body.pro #duo .news-card .news-scroll{ height:78vh; }
-  body.pro #duo .news-card{ position:sticky; top: calc(var(--topbar-h) + var(--ticker-h) * 2 + 12px); }
+body.chart-fullscreen #adv-chart-wrap,
+body.chart-fullscreen #adv-chart-wrap .tradingview-widget-container__widget{
+  width:100%!important;height:100%!important
 }
-/* Pro button state */
-#proToggle.is-on{ box-shadow:0 0 0 2px var(--accent) inset; border-color:var(--accent); color:var(--accent); }
-/* ====== XR DESKTOP "TALL DECK" LAYOUT (shared by Home & Markets) ====== */
-/* Height equals full viewport minus header + both tickers + a bit of margin */
-:root{
-  --deck-h: calc(100vh - (var(--topbar-h) + var(--ticker-h)*2 + 64px));
-}
+body.chart-fullscreen #chartFsClose{display:inline-block}
 
-.section.tall { margin-top: 18px; }
-.card.tall {
-  height: var(--deck-h);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Make all TradingView widgets fill the tall card */
-.card.tall .tradingview-widget-container,
-.card.tall .tradingview-widget-container__widget{
-  width:100%!important;
-  height:100%!important;
-}
-
-/* Two-up row for Screener + News (same height, internal scrollbars) */
-.decks-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:16px;
-  margin-top:18px;
-}
-.card.tall .scroll-body{
-  position:absolute; inset:12px;
-  overflow:auto; border-radius: var(--radius);
-}
-
-/* News card tweaks + internal scroll */
-.card.news-card.tall{ border-width:4px; }
-.card.news-card.tall .news-head{ position:sticky; top:0; background:var(--surface); z-index:1; padding-top:4px; }
-.card.news-card.tall .news-scroll{ height: calc(100% - 46px); overflow:auto; padding-right:4px; }
-
-/* On small screens: stack everything */
-@media (max-width: 900px){
-  :root{ --deck-h: min(70vh, 640px); }
-  .decks-grid{ grid-template-columns: 1fr; }
-  .card.tall{ height: auto; min-height: 420px; }
-  .card.news-card.tall .news-scroll{ height:auto; max-height: 520px; }
-}
-/* ====== Shared wide desktop layout for Home & Markets ====== */
-.container.wide{ max-width: 1680px; } /* make content span most of the monitor */
-
-:root{
-  --panel-h: 760px; /* desktop panel height for chart/heatmap/screener/news */
-}
-
-/* Big equal-height panels */
-.panel{
-  height: var(--panel-h);
-}
-
-/* Two-column row for Screener + News */
-.row-2{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:16px;
-}
-
-/* Card that can scroll internally (for long lists) */
-.scroll-card{
-  overflow: hidden; /* keep borders clean */
-  display:flex;
-  flex-direction:column;
-}
-.scroll-card .news-head{ padding-bottom:8px; border-bottom:1px solid var(--border); }
-.scroll-card .news-list{
-  flex:1 1 auto;
-  min-height:0;              /* allow child to shrink */
-  overflow:auto;             /* <— vertical scrollbar for news */
-  padding-right:6px;         /* room for scrollbar */
-}
-
-/* Screener container should fill the panel (TV widget handles its own internal scrollbars) */
-[data-tv="screener"] .tradingview-widget-container__widget{ height:100% !important; }
-
-/* Heatmap height: match panel height */
-[data-tv="crypto-heatmap"] .tradingview-widget-container__widget,
-[data-tv="stock-heatmap"] .tradingview-widget-container__widget{ height:100% !important; }
-
-/* Chart container keeps tools visible and expands side-to-side */
-#adv-chart-wrap .tradingview-widget-container__widget{ height:100% !important; }
-
-/* Mobile stacking */
-@media (max-width: 900px){
-  .container.wide{ max-width: 100%; }
-  :root{ --panel-h: 520px; }            /* shorter on phones */
-  .row-2{ grid-template-columns: 1fr; } /* stack screener + news */
-  .panel{ height: var(--panel-h); }
-}
-/* ====== Equal-height stacked panels (desktop), scroll inside widgets/news ====== */
-:root{
-  /* desktop panel height — tweak to taste */
-  --panel-h: 78vh;
-}
-.panel .panel-card{
-  height: var(--panel-h);
-  display: block;
-}
-.h-100{ height:100%; }
-
-/* Make all TradingView widget containers stretch to the panel height */
-.panel .tradingview-widget-container,
-.panel .tradingview-widget-container__widget{
-  height:100%!important; width:100%!important;
-}
-
-/* News card uses flex: header (auto) + scroll area (fills) */
-.flex-vert{ display:flex; flex-direction:column; }
-.news-card .news-head{
-  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
-  margin-bottom:8px;
-}
-.news-card .news-scroll{
-  flex:1 1 auto; min-height:0;      /* enables the overflow child below */
-  overflow:auto; padding-right:6px; /* inner scrollbar */
-  border-top:1px solid var(--border);
-}
-.news-card .news-list{ margin:0; }
-
-/* On small screens, let panels size naturally (stacked like before) */
-@media (max-width: 900px){
-  :root{ --panel-h: auto; }
-  .panel .panel-card{ height:auto; }
-  .news-card .news-scroll{ max-height: 520px; }
-}
-<section class="section" id="chart">
-  <h1>SPY — Advanced Chart</h1>
-  <div class="card full-bleed vh-78">
-    <div id="adv-chart-wrap" class="tradingview-widget-container" data-tv="advchart" style="height:100%;width:100%">
-      <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
-      <div class="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/symbols/AMEX-SPY/?exchange=AMEX" rel="noopener nofollow" target="_blank">
-          <span class="blue-text">SPY chart by TradingView</span>
-        </a>
-      </div>
-      <script class="tv-config" type="application/json">
-        {
-          "allow_symbol_change": true,
-          "calendar": false,
-          "details": true,
-          "hide_side_toolbar": false,
-          "hide_top_toolbar": false,
-          "hide_legend": false,
-          "hide_volume": false,
-          "hotlist": true,
-          "interval": "60",
-          "locale": "en",
-          "save_image": true,
-          "style": "1",
-          "symbol": "AMEX:SPY",
-          "timezone": "Etc/UTC",
-          "withdateranges": true,
-          "autosize": true
-        }
-      </script>
-    </div>
-  </div>
-</section>
-/* ==== Equal panel heights & news scroll (desktop) ==== */
-:root { --panel-h: 600px; } /* match your chart/heatmap height */
-
-@media (min-width: 1024px) {
-  /* Cap the News card to the same height as chart/heatmap */
-  #news .news-card {
-    max-height: var(--panel-h);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* clip inside, not the card itself */
-  }
-
-  /* Head stays fixed; lists scroll inside */
-  #news .news-card .news-head {
-    flex: 0 0 auto;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 8px;
-    margin-bottom: 8px;
-  }
-
-  /* Both lists get the same scrollable height */
-  #news .news-card .news-list {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    min-height: 0;            /* important for flex scroll */
-    padding-right: 4px;       /* room for scrollbar */
-  }
-
-  /* Optional nice gap between big sections */
-  .section + .section { margin-top: 16px; }
-}
-/* ===== Full-screen chart layout (Expand) ===== */
-body.chart-full { overflow: hidden; }
-
-/* Hide chrome while expanded */
-body.chart-full .header,
-body.chart-full .footer,
-body.chart-full .ticker { display: none !important; }
-
-/* Let the main area take the entire viewport */
-body.chart-full .main,
-body.chart-full .container {
-  position: static;
-  margin: 0 !important;
-  padding: 0 !important;
-  max-width: 100vw !important;
-  width: 100vw !important;
-}
-
-/* Pin the chart section to the viewport */
-body.chart-full #chart {
-  position: fixed;
-  inset: 0;                 /* top:0 right:0 bottom:0 left:0 */
-  z-index: 9999;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: var(--bg, #0f1115);
-}
-
-/* Make the card + widget span the whole screen */
-body.chart-full #chart .card {
-  height: 100vh !important;
-  width: 100vw !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
-body.chart-full #adv-chart-wrap,
-body.chart-full #adv-chart-wrap .tradingview-widget-container__widget {
-  height: 100vh !important;
-  width: 100vw !important;
-}
-/* === Expanded chart sizing (bounded) === */
-:root{
-  /* Tweak these two to change how much “air” you want around the chart */
-  --chart-full-hpad: 12.5vw; /* left/right pad ≈ 25% total width trimmed */
-  --chart-full-vpad: 6vh;    /* top/bottom pad */
-}
-
-/* When body.chart-full is on (your Expand button), make chart fill the
-   viewport minus the pads above. */
-body.chart-full header,
-body.chart-full .ticker,
-body.chart-full footer{ display:none !important; }
-
-body.chart-full #pageMain{ padding:0 !important; }
-
-body.chart-full #chart .card,
-body.chart-full .chart-card{
-  position: fixed;
-  z-index: 1000;
-  left: var(--chart-full-hpad);
-  right: var(--chart-full-hpad);
-  top: var(--chart-full-vpad);
-  bottom: var(--chart-full-vpad);
-  margin: 0;
-  width: auto !important;
-  height: auto !important;
-}
-
-/* Ensure the TradingView widget stretches perfectly inside */
-body.chart-full #chart .tradingview-widget-container,
-body.chart-full #chart .tradingview-widget-container__widget{
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* Put the Close button inside the padded area */
-body.chart-full #chartExpand{
-  position: fixed;
-  top: calc(var(--chart-full-vpad) - 36px);
-  right: calc(var(--chart-full-hpad) - 4px);
-}
-:root{ --panel-height: 600px; } /* match your regular chart card height */
-
-.news-card{ max-height: var(--panel-height); overflow: auto; }
-.section .tradingview-widget-container[data-tv="screener"] .tradingview-widget-container__widget{
-  height: var(--panel-height) !important;
-}
-/* Fullscreen mode for chart */
-body.chart-full header,
-body.chart-full footer,
-body.chart-full .ticker,
-body.chart-full #heatmap,
-body.chart-full #screener,
-body.chart-full #news,
-body.chart-full .section:not(#chart) {
-  display: none !important;
-}
-
-body.chart-full #chart {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: var(--bg);
-  margin: 0 !important;
-  border-radius: 0;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-body.chart-full #chart [data-tv="advchart"] {
-  width: 100% !important;
-  height: 100vh !important;
-}
-
-body.chart-full #chartExpand {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  z-index: 10000;
-}
-/* === Chart "expand under header" mode (keep nav + tickers on screen) === */
-:root{
-  --hdr-h: 56px;     /* your top bar height */
-  --tape-h: 28px;    /* height of ONE ticker bar */
-  --expand-gap: 8px; /* small gap below tapes */
-}
-
-/* Lock page scrolling while expanded */
-body.chart-expand {
-  overflow: hidden;
-}
-
-/* Put the chart card in a fixed, centered stage */
-body.chart-expand #chart .card {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 60;
-
-  /* sit just below header + two ticker rows */
-  top: calc(var(--hdr-h) + (2 * var(--tape-h)) + var(--expand-gap));
-
-  /* target: 75% width, full remaining height */
-  width: 75vw;
-  height: calc(100vh - (var(--hdr-h) + (2 * var(--tape-h)) + (2 * var(--expand-gap))));
-  margin: 0; /* neutralize any section margins while fixed */
-}
-
-/* Make the TradingView widget fill the card perfectly */
-body.chart-expand #chart .card .tradingview-widget-container,
-body.chart-expand #chart .card .tradingview-widget-container__widget {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* Optional: dim the page behind the chart a bit (nice focus) */
-body.chart-expand::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.25);
-  z-index: 50;
-  pointer-events: none;
-}
-/* ===== XR overrides: panels + news height + centered expand ===== */
-
-/* 1) One single panel height to rule them all (chart, heatmap, screener, news) */
-:root{
-  --panel-h: 600px;            /* tweak to taste */
-  --expand-gap: 8px;           /* gap below tickers when expanded */
-}
-
-/* Make TV widgets fill their host panels */
-#adv-chart-wrap .tradingview-widget-container__widget,
-.panel .tradingview-widget-container,
-.panel .tradingview-widget-container__widget,
-.section .tradingview-widget-container[data-tv="screener"] .tradingview-widget-container__widget,
-[data-tv="crypto-heatmap"] .tradingview-widget-container__widget,
-[data-tv="stock-heatmap"]  .tradingview-widget-container__widget{
-  height: 100% !important;
-  width: 100% !important;
-}
-
-/* Ensure your “panel” cards are equal height on desktop */
-.panel,
-.panel .panel-card{
-  height: var(--panel-h);
-}
-
-/* News card: cap height to panel & scroll lists inside */
-#news .news-card{
-  max-height: var(--panel-h);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; /* keep border crisp */
-}
-#news .news-card .news-head{
-  flex: 0 0 auto;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 8px;
-  margin-bottom: 8px;
-}
-#news .news-card .news-list{
-  flex: 1 1 auto;
-  min-height: 0;      /* important for flex scroll */
-  overflow-y: auto;
-  padding-right: 6px; /* room for scrollbar */
-}
-
-/* Slightly wider content on big screens */
-.container.wide{ max-width: 1680px; }
-
-/* Mobile: stack & let cards auto-size a bit shorter */
-@media (max-width: 900px){
-  :root{ --panel-h: 520px; }
-  .panel, .panel .panel-card{ height: var(--panel-h); }
-  #news .news-card .news-list{ max-height: 520px; }
-}
-
-/* 2) Clean, centered EXPAND that keeps header + both tickers visible */
-:root{
-  --hdr-h: var(--topbar-h, 56px);
-  --tape-h: var(--ticker-h, 52px); /* height of one ticker row */
-}
-
-/* Lock page scroll while expanded and add a subtle backdrop */
-body.chart-expand{ overflow: hidden; }
-body.chart-expand::before{
-  content:"";
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,.28);
-  z-index: 50;
-  pointer-events: none;
-}
-
-/* The expanded chart card sits centered under header + two tickers */
-body.chart-expand #chart .card{
-  position: fixed;
-  z-index: 60;
-  left: 50%;
-  transform: translateX(-50%);
-  top: calc(var(--hdr-h) + (2 * var(--tape-h)) + var(--expand-gap));
-  width: 75vw;  /* target width */
-  height: calc(100vh - (var(--hdr-h) + (2 * var(--tape-h)) + (2 * var(--expand-gap))));
-  margin: 0;
-  border-radius: 10px; /* keep your rounded look */
-  box-shadow: var(--shadow);
-}
-
-/* Make the TradingView widget fully fill the expanded card */
-body.chart-expand #chart .tradingview-widget-container,
-body.chart-expand #chart .tradingview-widget-container__widget{
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* Keep the rest of the sections visible behind; no need to hide header/tickers */
-body.chart-expand header,
-body.chart-expand .ticker,
-body.chart-expand footer{ display: block; }
-
-/* Position for your Expand/Close button inside the card */
-#chartExpand{
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  z-index: 70;
-}
-
-/* 3) Neutralize any older “chart-full” rules if they still exist */
-body.chart-full .header,
-body.chart-full .footer,
-body.chart-full .ticker,
-body.chart-full #chart,
-body.chart-full #adv-chart-wrap{ all: unset; } /* no-op old mode */
-
+/* (old expand styles neutralized) */
+body.chart-expand *{all:unset}
