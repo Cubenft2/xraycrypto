@@ -4,8 +4,79 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Market Brief — XRayCrypto News</title>
+  <meta name="description" content="Daily Market Brief by XRayCrypto News — one story that actually matters."/>
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
+
+  <!-- Keep for main.js & loaders across soft-nav -->
+  <script id="news-config" type="application/json">
+    { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/" }
+  </script>
+
+  <style>
+    .brief-shell{ max-width:920px; margin:0 auto; padding:0; }
+    .brief-frame{
+      background: var(--surface, #0f1115);
+      border: 1px solid var(--border, #1d212a);
+      border-radius: 18px;
+      overflow: clip;
+      box-shadow: 0 10px 28px rgba(0,0,0,.25);
+    }
+
+    /* Cover stays hidden until an image actually loads */
+    .brief-cover{ display:none; }
+    .brief-cover.has-img{
+      display:grid;
+      aspect-ratio:16/9;
+      width:100%;
+      background:
+        linear-gradient(135deg, rgba(0,207,255,.10), rgba(0,0,0,0)),
+        radial-gradient(900px 600px at 70% 35%, rgba(102,252,241,.06), transparent 60%);
+      place-items:center;
+      overflow:hidden;
+    }
+    .brief-cover img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    .brief-body{ padding: clamp(16px, 2.5vw, 28px); }
+
+    .brief-title{
+      margin:0 0 6px; font-weight:800; line-height:1.05; letter-spacing:-.02em;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      background: linear-gradient(90deg, #66fcf1, #00cfff 45%, #9af0ff 80%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow: 0 0 .4px rgba(102,252,241,.6);
+    }
+    .brief-sub{ margin:0 0 14px; opacity:.8; font-size:.95rem; }
+
+    .brief-body h3{
+      margin:20px 0 6px; font-size:1.05rem; letter-spacing:.01em;
+      color:var(--text-strong,#e7e7e7);
+      border-left:3px solid var(--accent,#66fcf1); padding-left:10px;
+    }
+    .brief-body p{ margin:8px 0; }
+
+    .brief-share{
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+      margin-top:16px; padding-top:12px; border-top:1px dashed var(--border,#1d212a);
+    }
+    .brief-share .button{ padding:8px 12px; }
+
+    details.brief-sources{ margin-top:12px; border-top:1px dashed var(--border,#1d212a); padding-top:10px; }
+    details.brief-sources summary{ cursor:pointer; opacity:.85; }
+    details.brief-sources ul{ margin:8px 0 0 0; padding-left:18px; }
+
+    .brief-watermark{
+      padding:10px 14px; font-size:.85rem; display:flex; align-items:center; gap:8px;
+      background: linear-gradient(180deg, rgba(102,252,241,.06), transparent);
+    }
+    .brief-watermark img{ width:20px; height:20px; border-radius:4px; }
+
+    .ribbon{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      justify-content:space-between; margin-bottom:12px;
+    }
+    .ribbon h1{ margin:0; font-size:clamp(1.2rem, 2.5vw, 1.6rem); letter-spacing:.02em; }
+  </style>
 </head>
 
 <body>
@@ -35,86 +106,185 @@
       </div>
     </div>
 
-    <!-- Tickers -->
     <div class="ticker"><div id="cryptoTape"></div></div>
     <div class="ticker"><div id="stocksTape"></div></div>
   </header>
 
   <!-- MAIN -->
   <main class="main container" id="pageMain">
-    <section class="section">
-      <h1>Market Brief</h1>
-      <div id="brief-content" data-latest-brief>Loading latest brief…</div>
+    <section class="section brief-shell">
+      <div class="ribbon">
+        <h1>Market Brief</h1>
+        <div style="display:flex;gap:8px">
+          <button id="briefShareX" class="button outline" type="button" title="Share on X">Share on X</button>
+          <button id="briefCopyLink" class="button outline" type="button" title="Copy link">Copy link</button>
+          <button id="briefNativeShare" class="button outline" type="button" title="Share…">Share…</button>
+        </div>
+      </div>
+
+      <article class="brief-frame" id="brief-frame">
+        <!-- Hidden unless image loads -->
+        <div class="brief-cover" id="brief-cover"></div>
+
+        <!-- NOTE: no data-latest-brief; we fully control the markup -->
+        <div class="brief-body" id="brief-content">Loading latest brief…</div>
+
+        <div class="brief-watermark">
+          <img src="pfp.png" alt="" aria-hidden="true"/>
+          <span>© XRayCrypto News</span>
+          <span class="muted" id="brief-date" style="margin-left:auto"></span>
+        </div>
+      </article>
       <noscript><p>Please enable JavaScript to view the latest brief.</p></noscript>
     </section>
   </main>
 
   <!-- FOOTER -->
   <footer class="footer">
-   <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button> 
+    <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
     © 2025 XRayCrypto™ ·
-    <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
+    <a href="https://x.com/xraycryptox" target="_blank" rel="noopener" class="x-link">X</a>
     <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
   </footer>
 
-  <!-- Worker base: point to the ROOT (not /fetch) -->
-  <script id="news-config" type="application/json">
-  { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/" }
-  </script>
-
+  <!-- Renderer -->
   <script>
   (async () => {
     const cfgEl = document.getElementById('news-config');
     const base = cfgEl ? (JSON.parse(cfgEl.textContent).workerBase || "/") : "/";
-    const el = document.getElementById('brief-content');
+    const contentEl = document.getElementById('brief-content');
+    const coverEl = document.getElementById('brief-cover');
+    const dateEl = document.getElementById('brief-date');
 
-    const safe = s => String(s ?? "").replace(/[&<>"']/g, m => (
-      {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]
-    ));
+    const safe = s => String(s ?? "").replace(/[&<>"']/g, m =>
+      ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m])
+    );
+
+    // helper: set static meta for UX (note: crawlers won't execute this JS)
+    function setHeadTag(selector, html) {
+      const head = document.head || document.getElementsByTagName('head')[0];
+      const existing = head.querySelector(selector);
+      if (existing) existing.remove();
+      head.insertAdjacentHTML('beforeend', html);
+    }
+    function setShareMeta({title, description, image, canonical}) {
+      if (!title) title = 'Market Brief — XRayCrypto News';
+      if (!description) description = 'Daily Market Brief by XRayCrypto News — one story that actually matters.';
+      if (!image) image = 'pfp.png';
+      if (!canonical) canonical = location.href;
+
+      setHeadTag('link[rel="canonical"]', `<link rel="canonical" href="${canonical}">`);
+      setHeadTag('meta[property="og:title"]', `<meta property="og:title" content="${safe(title)}">`);
+      setHeadTag('meta[property="og:description"]', `<meta property="og:description" content="${safe(description)}">`);
+      setHeadTag('meta[property="og:image"]', `<meta property="og:image" content="${image}">`);
+      setHeadTag('meta[property="og:url"]', `<meta property="og:url" content="${canonical}">`);
+      setHeadTag('meta[property="og:type"]', `<meta property="og:type" content="article">`);
+      setHeadTag('meta[name="twitter:card"]', `<meta name="twitter:card" content="summary_large_image">`);
+      setHeadTag('meta[name="twitter:title"]', `<meta name="twitter:title" content="${safe(title)}">`);
+      setHeadTag('meta[name="twitter:description"]', `<meta name="twitter:description" content="${safe(description)}">`);
+      setHeadTag('meta[name="twitter:image"]', `<meta name="twitter:image" content="${image}">`);
+    }
 
     try {
-      // 1) Get feed JSON to find the latest slug
       const feedRes = await fetch(base + "marketbrief/feed/index.json", { cache: "no-store" });
       if (!feedRes.ok) throw new Error("feed fetch failed");
       const feed = await feedRes.json();
+      if (!feed?.latest) throw new Error("no-latest");
 
-      if (!feed?.latest) {
-        el.textContent = "No brief yet. Check back soon.";
-        return;
-      }
-
-      // 2) Fetch that brief's JSON
       const briefRes = await fetch(base + `marketbrief/briefs/${feed.latest}.json`, { cache: "no-store" });
       if (!briefRes.ok) throw new Error("brief fetch failed");
-      const b = await briefRes.json();
+      const brief = await briefRes.json();
 
-      const sources = Array.isArray(b.sources) && b.sources.length
-        ? `<details><summary>Sources</summary><ul>${
-            b.sources.map(s =>
+      const canonical = brief.canonical || (base + "marketbrief/" + brief.slug);
+
+      // COVER: only show after the image actually loads
+      coverEl.classList.remove('has-img');
+      coverEl.innerHTML = "";
+      if (brief.og_image) {
+        const img = document.createElement('img');
+        img.alt = brief.title ? safe(brief.title) : "Market Brief cover";
+        img.loading = "lazy";
+        img.src = brief.og_image;
+        img.addEventListener('load', () => {
+          coverEl.appendChild(img);
+          coverEl.classList.add('has-img');
+        }, { once:true });
+        img.addEventListener('error', () => {
+          coverEl.classList.remove('has-img');
+          coverEl.innerHTML = "";
+        }, { once:true });
+      }
+
+      // BODY
+      const title = safe(brief.title || ("Market Brief — " + (brief.date || "")));
+      const sub = safe(brief.summary || "");
+      const lastWord = brief.last_word ? `<p><em>${safe(brief.last_word)}</em></p>` : "";
+      const sourcesHTML = Array.isArray(brief.sources) && brief.sources.length
+        ? `<details class="brief-sources"><summary>Sources</summary><ul>${
+            brief.sources.map(s =>
               `<li><a href="${s.url}" target="_blank" rel="noopener">${safe(s.label || s.url)}</a></li>`
             ).join("")
           }</ul></details>`
         : "";
 
-      el.innerHTML = `
-        <article class="brief">
-          <h2>${safe(b.title || ("Market Brief — " + (b.date || "")))}</h2>
-          <p class="muted">${safe(b.date || "")}</p>
-          ${b.article_html || ""}
-          ${b.last_word ? `<hr><p><em>${safe(b.last_word)}</em></p>` : ""}
-          ${sources}
-          <p class="muted" style="margin-top:12px">
-            <a href="${base}marketbrief/${b.slug}" rel="noopener">Permalink</a>
-          </p>
-        </article>
+      contentEl.innerHTML = `
+        <h2 class="brief-title">${title}</h2>
+        ${brief.summary ? `<p class="brief-sub">${sub}</p>` : ""}
+        ${brief.article_html || ""}
+        ${lastWord}
+        ${sourcesHTML}
+        <div class="brief-share">
+          <button class="button" id="shareXInline">Share on X</button>
+          <button class="button outline" id="copyLinkInline">Copy link</button>
+        </div>
       `;
+      if (dateEl) dateEl.textContent = safe(brief.date || "");
+
+      // Set head meta for UX (crawlers will use the Worker permalink itself)
+      setShareMeta({
+        title: brief.title,
+        description: brief.summary,
+        image: brief.og_image,
+        canonical
+      });
+
+      // SHARE actions always use the Worker permalink (server has OG tags)
+      const shareText = (brief.social_text && brief.social_text.trim())
+        ? brief.social_text
+        : `Let’s talk about something.\n${brief.title || "Market Brief"} — ${brief.date || ""}`;
+
+      function openX() {
+        const url = new URL("https://twitter.com/intent/tweet");
+        url.searchParams.set("text", shareText);
+        url.searchParams.set("url", canonical);
+        window.open(url.toString(), "_blank", "noopener");
+      }
+      async function copyLink(btn) {
+        try {
+          await navigator.clipboard.writeText(canonical);
+          if (btn) { const t=btn.textContent; btn.textContent="Copied!"; setTimeout(()=>btn.textContent=t,1000); }
+        } catch {}
+      }
+      async function nativeShare() {
+        if (navigator.share) {
+          try { await navigator.share({ title: brief.title, text: shareText, url: canonical }); }
+          catch {}
+        } else {
+          openX();
+        }
+      }
+
+      document.getElementById('briefShareX')?.addEventListener('click', openX);
+      document.getElementById('briefCopyLink')?.addEventListener('click', e=>copyLink(e.currentTarget));
+      document.getElementById('briefNativeShare')?.addEventListener('click', nativeShare);
+      document.getElementById('shareXInline')?.addEventListener('click', openX);
+      document.getElementById('copyLinkInline')?.addEventListener('click', e=>copyLink(e.currentTarget));
+
     } catch (err) {
-      console.error(err);
-      // Fallback: link to Worker’s HTML permalink (served by /marketbrief/latest)
-      el.innerHTML = `
-        <p>Couldn’t load the JSON brief right now.</p>
-        <p><a href="${base}marketbrief/latest" rel="noopener">Open the latest Market Brief</a></p>
-      `;
+      console.warn("Brief load failed:", err);
+      document.getElementById('brief-content').innerHTML = `<p>Couldn’t load the brief. Please try again shortly.</p>`;
+      coverEl.classList.remove('has-img');
+      coverEl.innerHTML = "";
     }
   })();
   </script>

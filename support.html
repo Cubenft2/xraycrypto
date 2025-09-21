@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html> 
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
@@ -31,7 +31,6 @@
     .support-page .support-wrap{display:grid; gap:16px; align-items:start;}
     .support-page .pfp-card{display:grid; place-items:center; padding:20px}
 
-    /* Guard against any global img wideners after soft-nav */
     .support-page .pfp-card img.pfp{
       display:block;
       width:160px !important;
@@ -145,11 +144,17 @@
               </div>
             </div>
 
-          </div>
+            <!-- Web3 / UD -->
+            <div class="wallet-row">
+              <h3>Web3 (UD Domain)</h3>
+              <div class="addr-wrap" style="flex:1">
+                <code id="addr-ud">xraycrypto.x</code>
+                <button class="button small" type="button" data-copy="#addr-ud" aria-label="Copy Web3 address">Copy</button>
+                <a href="https://ud.me/xraycrypto.x" target="_blank" rel="noopener" class="button small outline">View</a>
+              </div>
+            </div>
 
-          <p class="note" style="margin-top:10px">
-            Want human-readable? If your wallet supports UD, you can also tip <strong>xraycrypto.x</strong>.
-          </p>
+          </div>
         </div>
       </div>
     </section>

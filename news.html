@@ -65,7 +65,6 @@
   </script>
 
   <main class="main container" id="pageMain">
-    <!-- HEADLINES via Worker (Crypto vs Markets) -->
     <!-- LIVE STREAMS -->
     <section class="section">
       <h2>Live Market News</h2>
@@ -160,9 +159,10 @@
         </div>
         <p class="note" style="margin-top:8px">These open the official live pages to avoid regional embed blocks.</p>
       </div>
+    </section> <!-- ✅ closed Live Market News section -->
 
-     
-  <section class="section" id="news">
+    <!-- HEADLINES via Worker (Crypto vs Markets) -->
+    <section class="section" id="news">
       <div class="card news-card">
         <div class="news-head" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
           <h3 style="margin:0">News</h3>
@@ -185,17 +185,17 @@
   <footer class="footer">
     <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
     © 2025 XRayCrypto™ ·
-    <a href="https://x.com/XRayCryptox" target="_blank" class="x-link">X</a>
+    <a href="https://x.com/XRayCryptox" target="_blank" rel="noopener" class="x-link">X</a>
     <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
   </footer>
 
   <script src="main.js"></script>
   <script>
-    // Auto-refresh the CryptoPanic widget every 2 minutes
-    setInterval(() => {
-      const f = document.getElementById('cryptoNews');
-      if (f) f.src = f.src;
-    }, 120000);
+    // Example: auto-refresh a (removed) CryptoPanic iframe, kept for reference:
+    // setInterval(() => {
+    //   const f = document.getElementById('cryptoNews');
+    //   if (f) f.src = f.src;
+    // }, 120000);
   </script>
 </body>
 </html>

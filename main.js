@@ -492,6 +492,79 @@ async function loadNewsFromWorker() {
   if (stampEl) stampEl.textContent = 'Updated ' + new Date().toLocaleTimeString();
 }
 
+/* ========= >>> Market Brief hydration (added) ========= */
+/* derive API base from <script id="brief-config"> or news-config workerBase */
+function getBriefApiBase(){
+  const cfgEl = document.getElementById('brief-config');
+  const cfg = cfgEl ? safeParseJSON(cfgEl.textContent || '{}') : null;
+  if (cfg && cfg.api) return cfg.api.replace(/\/+$/,'');
+  const newsCfgEl = document.getElementById('news-config');
+  const newsCfg = newsCfgEl ? safeParseJSON(newsCfgEl.textContent || '{}') : null;
+  if (newsCfg && newsCfg.workerBase) {
+    try{
+      const u = new URL(newsCfg.workerBase);
+      return `${u.protocol}//${u.host}`;
+    }catch(e){}
+  }
+  // fallback to workers.dev (adjust if you have a custom route)
+  return 'https://xraycrypto-news.xrprat.workers.dev';
+}
+
+function attachBriefRefresh(){
+  const btn = document.getElementById('briefRefresh');
+  if(!btn) return;
+  btn.addEventListener('click', async ()=>{
+    btn.disabled = true;
+    try{
+      const api = getBriefApiBase();
+      const r = await fetch(`${api}/marketbrief/latest.json`, { cache: 'no-store' });
+      if(!r.ok) throw new Error('Refresh failed: '+r.status);
+      const brief = await r.json();
+      const body = document.querySelector('.brief-body');
+      if(body) body.innerHTML = brief.article_html || '<p>No content.</p>';
+    }catch(e){
+      const body = document.querySelector('.brief-body');
+      if(body) body.innerHTML = `<p class="muted">${(e && e.message) ? e.message : 'Refresh error'}</p>`;
+    }finally{
+      btn.disabled = false;
+    }
+  });
+}
+
+async function hydrateMarketBrief(){
+  const mount = document.querySelector('#brief-content[data-latest-brief]');
+  if(!mount) return;
+
+  // If server (Worker/HTMLRewriter) already injected real content, keep it.
+  const hasContent = mount.querySelector('article, section, h1, .brief-card');
+  if(hasContent){ attachBriefRefresh(); return; }
+
+  try{
+    const api = getBriefApiBase();
+    const res = await fetch(`${api}/marketbrief/latest.json`, { cache: 'no-store' });
+    if(!res.ok) throw new Error('Brief fetch failed: '+res.status);
+    const brief = await res.json();
+
+    mount.innerHTML = `
+      <article class="brief-card">
+        <header class="brief-head">
+          <h2>${(brief.title || 'Market Brief')}</h2>
+          <div class="muted">${(brief.date || '')}</div>
+        </header>
+        <div class="brief-body">${brief.article_html || '<p>No content.</p>'}</div>
+        <footer class="brief-foot">
+          <button id="briefRefresh" class="btn">Hard Refresh</button>
+          <a class="muted" href="/marketbrief/${(brief.slug || 'latest')}">Permalink</a>
+        </footer>
+      </article>
+    `;
+    attachBriefRefresh();
+  }catch(e){
+    mount.innerHTML = `<p class="muted">Could not load the latest brief.</p>`;
+  }
+}
+/* ========= (end Market Brief hydration) ========= */
+
 /* ========= Twitch parent fixer ========= */
 function fixTwitchParents(){
   const host = location.hostname || 'localhost';
@@ -566,6 +639,7 @@ function bindHeaderControls(){
       rebuildTickerTapes();
       rebuildWidgetsIn(document.getElementById('pageMain'));
       loadNewsFromWorker();
+      hydrateMarketBrief(); // ensure brief follows theme + refreshes
     };
   }
 
@@ -642,7 +716,7 @@ function bindHeaderControls(){
   }
 
   fixTwitchParents();
-  bindChartFullscreen();  // <— hook up the shared fullscreen logic
+  bindChartFullscreen();  // <— shared fullscreen logic
 }
 
 /* ==== ChillZone effects ==== */
@@ -686,6 +760,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     ensureMounted(mainRoot);
 
     loadNewsFromWorker();
+    hydrateMarketBrief(); // <<< ensure brief shows on first load (no hard refresh)
 
     const hasNewsLists = document.getElementById('newsListCrypto') && document.getElementById('newsListMarkets');
     if (hasNewsLists) setInterval(()=> loadNewsFromWorker(), 300000);
@@ -793,6 +868,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         rebuildWidgetsIn(nextMain);
         ensureMounted(nextMain);
         loadNewsFromWorker();
+        hydrateMarketBrief(); // <<< ensure brief loads on SPA nav
         bindChillZoneEffects();
         fixTwitchParents();
         bindHeaderControls();
