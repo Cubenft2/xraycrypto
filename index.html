@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>XRayCrypto — Home</title>
+  <title>XRayCrypto — Crypto</title>
   <meta name="description" content="Live crypto prices, live market news, heatmap, crypto screener, Ethereum, Bitcoin, XRP, SUI, TRX, DOGE, doginaldogs, Hyperliquidity, advanced TradingView charts, watchlist and curated news — XRayCrypto."/>
   <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
   <link rel="stylesheet" href="styles.css"/>
@@ -21,7 +21,8 @@
       <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
 
       <nav id="primaryNav" class="nav">
-        <a href="index.html" class="active" data-softnav>Home</a>
+        <a href="marketbrief.html" data-softnav>MarketBrief</a>
+        <a href="index.html" class="active" data-softnav>Crypto</a>
         <a href="markets.html" data-softnav>Markets</a>
         <a href="watchlist.html" data-softnav>Watchlist</a>
         <a href="news.html" data-softnav>News</a>
@@ -32,11 +33,8 @@
         </a>
       </nav>
 
+      <!-- Keep only theme + expand in header controls -->
       <div id="headerControls" class="symbol-form">
-        <form id="symbolForm" autocomplete="off">
-          <input id="symbolInput" name="symbol" type="text" placeholder="BTC, ETH, SOL…" aria-label="Symbol"/>
-          <button class="button" type="submit">Open</button>
-        </form>
         <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
         <button id="chartExpand" class="button outline" type="button" title="Expand chart to fullscreen" aria-pressed="false">⤢</button>
       </div>
@@ -46,7 +44,7 @@
     <div class="ticker"><div id="stocksTape"></div></div>
   </header>
 
-  <!-- Worker config -->
+  <!-- Worker config (MUST use /fetch?url= for news proxy) -->
   <script id="news-config" type="application/json">
     { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/fetch?url=" }
   </script>
@@ -54,9 +52,17 @@
   <!-- MAIN -->
   <main class="main container" id="pageMain">
     <section class="section" id="chart">
-      <h1>BTC — Advanced Chart</h1>
+      <!-- chart title + moved Open form on the right -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <h1>BTC — Advanced Chart</h1>
+        <form id="symbolForm" autocomplete="off" style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <input id="symbolInput" name="symbol" type="text" placeholder="BTC, ETH, SOL…" aria-label="Symbol" style="min-width:160px"/>
+          <button class="button" type="submit">Open</button>
+        </form>
+      </div>
 
       <div class="card">
+        <!-- Close button (works with main.js handlers) -->
         <button id="chartFsClose" type="button" title="Close chart (Esc)">⤡</button>
 
         <div id="adv-chart-wrap" class="tradingview-widget-container" data-tv="advchart" style="height:100%;width:100%">
@@ -136,6 +142,7 @@
   <footer class="footer">
     <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
     © 2025 XRayCrypto™ ·
+    <a href="privacy.html" data-softnav>Privacy</a> ·
     <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
     <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
   </footer>
