@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>XRayCrypto — Support</title>
+  <meta name="description" content="If this project helps you, feel free to tip any amount. Thank you!"/>
+
+  <!-- Canonical + Social -->
+  <link rel="canonical" href="https://xraycrypto.io/support.html"/>
+  <meta property="og:title" content="XRayCrypto — Support"/>
+  <meta property="og:description" content="If this project helps you, a small tip keeps it fast and ad-free. Thank you! ❤️"/>
+  <meta property="og:image" content="https://xraycrypto.io/pfp.png"/>
+  <meta property="og:url" content="https://xraycrypto.io/support.html"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="XRayCrypto — Support"/>
+  <meta name="twitter:description" content="If this project helps you, a small tip keeps it fast and ad-free. Thank you! ❤️"/>
+  <meta name="twitter:image" content="https://xraycrypto.io/pfp.png"/>
+
+  <!-- IMPORTANT: keep workerBase in head so SPA always has it after navigating -->
+  <script id="news-config" type="application/json">
+    { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/fetch?url=" }
+  </script>
+
+  <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
+  <link rel="stylesheet" href="styles.css"/>
+
+  <style>
+    /* ===== Page-only tweaks (scoped to .support-page) ===== */
+    .support-page .support-wrap{display:grid; gap:16px; align-items:start;}
+    .support-page .pfp-card{display:grid; place-items:center; padding:20px}
+
+    /* Guard against any global img wideners after soft-nav */
+    .support-page .pfp-card img.pfp{
+      display:block;
+      width:160px !important;
+      height:160px !important;
+      max-width:160px !important;
+      max-height:160px !important;
+      object-fit:cover;
+      border-radius:20px;
+      box-shadow:0 0 0 3px var(--accent);
+    }
+
+    .support-page .wallet-list{display:grid; gap:12px}
+    .support-page .wallet-row{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+      padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--surface-2)
+    }
+    .support-page .wallet-row h3{margin:0; font-size:1rem}
+    .support-page .addr-wrap{display:flex; gap:8px; align-items:center; flex:1; min-width:220px}
+    .support-page .addr-wrap code{
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      padding:6px 8px; border:1px solid var(--border); border-radius:8px; background:var(--surface); max-width:100%
+    }
+    .support-page .button.small{padding:6px 10px; font-weight:700}
+
+    /* ===== Ambient (page-local) ===== */
+    .site-aurora {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      opacity: 0; transition: opacity .6s ease;
+      filter: blur(12px) saturate(120%);
+      background:
+        radial-gradient(1200px 800px at 20% 20%, rgba(0,207,255,.10), transparent 60%),
+        radial-gradient(900px 700px at 80% 30%, rgba(255,215,0,.08), transparent 60%),
+        radial-gradient(1200px 900px at 60% 80%, rgba(0,255,170,.06), transparent 65%);
+    }
+    body.aurora-on .site-aurora { opacity: .9; }
+    @media (prefers-reduced-motion: reduce) { .site-aurora{transition:none} }
+  </style>
+</head>
+
+<body class="support-page">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="topbar container">
+      <a class="brand" href="index.html" data-softnav>
+        <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
+        <span class="name">XRayCrypto<span class="tm" aria-hidden="true">™</span></span>
+      </a>
+
+      <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
+
+      <nav id="primaryNav" class="nav">
+        <a href="marketbrief.html" data-softnav>MarketBrief</a>
+        <a href="index.html" data-softnav>Crypto</a>
+        <a href="markets.html" data-softnav>Markets</a>
+        <a href="watchlist.html" data-softnav>Watchlist</a>
+        <a href="news.html" data-softnav>News</a>
+        <a href="store.html" data-softnav>Store</a>
+        <a href="chill.html" data-softnav>ChillZone</a>
+        <a href="support.html" class="active" data-softnav>💸</a>
+      </nav>
+
+      <div id="headerControls" class="symbol-form">
+        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
+      </div>
+    </div>
+
+    <div class="ticker"><div id="cryptoTape"></div></div>
+    <div class="ticker"><div id="stocksTape"></div></div>
+  </header>
+
+  <!-- Ambient -->
+  <div class="site-aurora" aria-hidden="true"></div>
+
+  <!-- MAIN -->
+  <main class="main container" id="pageMain">
+    <section class="section">
+      <div class="support-wrap">
+        <div class="card pfp-card">
+          <img src="pfp.png" alt="XRayCrypto avatar" class="pfp" id="supportLogo" data-support-logo loading="lazy">
+          <p class="note" style="margin:10px 0 0">If this project helps you, a small tip keeps it fast and ad-free. Thank you! ❤️</p>
+        </div>
+
+        <div class="card">
+          <h2 style="margin:0 0 10px">Tip Addresses</h2>
+          <div class="wallet-list">
+
+            <!-- BTC -->
+            <div class="wallet-row">
+              <h3>Bitcoin (BTC)</h3>
+              <div class="addr-wrap" style="flex:1">
+                <code id="addr-btc">bc1qlnldyzwvzu0wtej24kgk9c9tr7naz2fcdarrt6</code>
+                <button class="button small" type="button" data-copy="#addr-btc" aria-label="Copy BTC address">Copy</button>
+              </div>
+            </div>
+
+            <!-- ETH -->
+            <div class="wallet-row">
+              <h3>Ethereum (ETH)</h3>
+              <div class="addr-wrap" style="flex:1">
+                <code id="addr-eth">0x26423bffa264bb913fb152401dbb63ff8176e6a3</code>
+                <button class="button small" type="button" data-copy="#addr-eth" aria-label="Copy ETH address">Copy</button>
+              </div>
+            </div>
+
+            <!-- SOL -->
+            <div class="wallet-row">
+              <h3>Solana (SOL)</h3>
+              <div class="addr-wrap" style="flex:1">
+                <code id="addr-sol">6y6KMjsXoaWcUjz6pGty73gYTXtVahukCQdyk1vX6DLn</code>
+                <button class="button small" type="button" data-copy="#addr-sol" aria-label="Copy SOL address">Copy</button>
+              </div>
+            </div>
+
+          </div>
+
+          <p class="note" style="margin-top:10px">
+            Want human-readable? If your wallet supports UD, you can also tip <strong>xraycrypto.x</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
+    © 2025 XRayCrypto™ · <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

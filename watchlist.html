@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>XRayCrypto — Watchlist</title>
+  <meta name="description" content="Build your own crypto and stock watchlist. Save tickers, view mini charts, and track price moves instantly on XRayCrypto."/>
+  <meta name="keywords" content="watchlist, crypto watchlist, stock watchlist, mini charts, tickers, XRayCrypto"/>
+
+  <!-- Canonical + Social -->
+  <link rel="canonical" href="https://xraycrypto.io/watchlist.html"/>
+  <meta property="og:title" content="XRayCrypto — Watchlist"/>
+  <meta property="og:description" content="Build your own crypto and stock watchlist with live mini charts and tickers."/>
+  <meta property="og:image" content="https://xraycrypto.io/pfp.png"/>
+  <meta property="og:url" content="https://xraycrypto.io/watchlist.html"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="XRayCrypto — Watchlist"/>
+  <meta name="twitter:description" content="Build your own crypto and stock watchlist with live mini charts and tickers."/>
+  <meta name="twitter:image" content="https://xraycrypto.io/pfp.png"/>
+
+  <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
+  <link rel="stylesheet" href="styles.css"/>
+
+  <style>
+    .grid{ display:grid; gap:12px; }
+    .grid.cols-3{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+
+    @media (min-width:900px){
+      .grid.cols-3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+    }
+    @media (max-width:380px){
+      .grid.cols-3{ grid-template-columns: 1fr; }
+    }
+
+    #wlList .card{ display:flex; flex-direction:column; gap:8px; }
+    form#wlForm { display:flex; gap:8px; flex-wrap:wrap; margin: 12px 0; }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="topbar container">
+      <a class="brand" href="index.html" data-softnav>
+        <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
+        <span class="name">XRayCrypto<span class="tm" aria-hidden="true">™</span></span>
+      </a>
+
+      <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
+
+      <nav id="primaryNav" class="nav">
+        <a href="marketbrief.html" data-softnav>MarketBrief</a>
+        <a href="index.html" data-softnav>Crypto</a>
+        <a href="markets.html" data-softnav>Markets</a>
+        <a href="watchlist.html" class="active" data-softnav>Watchlist</a>
+        <a href="news.html" data-softnav>News</a>
+        <a href="store.html" data-softnav>Store</a>
+        <a href="chill.html" data-softnav>ChillZone</a>
+        <a href="support.html" class="support-link" data-softnav>
+          <span class="support-icon">❤</span><span class="support-text">💸</span>
+        </a>
+      </nav>
+
+      <!-- Header controls now only has theme toggle -->
+      <div id="headerControls" class="symbol-form">
+        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
+      </div>
+    </div>
+
+    <div class="ticker"><div id="cryptoTape"></div></div>
+    <div class="ticker"><div id="stocksTape"></div></div>
+  </header>
+
+  <!-- PAGE -->
+  <main class="main container" id="pageMain">
+    <!-- CRYPTO HEAT MAP -->
+    <section class="section" id="crypto-heatmap">
+      <h2>Crypto Coins Heatmap</h2>
+      <div class="card">
+        <div class="tradingview-widget-container" data-tv="crypto-heatmap">
+          <div class="tradingview-widget-container__widget"></div>
+          <script class="tv-config" type="application/json">
+            {
+              "dataSource": "Crypto",
+              "blockSize": "market_cap_calc",
+              "blockColor": "24h_close_change|5",
+              "locale": "en",
+              "width": "100%",
+              "height": 520
+            }
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- WATCHLIST SECTION -->
+    <section class="section">
+      <h1>Watchlist</h1>
+      <p class="note">Add coins below (BTC or BTCUSDT).📋.</p>
+
+      <!-- Add form moved here -->
+      <form id="wlForm">
+        <input id="wlInput" type="text" placeholder="BTC, ETH, SOL or EXCHANGE:PAIR">
+        <button class="button" id="wlAdd" type="submit">Add</button>
+      </form>
+
+      <div id="wlList" class="grid cols-3"></div>
+      <p id="wlEmpty" class="note" style="display:none">Your watchlist is empty.</p>
+      <div style="margin-top:12px">
+        <button class="button danger" id="wlClear">Clear all</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
+    © 2025 XRayCrypto™ ·
+    <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
+    <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    const list = document.getElementById('wlList');
+    const empty = document.getElementById('wlEmpty');
+
+    function miniCard(symbol){
+      const theme = getTheme();
+      const wrap = document.createElement('div');
+      wrap.className = 'card';
+      wrap.innerHTML = `
+        <h2 style="margin:0 0 8px">${symbol}</h2>
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <a class="button" href="index.html#chart" onclick="sessionStorage.setItem('xr_symbol','${symbol}')">Open on Home</a>
+          <button class="button outline" data-remove="${symbol}">Remove</button>
+        </div>
+      `;
+      const s = document.createElement('script');
+      s.src = "https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js";
+      s.async = true;
+      s.text = JSON.stringify({
+        symbol,
+        width: "100%",
+        height: 110,
+        locale: "en",
+        dateRange: "1M",
+        colorTheme: theme,
+        isTransparent: false,
+        showVolume: true
+      });
+      wrap.querySelector('.tradingview-widget-container').appendChild(s);
+      return wrap;
+    }
+
+    function render(){
+      list.innerHTML = '';
+      const wl = WL.get();
+      empty.style.display = wl.length ? 'none' : '';
+      wl.forEach(sym => list.appendChild(miniCard(sym)));
+    }
+
+    function addCurrent(){
+      const raw = document.getElementById('wlInput').value || '';
+      const sym = mapShortToSymbol(raw);
+      if(!sym) return;
+      WL.add(sym);
+      document.getElementById('wlInput').value = '';
+      render();
+    }
+    document.getElementById('wlForm').addEventListener('submit', (e)=>{ e.preventDefault(); addCurrent(); });
+    document.getElementById('wlAdd').addEventListener('click', (e)=>{ e.preventDefault(); addCurrent(); });
+
+    list.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button[data-remove]');
+      if(!btn) return;
+      WL.remove(btn.getAttribute('data-remove'));
+      render();
+    });
+    document.getElementById('wlClear').addEventListener('click', ()=>{
+      if(confirm('Clear your entire watchlist?')){ WL.clear(); render(); }
+    });
+
+    window.addEventListener('storage', (e)=>{ if(e.key==='xr_theme') render(); });
+    window.addEventListener('wl-updated', render);
+
+    render();
+    document.getElementById('themeToggle')?.addEventListener('click', ()=> setTimeout(render, 0));
+  </script>
+</body>
+</html>

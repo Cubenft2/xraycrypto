@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>XRayCrypto — Crypto</title>
+  <meta name="description" content="Live crypto prices, live market news, heatmap, crypto screener, Ethereum, Bitcoin, XRP, SUI, TRX, DOGE, doginaldogs, Hyperliquidity, advanced TradingView charts, watchlist and curated news — XRayCrypto."/>
+  <link rel="icon" type="image/png" href="pfp.png" sizes="32x32"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="topbar container">
+      <a class="brand" href="index.html" data-softnav>
+        <img src="pfp.png" alt="XRayCrypto logo" class="logo"/>
+        <span class="name">XRayCrypto<span class="tm" aria-hidden="true">™</span></span>
+      </a>
+
+      <button id="menuToggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
+
+      <nav id="primaryNav" class="nav">
+        <a href="marketbrief.html" data-softnav>MarketBrief</a>
+        <a href="index.html" class="active" data-softnav>Crypto</a>
+        <a href="markets.html" data-softnav>Markets</a>
+        <a href="watchlist.html" data-softnav>Watchlist</a>
+        <a href="news.html" data-softnav>News</a>
+        <a href="store.html" data-softnav>Store</a>
+        <a href="chill.html" data-softnav>ChillZone</a>
+        <a href="support.html" class="support-link" data-softnav>
+          <span class="support-icon">❤</span><span class="support-text">💸</span>
+        </a>
+      </nav>
+
+      <!-- Keep only theme + expand in header controls -->
+      <div id="headerControls" class="symbol-form">
+        <button id="themeToggle" class="button outline" type="button" title="Toggle theme">🌙</button>
+        <button id="chartExpand" class="button outline" type="button" title="Expand chart to fullscreen" aria-pressed="false">⤢</button>
+      </div>
+    </div>
+
+    <div class="ticker"><div id="cryptoTape"></div></div>
+    <div class="ticker"><div id="stocksTape"></div></div>
+  </header>
+
+  <!-- Worker config (MUST use /fetch?url= for news proxy) -->
+  <script id="news-config" type="application/json">
+    { "workerBase": "https://xraycrypto-news.xrprat.workers.dev/fetch?url=" }
+  </script>
+
+  <!-- MAIN -->
+  <main class="main container" id="pageMain">
+    <section class="section" id="chart">
+      <!-- chart title + moved Open form on the right -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <h1>BTC — Advanced Chart</h1>
+        <form id="symbolForm" autocomplete="off" style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <input id="symbolInput" name="symbol" type="text" placeholder="BTC, ETH, SOL…" aria-label="Symbol" style="min-width:160px"/>
+          <button class="button" type="submit">Open</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <!-- Close button (works with main.js handlers) -->
+        <button id="chartFsClose" type="button" title="Close chart (Esc)">⤡</button>
+
+        <div id="adv-chart-wrap" class="tradingview-widget-container" data-tv="advchart" style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+          <div class="tradingview-widget-copyright">
+            <a href="https://www.tradingview.com/symbols/BINANCE-BTCUSDT/?exchange=BINANCE" rel="noopener nofollow" target="_blank">
+              <span class="blue-text">BTC chart by TradingView</span>
+            </a>
+          </div>
+          <script class="tv-config" type="application/json">
+            {
+              "allow_symbol_change": true,
+              "calendar": false,
+              "details": true,
+              "hide_side_toolbar": false,
+              "hide_top_toolbar": false,
+              "hide_legend": false,
+              "hide_volume": false,
+              "hotlist": true,
+              "interval": "60",
+              "locale": "en",
+              "save_image": true,
+              "style": "1",
+              "symbol": "BINANCE:BTCUSDT",
+              "timezone": "Etc/UTC",
+              "withdateranges": true,
+              "autosize": true
+            }
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="heatmap">
+      <div class="card">
+        <h3>Crypto Heatmap</h3>
+        <div class="tradingview-widget-container" data-tv="crypto-heatmap">
+          <div class="tradingview-widget-container__widget"></div>
+          <script>{ "blockSize":"market_cap_calc","colorTheme":"light","width":"100%","height":460 }</script>
+          <script src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js" async></script>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="screener">
+      <div class="card">
+        <h3>Crypto Screener</h3>
+        <div class="tradingview-widget-container" data-tv="screener">
+          <div class="tradingview-widget-container__widget"></div>
+          <script>{ "defaultColumn":"overview","defaultScreen":"general","market":"crypto","colorTheme":"light","width":"100%","height":520 }</script>
+          <script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async></script>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="news">
+      <div class="card news-card">
+        <div class="news-head" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <h3 style="margin:0">News</h3>
+          <span id="newsUpdatedAt" class="updated"></span>
+          <div class="tabs" role="tablist" style="margin-left:auto" id="newsTabs">
+            <button id="newsRefresh" class="button outline" type="button" title="Refresh">↻ Refresh</button>
+            <button class="tab active" data-tab="crypto" role="tab" aria-selected="true">Crypto</button>
+            <button class="tab" data-tab="markets" role="tab" aria-selected="false">Markets</button>
+          </div>
+        </div>
+
+        <div class="news-scroll">
+          <ul id="newsListCrypto" class="news-list" data-tab-panel="crypto"></ul>
+          <ul id="newsListMarkets" class="news-list hidden" data-tab-panel="markets"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <button id="ambientToggle" class="button outline" type="button" title="Toggle ambient glow">✨</button>
+    © 2025 XRayCrypto™ ·
+    <a href="privacy.html" data-softnav>Privacy</a> ·
+    <a href="https://x.com/xraycryptox" target="_blank" class="x-link">X</a>
+    <a href="support.html" class="support-cta" data-softnav>❤ Support XR</a>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
